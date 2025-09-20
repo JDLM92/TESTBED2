@@ -193,11 +193,11 @@ function setTimeframeVisual(button, timeframe, state) {
 }
 
 function styleHomeButton(state) {
-  let color = COLORS.background;
-  let opacity = 0.85;
+  let color = COLORS.text;
+  let opacity = 0.95;
 
   if (state === "hover") {
-    color = mixColor(COLORS.background, COLORS.text, 0.18);
+    color = mixColor(COLORS.text, COLORS.future, 0.12);
     opacity = 1;
   }
 
@@ -208,8 +208,8 @@ function styleHomeButton(state) {
 
   const label = homeButton.querySelector("a-text");
   if (label) {
-    const labelOpacity = state === "hover" ? 1 : 0.85;
-    label.setAttribute("color", COLORS.text);
+    const labelOpacity = state === "hover" ? 1 : 0.9;
+    label.setAttribute("color", COLORS.background);
     label.setAttribute("opacity", labelOpacity);
   }
 }

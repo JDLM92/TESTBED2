@@ -101,14 +101,15 @@
           id="homeButton"
           class="clickable"
           geometry="primitive: circle; radius: 0.1"
-          material="shader: flat; color: #091017; opacity: 0.92"
-          position="1 0 0"
+          material="shader: flat; color: #ffffff; opacity: 0.95"
+          position="0.95 0 0"
+          render-order="3"
         >
           <a-text
             value="⌂"
             align="center"
             width="0.4"
-            color="#ffffff"
+            color="#091017"
             shader="msdf"
             font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
             position="0 0 0.01"
@@ -116,7 +117,7 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="infoLabel" position="0 0.5 -1.7">
+      <a-entity id="infoLabel" position="0 0.9 -1.45" render-order="2">
         <a-text
           id="infoText"
           value="Select a scenario to explore future mobility."
