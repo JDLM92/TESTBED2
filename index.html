@@ -25,33 +25,13 @@
     >
       <a-assets timeout="30000">
         <img
-          id="asset-seaside"
-          crossorigin="anonymous"
-          src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"
+          id="asset-mexico-present"
+          src="assets/mexico-city/present/CDMX hoy.jpeg"
         />
         <img
-          id="asset-mountain"
-          crossorigin="anonymous"
-          src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/yavapai.jpg"
+          id="asset-mexico-future"
+          src="assets/mexico-city/future/CDMX del futuro.png"
         />
-        <video
-          id="asset-city"
-          loop
-          muted
-          playsinline
-          crossorigin="anonymous"
-          preload="auto"
-          src="https://cdn.aframe.io/videos/360-video/japan360.mp4"
-        ></video>
-        <video
-          id="asset-ocean"
-          loop
-          muted
-          playsinline
-          crossorigin="anonymous"
-          preload="auto"
-          src="https://cdn.aframe.io/videos/360-video/race360.mp4"
-        ></video>
       </a-assets>
 
       <a-entity id="rig" position="0 0 0">
@@ -82,11 +62,11 @@
         ></a-entity>
       </a-entity>
 
-      <a-sky id="photoSphere" radius="100" src="#asset-seaside"></a-sky>
+      <a-sky id="photoSphere" radius="100" src="#asset-mexico-present"></a-sky>
       <a-videosphere
         id="videoSphere"
         radius="100"
-        src="#asset-city"
+        src=""
         visible="false"
       ></a-videosphere>
 
@@ -114,7 +94,7 @@
       <a-entity id="infoLabel" position="0 0.5 -1.7">
         <a-text
           id="infoText"
-          value="Seaside Photo"
+          value="Mexico City's historic downtown captured in the present."
           width="2"
           align="center"
           color="#f4f4f4"

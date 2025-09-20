@@ -1,31 +1,87 @@
+// Custom rounded-rectangle geometry to mimic iOS pill buttons.
+AFRAME.registerComponent("pill-button", {
+  schema: {
+    width: { type: "number", default: 1.6 },
+    height: { type: "number", default: 0.42 },
+    radius: { type: "number", default: 0.21 }
+  },
+  init() {
+    this.createGeometry();
+  },
+  update(oldData) {
+    if (
+      oldData.width !== this.data.width ||
+      oldData.height !== this.data.height ||
+      oldData.radius !== this.data.radius
+    ) {
+      this.createGeometry();
+    }
+  },
+  remove() {
+    const mesh = this.el.getObject3D("mesh");
+    if (mesh && mesh.geometry) {
+      mesh.geometry.dispose();
+    }
+    this.el.removeObject3D("mesh");
+  },
+  createGeometry() {
+    const width = Math.max(this.data.width, this.data.radius * 2 + 0.001);
+    const height = Math.max(this.data.height, this.data.radius * 2 + 0.001);
+    const radius = Math.min(this.data.radius, Math.min(width, height) / 2);
+
+    const hw = width / 2;
+    const hh = height / 2;
+    const r = radius;
+
+    const shape = new THREE.Shape();
+    shape.moveTo(hw - r, hh);
+    shape.absarc(hw - r, hh - r, r, 0, Math.PI / 2, false);
+    shape.absarc(-hw + r, hh - r, r, Math.PI / 2, Math.PI, false);
+    shape.absarc(-hw + r, -hh + r, r, Math.PI, Math.PI * 1.5, false);
+    shape.absarc(hw - r, -hh + r, r, Math.PI * 1.5, Math.PI * 2, false);
+    shape.closePath();
+
+    const geometry = new THREE.ShapeGeometry(shape, 24);
+    geometry.computeVertexNormals();
+
+    let mesh = this.el.getObject3D("mesh");
+    if (!mesh) {
+      mesh = new THREE.Mesh(geometry);
+      this.el.setObject3D("mesh", mesh);
+    } else {
+      mesh.geometry.dispose();
+      mesh.geometry = geometry;
+    }
+  }
+});
+
+const BUTTON_STYLES = {
+  default: { color: "#0a84ff", opacity: 0.96 },
+  hover: { color: "#409cff", opacity: 1 },
+  active: { color: "#32d74b", opacity: 1 }
+};
+
+function applyButtonStyle(button, style) {
+  button.setAttribute(
+    "material",
+    `shader: flat; color: ${style.color}; transparent: true; opacity: ${style.opacity}`
+  );
+}
+
 const experiences = [
   {
-    id: "seaside",
-    label: "Seaside Photo",
+    id: "mexico-present",
+    label: "Mexico City — Present",
     type: "photo",
-    asset: "#asset-seaside",
-    description: "Golden hour on the Pacific coastline."
+    asset: "#asset-mexico-present",
+    description: "Mexico City's historic downtown captured in the present."
   },
   {
-    id: "mountain",
-    label: "Desert Photo",
+    id: "mexico-future",
+    label: "Mexico City — Future Vision",
     type: "photo",
-    asset: "#asset-mountain",
-    description: "Clouds rolling over a red rock desert vista."
-  },
-  {
-    id: "city",
-    label: "Tokyo Night Video",
-    type: "video",
-    asset: "#asset-city",
-    description: "Night drive through Shinjuku's neon streets."
-  },
-  {
-    id: "ocean",
-    label: "Ocean Race Video",
-    type: "video",
-    asset: "#asset-ocean",
-    description: "Sail the waves in an offshore race."
+    asset: "#asset-mexico-future",
+    description: "A speculative nightscape imagining Mexico City's future skyline."
   }
 ];
 
@@ -42,26 +98,22 @@ const videoElements = experiences
 const buttonMap = new Map();
 
 function buildButtons() {
-  const spacing = 0.32;
+  const spacing = 0.5;
   const startY = ((experiences.length - 1) * spacing) / 2;
 
   experiences.forEach((exp, index) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "experience-button clickable");
-    button.setAttribute(
-      "geometry",
-      "primitive: plane; width: 1.4; height: 0.26;"
-    );
-    button.setAttribute(
-      "material",
-      "color: #1b6ef3; opacity: 0.92; shader: flat;"
-    );
+    button.setAttribute("pill-button", "width: 1.7; height: 0.44; radius: 0.22");
+    applyButtonStyle(button, BUTTON_STYLES.default);
+    button.setAttribute("render-order", "2");
+    button.setAttribute("shadow", "receive: false");
     button.setAttribute("position", `0 ${startY - index * spacing} 0`);
 
     const label = document.createElement("a-text");
     label.setAttribute("value", exp.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "1.3");
+    label.setAttribute("width", "1.5");
     label.setAttribute("color", "#ffffff");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
@@ -74,18 +126,12 @@ function buildButtons() {
 
     button.addEventListener("mouseenter", () => {
       if (button.getAttribute("data-active") === "true") return;
-      button.setAttribute(
-        "material",
-        "color: #3fa7ff; opacity: 1; shader: flat;"
-      );
+      applyButtonStyle(button, BUTTON_STYLES.hover);
     });
 
     button.addEventListener("mouseleave", () => {
       if (button.getAttribute("data-active") === "true") return;
-      button.setAttribute(
-        "material",
-        "color: #1b6ef3; opacity: 0.92; shader: flat;"
-      );
+      applyButtonStyle(button, BUTTON_STYLES.default);
     });
 
     button.addEventListener("click", () => activateExperience(exp));
@@ -99,12 +145,11 @@ function setButtonState(activeId) {
   buttonMap.forEach((button, id) => {
     const isActive = id === activeId;
     button.setAttribute("data-active", isActive);
-    button.setAttribute(
-      "material",
-      isActive
-        ? "color: #34d399; opacity: 1; shader: flat;"
-        : "color: #1b6ef3; opacity: 0.92; shader: flat;"
+    applyButtonStyle(
+      button,
+      isActive ? BUTTON_STYLES.active : BUTTON_STYLES.default
     );
+    button.setAttribute("scale", isActive ? "1.05 1.05 1" : "1 1 1");
   });
 }
 
