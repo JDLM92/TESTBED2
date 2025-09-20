@@ -62,39 +62,64 @@
         ></a-entity>
       </a-entity>
 
-      <a-sky id="photoSphere" radius="100" src="#asset-mexico-present"></a-sky>
-      <a-videosphere
-        id="videoSphere"
-        radius="100"
-        src=""
-        visible="false"
-      ></a-videosphere>
+      <a-sky id="photoSphere" radius="100" visible="false"></a-sky>
 
-      <a-entity id="menu" position="0 1.5 -2">
+      <a-entity id="homeMenu" position="0 1.5 -2">
         <a-plane
-          width="1.8"
-          height="1.2"
-          color="#101820"
-          opacity="0.85"
+          width="2.1"
+          height="1.4"
+          color="#091017"
+          opacity="0.9"
           material="shader: flat; side: double"
           class="menu-surface"
         ></a-plane>
         <a-text
-          value="Choose an experience"
-          position="0 0.45 0.01"
-          width="1.6"
+          value="InflectionPoints: Mobility"
+          position="0 0.38 0.01"
+          width="1.9"
           align="center"
-          color="#f4f4f4"
+          color="#ffffff"
           shader="msdf"
           font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
         ></a-text>
-        <a-entity id="buttonContainer" position="0 -0.05 0.01"></a-entity>
+        <a-text
+          value="Select a scenario to explore future mobility."
+          position="0 0.12 0.01"
+          width="1.8"
+          align="center"
+          color="#ffffff"
+          opacity="0.8"
+          shader="msdf"
+          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+        ></a-text>
+        <a-entity id="scenarioButtonContainer" position="0 -0.3 0.01"></a-entity>
+      </a-entity>
+
+      <a-entity id="scenarioControls" position="0 0.4 -1.6" visible="false">
+        <a-entity id="timeframeToggle" position="0 0 0"></a-entity>
+        <a-entity
+          id="homeButton"
+          class="clickable"
+          geometry="primitive: circle; radius: 0.1"
+          material="shader: flat; color: #091017; opacity: 0.92"
+          position="1 0 0"
+        >
+          <a-text
+            value="⌂"
+            align="center"
+            width="0.4"
+            color="#ffffff"
+            shader="msdf"
+            font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+            position="0 0 0.01"
+          ></a-text>
+        </a-entity>
       </a-entity>
 
       <a-entity id="infoLabel" position="0 0.5 -1.7">
         <a-text
           id="infoText"
-          value="Mexico City's historic downtown captured in the present."
+          value="Select a scenario to explore future mobility."
           width="2"
           align="center"
           color="#f4f4f4"

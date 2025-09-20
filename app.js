@@ -55,137 +55,337 @@ AFRAME.registerComponent("pill-button", {
   }
 });
 
-const BUTTON_STYLES = {
-  default: { color: "#0a84ff", opacity: 0.96 },
-  hover: { color: "#409cff", opacity: 1 },
-  active: { color: "#32d74b", opacity: 1 }
+const COLORS = {
+  present: "#F70E56",
+  future: "#07CC68",
+  background: "#091017",
+  text: "#ffffff"
 };
 
-function applyButtonStyle(button, style) {
-  button.setAttribute(
-    "material",
-    `shader: flat; color: ${style.color}; transparent: true; opacity: ${style.opacity}`
-  );
-}
-
-const experiences = [
+const scenarios = [
   {
-    id: "mexico-present",
-    label: "Mexico City — Present",
-    type: "photo",
-    asset: "#asset-mexico-present",
-    description: "Mexico City's historic downtown captured in the present."
-  },
-  {
-    id: "mexico-future",
-    label: "Mexico City — Future Vision",
-    type: "photo",
-    asset: "#asset-mexico-future",
-    description: "A speculative nightscape imagining Mexico City's future skyline."
+    id: "mexico-city",
+    label: "Mexico City Scenario",
+    present: {
+      asset: "#asset-mexico-present",
+      description: "Mexico City's historic downtown captured in the present."
+    },
+    future: {
+      asset: "#asset-mexico-future",
+      description: "A speculative nightscape imagining Mexico City's future skyline."
+    }
   }
 ];
 
 const photoSphere = document.getElementById("photoSphere");
-const videoSphere = document.getElementById("videoSphere");
-const buttonContainer = document.getElementById("buttonContainer");
 const infoText = document.getElementById("infoText");
+const homeMenu = document.getElementById("homeMenu");
+const scenarioControls = document.getElementById("scenarioControls");
+const scenarioButtonContainer = document.getElementById("scenarioButtonContainer");
+const timeframeToggle = document.getElementById("timeframeToggle");
+const homeButton = document.getElementById("homeButton");
 
-const videoElements = experiences
-  .filter((exp) => exp.type === "video")
-  .map((exp) => document.querySelector(exp.asset))
-  .filter(Boolean);
+const timeframeButtons = new Map();
+const scenarioButtons = new Map();
 
-const buttonMap = new Map();
+let activeScenario = null;
+let activeTimeframe = "present";
 
-function buildButtons() {
-  const spacing = 0.5;
-  const startY = ((experiences.length - 1) * spacing) / 2;
+function clearChildren(el) {
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
+}
 
-  experiences.forEach((exp, index) => {
+function hexToRgb(hex) {
+  const sanitized = hex.replace("#", "");
+  const value = parseInt(sanitized, 16);
+  return {
+    r: (value >> 16) & 255,
+    g: (value >> 8) & 255,
+    b: value & 255
+  };
+}
+
+function rgbToHex(r, g, b) {
+  const toHex = (component) => component.toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function mixColor(colorA, colorB, ratio) {
+  const a = hexToRgb(colorA);
+  const b = hexToRgb(colorB);
+  const clampedRatio = Math.max(0, Math.min(1, ratio));
+  const r = Math.round(a.r + (b.r - a.r) * clampedRatio);
+  const g = Math.round(a.g + (b.g - a.g) * clampedRatio);
+  const blue = Math.round(a.b + (b.b - a.b) * clampedRatio);
+  return rgbToHex(r, g, blue);
+}
+
+function applyPillStyle(button, color, options = {}) {
+  const opacity = options.opacity != null ? options.opacity : 0.96;
+  const scale = options.scale != null ? options.scale : 1;
+  button.setAttribute(
+    "material",
+    `shader: flat; color: ${color}; transparent: true; opacity: ${opacity}`
+  );
+  button.setAttribute("scale", `${scale} ${scale} 1`);
+}
+
+function styleScenarioButton(button, state) {
+  const baseColor = COLORS.future;
+  let color = baseColor;
+  let opacity = 0.9;
+  let scale = 1;
+
+  if (state === "hover") {
+    color = mixColor(baseColor, COLORS.text, 0.18);
+    opacity = 1;
+    scale = 1.04;
+  }
+
+  applyPillStyle(button, color, { opacity, scale });
+
+  const label = button.querySelector("a-text");
+  if (label) {
+    label.setAttribute("color", COLORS.text);
+    label.setAttribute("opacity", 1);
+  }
+}
+
+function setTimeframeVisual(button, timeframe, state) {
+  const baseColor = timeframe === "present" ? COLORS.present : COLORS.future;
+  let color = baseColor;
+  let opacity = 1;
+  let scale = 1;
+
+  switch (state) {
+    case "active":
+      color = baseColor;
+      opacity = 1;
+      scale = 1.08;
+      break;
+    case "hover":
+      color = mixColor(baseColor, COLORS.text, 0.2);
+      opacity = 1;
+      scale = 1.04;
+      break;
+    case "inactive":
+      color = mixColor(baseColor, COLORS.text, 0.08);
+      opacity = 0.7;
+      break;
+    case "disabled":
+      color = mixColor(baseColor, COLORS.background, 0.6);
+      opacity = 0.35;
+      break;
+    default:
+      break;
+  }
+
+  applyPillStyle(button, color, { opacity, scale });
+
+  const label = button.querySelector("a-text");
+  if (label) {
+    const labelOpacity = state === "disabled" ? 0.55 : 1;
+    label.setAttribute("color", COLORS.text);
+    label.setAttribute("opacity", labelOpacity);
+  }
+}
+
+function styleHomeButton(state) {
+  let color = COLORS.background;
+  let opacity = 0.85;
+
+  if (state === "hover") {
+    color = mixColor(COLORS.background, COLORS.text, 0.18);
+    opacity = 1;
+  }
+
+  homeButton.setAttribute(
+    "material",
+    `shader: flat; color: ${color}; opacity: ${opacity}`
+  );
+
+  const label = homeButton.querySelector("a-text");
+  if (label) {
+    const labelOpacity = state === "hover" ? 1 : 0.85;
+    label.setAttribute("color", COLORS.text);
+    label.setAttribute("opacity", labelOpacity);
+  }
+}
+
+function buildHomeMenu() {
+  clearChildren(scenarioButtonContainer);
+  scenarioButtons.clear();
+
+  const spacing = 0.6;
+  const startY = ((scenarios.length - 1) * spacing) / 2;
+
+  scenarios.forEach((scenario, index) => {
     const button = document.createElement("a-entity");
-    button.setAttribute("class", "experience-button clickable");
-    button.setAttribute("pill-button", "width: 1.7; height: 0.44; radius: 0.22");
-    applyButtonStyle(button, BUTTON_STYLES.default);
-    button.setAttribute("render-order", "2");
-    button.setAttribute("shadow", "receive: false");
+    button.setAttribute("class", "scenario-button clickable");
+    button.setAttribute("pill-button", "width: 1.6; height: 0.46; radius: 0.23");
     button.setAttribute("position", `0 ${startY - index * spacing} 0`);
+    button.setAttribute("render-order", "2");
+    button.dataset.scenarioId = scenario.id;
 
     const label = document.createElement("a-text");
-    label.setAttribute("value", exp.label);
+    label.setAttribute("value", scenario.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "1.5");
-    label.setAttribute("color", "#ffffff");
+    label.setAttribute("width", "1.4");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
       "https://cdn.aframe.io/fonts/Roboto-msdf.json"
     );
     label.setAttribute("position", "0 0 0.01");
-
     button.appendChild(label);
 
+    styleScenarioButton(button, "default");
+
     button.addEventListener("mouseenter", () => {
-      if (button.getAttribute("data-active") === "true") return;
-      applyButtonStyle(button, BUTTON_STYLES.hover);
+      styleScenarioButton(button, "hover");
     });
 
     button.addEventListener("mouseleave", () => {
-      if (button.getAttribute("data-active") === "true") return;
-      applyButtonStyle(button, BUTTON_STYLES.default);
+      styleScenarioButton(button, "default");
     });
 
-    button.addEventListener("click", () => activateExperience(exp));
+    button.addEventListener("click", () => {
+      enterScenario(scenario);
+    });
 
-    buttonContainer.appendChild(button);
-    buttonMap.set(exp.id, button);
+    scenarioButtonContainer.appendChild(button);
+    scenarioButtons.set(scenario.id, button);
   });
 }
 
-function setButtonState(activeId) {
-  buttonMap.forEach((button, id) => {
-    const isActive = id === activeId;
-    button.setAttribute("data-active", isActive);
-    applyButtonStyle(
-      button,
-      isActive ? BUTTON_STYLES.active : BUTTON_STYLES.default
+function buildTimeframeControls() {
+  clearChildren(timeframeToggle);
+  timeframeButtons.clear();
+
+  const entries = [
+    { timeframe: "present", label: "Present", position: "-0.5 0 0" },
+    { timeframe: "future", label: "Future", position: "0.5 0 0" }
+  ];
+
+  entries.forEach((entry) => {
+    const button = document.createElement("a-entity");
+    button.setAttribute("class", "timeframe-button clickable");
+    button.setAttribute("pill-button", "width: 0.86; height: 0.34; radius: 0.17");
+    button.setAttribute("position", entry.position);
+    button.setAttribute("render-order", "2");
+    button.dataset.timeframe = entry.timeframe;
+
+    const label = document.createElement("a-text");
+    label.setAttribute("value", entry.label);
+    label.setAttribute("align", "center");
+    label.setAttribute("width", "0.75");
+    label.setAttribute("shader", "msdf");
+    label.setAttribute(
+      "font",
+      "https://cdn.aframe.io/fonts/Roboto-msdf.json"
     );
-    button.setAttribute("scale", isActive ? "1.05 1.05 1" : "1 1 1");
+    label.setAttribute("position", "0 0 0.01");
+    button.appendChild(label);
+
+    button.addEventListener("mouseenter", () => {
+      if (!activeScenario) return;
+      setTimeframeVisual(
+        button,
+        entry.timeframe,
+        activeTimeframe === entry.timeframe ? "active" : "hover"
+      );
+    });
+
+    button.addEventListener("mouseleave", () => {
+      updateTimeframeButtons();
+    });
+
+    button.addEventListener("click", () => {
+      if (!activeScenario) return;
+      setActiveTimeframe(entry.timeframe);
+    });
+
+    timeframeToggle.appendChild(button);
+    timeframeButtons.set(entry.timeframe, button);
   });
+
+  updateTimeframeButtons();
 }
 
-function activateExperience(exp) {
-  setButtonState(exp.id);
-  infoText.setAttribute("value", exp.description);
-
-  if (exp.type === "photo") {
-    videoSphere.setAttribute("visible", false);
-    pauseAllVideos();
-    photoSphere.setAttribute("src", exp.asset);
-    photoSphere.setAttribute("visible", true);
-  } else if (exp.type === "video") {
-    const videoEl = document.querySelector(exp.asset);
-    if (!videoEl) return;
-    photoSphere.setAttribute("visible", false);
-    videoSphere.setAttribute("src", exp.asset);
-    videoSphere.setAttribute("visible", true);
-    pauseAllVideos(videoEl);
-    const playPromise = videoEl.play();
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(() => {
-        // Autoplay might be blocked until the user interacts in-headset.
-      });
+function updateTimeframeButtons() {
+  timeframeButtons.forEach((button, timeframe) => {
+    if (!activeScenario) {
+      setTimeframeVisual(button, timeframe, "disabled");
+      return;
     }
-  }
-}
 
-function pauseAllVideos(exempt) {
-  videoElements.forEach((video) => {
-    if (video === exempt) return;
-    if (!video) return;
-    video.pause();
-    video.currentTime = 0;
+    const state = timeframe === activeTimeframe ? "active" : "inactive";
+    setTimeframeVisual(button, timeframe, state);
   });
 }
 
-buildButtons();
-activateExperience(experiences[0]);
+function setActiveTimeframe(timeframe) {
+  if (!activeScenario || activeTimeframe === timeframe) return;
+  activeTimeframe = timeframe;
+  updateTimeframeButtons();
+  applyScenarioFrame();
+}
+
+function applyScenarioFrame() {
+  if (!activeScenario) return;
+  const frame = activeScenario[activeTimeframe];
+  if (!frame) return;
+
+  photoSphere.setAttribute("src", frame.asset);
+  photoSphere.setAttribute("visible", true);
+  infoText.setAttribute("value", frame.description);
+}
+
+function enterScenario(scenario) {
+  activeScenario = scenario;
+  activeTimeframe = "present";
+
+  homeMenu.setAttribute("visible", false);
+  scenarioControls.setAttribute("visible", true);
+  styleHomeButton("default");
+
+  updateTimeframeButtons();
+  applyScenarioFrame();
+}
+
+function exitToHome() {
+  activeScenario = null;
+  activeTimeframe = "present";
+
+  photoSphere.setAttribute("visible", false);
+  infoText.setAttribute("value", "Select a scenario to explore future mobility.");
+
+  homeMenu.setAttribute("visible", true);
+  scenarioControls.setAttribute("visible", false);
+
+  scenarioButtons.forEach((button) => {
+    styleScenarioButton(button, "default");
+  });
+
+  updateTimeframeButtons();
+}
+
+homeButton.addEventListener("click", () => {
+  exitToHome();
+});
+
+homeButton.addEventListener("mouseenter", () => {
+  if (!activeScenario) return;
+  styleHomeButton("hover");
+});
+
+homeButton.addEventListener("mouseleave", () => {
+  styleHomeButton("default");
+});
+
+buildHomeMenu();
+buildTimeframeControls();
+styleHomeButton("default");
+exitToHome();
