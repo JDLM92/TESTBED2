@@ -95,14 +95,14 @@
         <a-entity id="scenarioButtonContainer" position="0 -0.3 0.01"></a-entity>
       </a-entity>
 
-      <a-entity id="scenarioControls" position="0 0.4 -1.6" visible="false">
+      <a-entity id="scenarioControls" position="0 0.32 -1.6" visible="false">
         <a-entity id="timeframeToggle" position="0 0 0"></a-entity>
         <a-entity
           id="homeButton"
           class="clickable"
           geometry="primitive: circle; radius: 0.1"
           material="shader: flat; color: #ffffff; opacity: 0.95"
-          position="0.95 0 0"
+          position="1.1 0 0"
           render-order="3"
         >
           <a-text
@@ -117,15 +117,16 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="infoLabel" position="0 0.9 -1.45" render-order="2">
+      <a-entity id="infoLabel" position="0 1.05 -1.55" render-order="2">
         <a-text
           id="infoText"
-          value="Select a scenario to explore future mobility."
-          width="2"
+          value=""
+          width="2.4"
           align="center"
           color="#f4f4f4"
           shader="msdf"
           font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+          wrap-count="48"
         ></a-text>
       </a-entity>
     </a-scene>

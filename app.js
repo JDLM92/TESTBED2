@@ -68,11 +68,13 @@ const scenarios = [
     label: "Mexico City Scenario",
     present: {
       asset: "#asset-mexico-present",
-      description: "Mexico City's historic downtown captured in the present."
+      description:
+        "A narrow colonial intersection in Mexico City’s Centro Histórico is dominated by asphalt, faded crosswalks, scattered bollards, minimal greenery, and occasional delivery vans.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
     },
     future: {
       asset: "#asset-mexico-future",
-      description: "A speculative nightscape imagining Mexico City's future skyline."
+      description:
+        "The same intersection becomes a superblock shared-space with cobblestone paving, shaded cycle tracks lined by trees, modular vendor and cargo kiosks, wider sidewalks, and car-free priority for people.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
     }
   }
 ];
@@ -265,14 +267,14 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.5 0 0" },
-    { timeframe: "future", label: "Future", position: "0.5 0 0" }
+    { timeframe: "present", label: "Present", position: "-0.4 0 0" },
+    { timeframe: "future", label: "Future", position: "0.4 0 0" }
   ];
 
   entries.forEach((entry) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "timeframe-button clickable");
-    button.setAttribute("pill-button", "width: 0.86; height: 0.34; radius: 0.17");
+    button.setAttribute("pill-button", "width: 0.7; height: 0.28; radius: 0.14");
     button.setAttribute("position", entry.position);
     button.setAttribute("render-order", "2");
     button.dataset.timeframe = entry.timeframe;
@@ -280,7 +282,7 @@ function buildTimeframeControls() {
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "0.75");
+    label.setAttribute("width", "0.6");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
@@ -360,7 +362,7 @@ function exitToHome() {
   activeTimeframe = "present";
 
   photoSphere.setAttribute("visible", false);
-  infoText.setAttribute("value", "Select a scenario to explore future mobility.");
+  infoText.setAttribute("value", "");
 
   homeMenu.setAttribute("visible", true);
   scenarioControls.setAttribute("visible", false);
