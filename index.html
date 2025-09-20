@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Immersive Experience Playground</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>Immersive Experience Playground</h1>
+      <p>
+        Launch a 360° scene and click the VR button to step inside using a Meta
+        Quest 3/3S or a mobile browser. Aim with your controllers or pointer to
+        press the buttons floating in front of you.
+      </p>
+    </header>
+
+    <a-scene
+      background="color: #000"
+      renderer="antialias: true"
+      webxr="optionalFeatures: local-floor, bounded-floor"
+      vr-mode-ui="enabled: true"
+    >
+      <a-assets timeout="30000">
+        <img
+          id="asset-seaside"
+          crossorigin="anonymous"
+          src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg"
+        />
+        <img
+          id="asset-mountain"
+          crossorigin="anonymous"
+          src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/yavapai.jpg"
+        />
+        <video
+          id="asset-city"
+          loop
+          muted
+          playsinline
+          crossorigin="anonymous"
+          preload="auto"
+          src="https://cdn.aframe.io/videos/360-video/japan360.mp4"
+        ></video>
+        <video
+          id="asset-ocean"
+          loop
+          muted
+          playsinline
+          crossorigin="anonymous"
+          preload="auto"
+          src="https://cdn.aframe.io/videos/360-video/race360.mp4"
+        ></video>
+      </a-assets>
+
+      <a-entity id="rig" position="0 0 0">
+        <a-entity
+          id="player"
+          camera
+          look-controls="magicWindowTrackingEnabled: true"
+          wasd-controls="enabled: false"
+          position="0 1.6 0"
+        >
+          <a-entity
+            id="mouseCursor"
+            cursor="rayOrigin: mouse"
+            raycaster="objects: .clickable"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.008"
+            material="color: #fff; shader: flat; opacity: 0.9"
+          ></a-entity>
+        </a-entity>
+
+        <a-entity
+          laser-controls="hand: left"
+          raycaster="objects: .clickable"
+        ></a-entity>
+        <a-entity
+          laser-controls="hand: right"
+          raycaster="objects: .clickable"
+        ></a-entity>
+      </a-entity>
+
+      <a-sky id="photoSphere" radius="100" src="#asset-seaside"></a-sky>
+      <a-videosphere
+        id="videoSphere"
+        radius="100"
+        src="#asset-city"
+        visible="false"
+      ></a-videosphere>
+
+      <a-entity id="menu" position="0 1.5 -2">
+        <a-plane
+          width="1.8"
+          height="1.2"
+          color="#101820"
+          opacity="0.85"
+          material="shader: flat; side: double"
+          class="menu-surface"
+        ></a-plane>
+        <a-text
+          value="Choose an experience"
+          position="0 0.45 0.01"
+          width="1.6"
+          align="center"
+          color="#f4f4f4"
+          shader="msdf"
+          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+        ></a-text>
+        <a-entity id="buttonContainer" position="0 -0.05 0.01"></a-entity>
+      </a-entity>
+
+      <a-entity id="infoLabel" position="0 0.5 -1.7">
+        <a-text
+          id="infoText"
+          value="Seaside Photo"
+          width="2"
+          align="center"
+          color="#f4f4f4"
+          shader="msdf"
+          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+        ></a-text>
+      </a-entity>
+    </a-scene>
+
+    <script src="app.js"></script>
+  </body>
+</html>
