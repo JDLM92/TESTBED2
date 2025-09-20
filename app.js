@@ -282,7 +282,7 @@ function buildTimeframeControls() {
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "0.6");
+    label.setAttribute("width", "0.45");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
