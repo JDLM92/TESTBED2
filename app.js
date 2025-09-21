@@ -76,6 +76,20 @@ const scenarios = [
       description:
         "The same intersection becomes a superblock shared-space with cobblestone paving, shaded cycle tracks lined by trees, modular vendor and cargo kiosks, wider sidewalks, and car-free priority for people.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
     }
+  },
+  {
+    id: "chicago",
+    label: "Chicago Scenario",
+    present: {
+      asset: "#asset-chicago-present",
+      description:
+        "A Lake Street viaduct in downtown Chicago is framed by elevated train tracks, multi-lane car traffic, narrow sidewalks, and sparse greenery.\n\nCars and delivery trucks dominate every level of the corridor, making the space noisy, dark, and difficult to navigate on foot or by bike."
+    },
+    future: {
+      asset: "#asset-chicago-future",
+      description:
+        "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
+    }
   }
 ];
 
@@ -274,7 +288,7 @@ function buildTimeframeControls() {
   entries.forEach((entry) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "timeframe-button clickable");
-    button.setAttribute("pill-button", "width: 0.7; height: 0.28; radius: 0.14");
+    button.setAttribute("pill-button", "width: 0.92; height: 0.36; radius: 0.18");
     button.setAttribute("position", entry.position);
     button.setAttribute("render-order", "2");
     button.dataset.timeframe = entry.timeframe;
@@ -282,13 +296,16 @@ function buildTimeframeControls() {
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "0.35");
+    label.setAttribute("width", "0.3");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
       "https://cdn.aframe.io/fonts/Roboto-msdf.json"
     );
     label.setAttribute("position", "0 0 0.01");
+    label.setAttribute("baseline", "center");
+    label.setAttribute("height", "0.2");
+    label.setAttribute("scale", "1.25 1.25 1");
     button.appendChild(label);
 
     button.addEventListener("mouseenter", () => {
