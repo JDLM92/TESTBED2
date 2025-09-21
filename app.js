@@ -281,14 +281,14 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.4 0 0" },
-    { timeframe: "future", label: "Future", position: "0.4 0 0" }
+    { timeframe: "present", label: "Present", position: "-0.46 0 0" },
+    { timeframe: "future", label: "Future", position: "0.46 0 0" }
   ];
 
   entries.forEach((entry) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "timeframe-button clickable");
-    button.setAttribute("pill-button", "width: 0.92; height: 0.36; radius: 0.18");
+    button.setAttribute("pill-button", "width: 1.1; height: 0.44; radius: 0.22");
     button.setAttribute("position", entry.position);
     button.setAttribute("render-order", "2");
     button.dataset.timeframe = entry.timeframe;
@@ -296,7 +296,7 @@ function buildTimeframeControls() {
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "0.3");
+    label.setAttribute("width", "0.24");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
@@ -304,7 +304,8 @@ function buildTimeframeControls() {
     );
     label.setAttribute("position", "0 0 0.01");
     label.setAttribute("baseline", "center");
-    label.setAttribute("scale", "1.25 1.25 1");
+    label.setAttribute("wrap-count", "8");
+    label.setAttribute("scale", "1.65 1.65 1");
     button.appendChild(label);
 
     button.addEventListener("mouseenter", () => {
