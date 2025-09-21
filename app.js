@@ -79,7 +79,7 @@ const scenarios = [
   },
   {
     id: "chicago",
-    label: "Chicago Scenario",
+    label: "Chicago Garfield Park",
     present: {
       asset: "#asset-chicago-present",
       description:
