@@ -304,7 +304,6 @@ function buildTimeframeControls() {
     );
     label.setAttribute("position", "0 0 0.01");
     label.setAttribute("baseline", "center");
-    label.setAttribute("height", "0.2");
     label.setAttribute("scale", "1.25 1.25 1");
     button.appendChild(label);
 
