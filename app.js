@@ -3,7 +3,8 @@ AFRAME.registerComponent("pill-button", {
   schema: {
     width: { type: "number", default: 1.6 },
     height: { type: "number", default: 0.42 },
-    radius: { type: "number", default: 0.21 }
+    radius: { type: "number", default: 0.21 },
+    depth: { type: "number", default: 0.012 }
   },
   init() {
     this.createGeometry();
@@ -12,7 +13,8 @@ AFRAME.registerComponent("pill-button", {
     if (
       oldData.width !== this.data.width ||
       oldData.height !== this.data.height ||
-      oldData.radius !== this.data.radius
+      oldData.radius !== this.data.radius ||
+      oldData.depth !== this.data.depth
     ) {
       this.createGeometry();
     }
@@ -28,6 +30,7 @@ AFRAME.registerComponent("pill-button", {
     const width = Math.max(this.data.width, this.data.radius * 2 + 0.001);
     const height = Math.max(this.data.height, this.data.radius * 2 + 0.001);
     const radius = Math.min(this.data.radius, Math.min(width, height) / 2);
+    const depth = Math.max(this.data.depth, 0.001);
 
     const hw = width / 2;
     const hh = height / 2;
@@ -41,7 +44,11 @@ AFRAME.registerComponent("pill-button", {
     shape.absarc(hw - r, -hh + r, r, Math.PI * 1.5, Math.PI * 2, false);
     shape.closePath();
 
-    const geometry = new THREE.ShapeGeometry(shape, 24);
+    const geometry = new THREE.ExtrudeGeometry(shape, {
+      depth,
+      bevelEnabled: false
+    });
+    geometry.translate(0, 0, -depth / 2);
     geometry.computeVertexNormals();
 
     let mesh = this.el.getObject3D("mesh");
@@ -52,6 +59,11 @@ AFRAME.registerComponent("pill-button", {
       mesh.geometry.dispose();
       mesh.geometry = geometry;
     }
+
+    if (mesh) {
+      mesh.castShadow = false;
+      mesh.receiveShadow = false;
+    }
   }
 });
 
@@ -61,6 +73,88 @@ const COLORS = {
   background: "#091017",
   text: "#ffffff"
 };
+
+const BUTTON_DEPTH = 0.012;
+const BUTTON_SHADOW_OFFSET = 0.012;
+const BUTTON_SHADOW_OPACITY = 0.32;
+const BUTTON_TEXT_Z_OFFSET = 0.015;
+
+const BUTTON_DIMENSIONS = {
+  scenario: { width: 1.7, height: 0.5, radius: 0.25 },
+  timeframe: { width: 1.0, height: 0.38, radius: 0.19 },
+  home: { width: 0.36, height: 0.36, radius: 0.18 }
+};
+
+function pillSpec({ width, height, radius, depth }) {
+  const targetDepth = depth != null ? depth : BUTTON_DEPTH;
+  return `width: ${width}; height: ${height}; radius: ${radius}; depth: ${targetDepth}`;
+}
+
+function findChildByClass(el, className) {
+  return Array.from(el.children).find((child) =>
+    child.classList && child.classList.contains(className)
+  );
+}
+
+function ensureButtonShadow(button, dims) {
+  const shadowDims = {
+    width: dims.width,
+    height: dims.height,
+    radius: dims.radius,
+    depth: 0.003
+  };
+  let shadow = findChildByClass(button, "button-shadow");
+  if (!shadow) {
+    shadow = document.createElement("a-entity");
+    shadow.classList.add("button-shadow");
+    button.insertBefore(shadow, button.firstChild);
+  }
+
+  shadow.setAttribute("pill-button", pillSpec(shadowDims));
+  shadow.setAttribute(
+    "material",
+    `shader: flat; color: #000; transparent: true; opacity: ${BUTTON_SHADOW_OPACITY}; side: back; depthWrite: false; depthTest: false`
+  );
+  shadow.setAttribute("position", `0 0 ${BUTTON_SHADOW_OFFSET}`);
+  shadow.setAttribute("scale", "1.04 1.04 1");
+  shadow.classList.remove("clickable");
+  shadow.setAttribute("render-order", "1");
+}
+
+function setShadowVisual(button, state) {
+  const shadow = findChildByClass(button, "button-shadow");
+  if (!shadow) return;
+
+  let opacity = BUTTON_SHADOW_OPACITY;
+  let scale = 1.04;
+
+  switch (state) {
+    case "active":
+      opacity = 0.45;
+      scale = 1.08;
+      break;
+    case "hover":
+      opacity = 0.38;
+      scale = 1.06;
+      break;
+    case "inactive":
+      opacity = 0.24;
+      scale = 1.02;
+      break;
+    case "disabled":
+      opacity = 0.15;
+      scale = 1.0;
+      break;
+    default:
+      break;
+  }
+
+  shadow.setAttribute(
+    "material",
+    `shader: flat; color: #000; transparent: true; opacity: ${opacity}; side: back; depthWrite: false; depthTest: false`
+  );
+  shadow.setAttribute("scale", `${scale} ${scale} 1`);
+}
 
 const scenarios = [
   {
@@ -90,6 +184,20 @@ const scenarios = [
       description:
         "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
     }
+  },
+  {
+    id: "london",
+    label: "London South Bank",
+    present: {
+      asset: "#asset-london-present",
+      description:
+        "A stretch of London's South Bank is lined with narrow footways, tour buses, and ad-hoc vendor carts crowding views of the Thames.\n\nVisitors weave between curbside parking, uneven paving, and fragmented cycle access while river traffic stays disconnected from street life."
+    },
+    future: {
+      asset: "#asset-london-future",
+      description:
+        "The same riverside becomes a shared promenade with continuous timber decking, climate-adaptive shade structures, and an integrated river ferry hub.\n\nModular kiosks, flexible seating, and protected micro-mobility lanes connect cultural venues while wetlands buffer tidal surges along the embankment."
+    }
   }
 ];
 
@@ -100,6 +208,17 @@ const scenarioControls = document.getElementById("scenarioControls");
 const scenarioButtonContainer = document.getElementById("scenarioButtonContainer");
 const timeframeToggle = document.getElementById("timeframeToggle");
 const homeButton = document.getElementById("homeButton");
+
+if (homeButton) {
+  homeButton.removeAttribute("geometry");
+  homeButton.setAttribute("pill-button", pillSpec(BUTTON_DIMENSIONS.home));
+  ensureButtonShadow(homeButton, BUTTON_DIMENSIONS.home);
+  const homeLabel = homeButton.querySelector("a-text");
+  if (homeLabel) {
+    homeLabel.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
+    homeLabel.setAttribute("scale", "1.5 1.5 1");
+  }
+}
 
 const timeframeButtons = new Map();
 const scenarioButtons = new Map();
@@ -141,26 +260,30 @@ function mixColor(colorA, colorB, ratio) {
 function applyPillStyle(button, color, options = {}) {
   const opacity = options.opacity != null ? options.opacity : 0.96;
   const scale = options.scale != null ? options.scale : 1;
+  const state = options.state || "default";
+  const emissive = mixColor(color, COLORS.text, 0.12);
   button.setAttribute(
     "material",
-    `shader: flat; color: ${color}; transparent: true; opacity: ${opacity}`
+    `shader: standard; color: ${color}; metalness: 0; roughness: 0.55; emissive: ${emissive}; emissiveIntensity: 0.22; transparent: true; opacity: ${opacity}; side: double`
   );
   button.setAttribute("scale", `${scale} ${scale} 1`);
+  button.dataset.buttonState = state;
+  setShadowVisual(button, state);
 }
 
 function styleScenarioButton(button, state) {
-  const baseColor = COLORS.future;
+  const baseColor = mixColor(COLORS.future, COLORS.background, 0.25);
   let color = baseColor;
-  let opacity = 0.9;
+  let opacity = 0.96;
   let scale = 1;
 
   if (state === "hover") {
-    color = mixColor(baseColor, COLORS.text, 0.18);
+    color = mixColor(COLORS.future, COLORS.text, 0.16);
     opacity = 1;
-    scale = 1.04;
+    scale = 1.05;
   }
 
-  applyPillStyle(button, color, { opacity, scale });
+  applyPillStyle(button, color, { opacity, scale, state });
 
   const label = button.querySelector("a-text");
   if (label) {
@@ -171,34 +294,34 @@ function styleScenarioButton(button, state) {
 
 function setTimeframeVisual(button, timeframe, state) {
   const baseColor = timeframe === "present" ? COLORS.present : COLORS.future;
-  let color = baseColor;
-  let opacity = 1;
+  let color = mixColor(baseColor, COLORS.background, 0.25);
+  let opacity = 0.97;
   let scale = 1;
 
   switch (state) {
     case "active":
       color = baseColor;
       opacity = 1;
-      scale = 1.08;
+      scale = 1.06;
       break;
     case "hover":
-      color = mixColor(baseColor, COLORS.text, 0.2);
+      color = mixColor(baseColor, COLORS.text, 0.18);
       opacity = 1;
       scale = 1.04;
       break;
     case "inactive":
-      color = mixColor(baseColor, COLORS.text, 0.08);
-      opacity = 0.7;
+      color = mixColor(baseColor, COLORS.background, 0.5);
+      opacity = 0.88;
       break;
     case "disabled":
-      color = mixColor(baseColor, COLORS.background, 0.6);
-      opacity = 0.35;
+      color = mixColor(baseColor, COLORS.background, 0.78);
+      opacity = 0.42;
       break;
     default:
       break;
   }
 
-  applyPillStyle(button, color, { opacity, scale });
+  applyPillStyle(button, color, { opacity, scale, state });
 
   const label = button.querySelector("a-text");
   if (label) {
@@ -209,24 +332,26 @@ function setTimeframeVisual(button, timeframe, state) {
 }
 
 function styleHomeButton(state) {
-  let color = COLORS.text;
-  let opacity = 0.95;
+  let color = mixColor(COLORS.future, COLORS.background, 0.15);
+  let opacity = 0.97;
+  let scale = 1;
 
   if (state === "hover") {
-    color = mixColor(COLORS.text, COLORS.future, 0.12);
+    color = mixColor(COLORS.future, COLORS.text, 0.18);
     opacity = 1;
+    scale = 1.06;
   }
 
-  homeButton.setAttribute(
-    "material",
-    `shader: flat; color: ${color}; opacity: ${opacity}`
-  );
+  applyPillStyle(homeButton, color, { opacity, scale, state });
 
   const label = homeButton.querySelector("a-text");
   if (label) {
-    const labelOpacity = state === "hover" ? 1 : 0.9;
-    label.setAttribute("color", COLORS.background);
+    const labelOpacity = state === "hover" ? 1 : 0.92;
+    const labelColor = mixColor(COLORS.background, COLORS.future, 0.25);
+    label.setAttribute("color", labelColor);
     label.setAttribute("opacity", labelOpacity);
+    const labelScale = state === "hover" ? "1.6 1.6 1" : "1.5 1.5 1";
+    label.setAttribute("scale", labelScale);
   }
 }
 
@@ -234,27 +359,35 @@ function buildHomeMenu() {
   clearChildren(scenarioButtonContainer);
   scenarioButtons.clear();
 
-  const spacing = 0.6;
+  const spacing = scenarios.length > 2 ? 0.52 : 0.6;
+  const startOffset = scenarios.length > 2 ? -0.05 : 0;
   const startY = ((scenarios.length - 1) * spacing) / 2;
 
   scenarios.forEach((scenario, index) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "scenario-button clickable");
-    button.setAttribute("pill-button", "width: 1.6; height: 0.46; radius: 0.23");
-    button.setAttribute("position", `0 ${startY - index * spacing} 0`);
+    button.setAttribute("pill-button", pillSpec(BUTTON_DIMENSIONS.scenario));
+    button.setAttribute(
+      "position",
+      `0 ${startOffset + startY - index * spacing} 0`
+    );
     button.setAttribute("render-order", "2");
     button.dataset.scenarioId = scenario.id;
+    ensureButtonShadow(button, BUTTON_DIMENSIONS.scenario);
 
     const label = document.createElement("a-text");
     label.setAttribute("value", scenario.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "1.4");
+    label.setAttribute("width", "1.86");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
       "https://cdn.aframe.io/fonts/Roboto-msdf.json"
     );
-    label.setAttribute("position", "0 0 0.01");
+    label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
+    label.setAttribute("baseline", "center");
+    label.setAttribute("wrap-count", "28");
+    label.setAttribute("scale", "1.85 1.85 1");
     button.appendChild(label);
 
     styleScenarioButton(button, "default");
@@ -281,31 +414,32 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.46 0 0" },
-    { timeframe: "future", label: "Future", position: "0.46 0 0" }
+    { timeframe: "present", label: "Present", position: "-0.55 0 0" },
+    { timeframe: "future", label: "Future", position: "0.55 0 0" }
   ];
 
   entries.forEach((entry) => {
     const button = document.createElement("a-entity");
     button.setAttribute("class", "timeframe-button clickable");
-    button.setAttribute("pill-button", "width: 1.1; height: 0.44; radius: 0.22");
+    button.setAttribute("pill-button", pillSpec(BUTTON_DIMENSIONS.timeframe));
     button.setAttribute("position", entry.position);
     button.setAttribute("render-order", "2");
     button.dataset.timeframe = entry.timeframe;
+    ensureButtonShadow(button, BUTTON_DIMENSIONS.timeframe);
 
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "0.24");
+    label.setAttribute("width", "1.1");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
       "https://cdn.aframe.io/fonts/Roboto-msdf.json"
     );
-    label.setAttribute("position", "0 0 0.01");
+    label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
     label.setAttribute("baseline", "center");
-    label.setAttribute("wrap-count", "8");
-    label.setAttribute("scale", "1.65 1.65 1");
+    label.setAttribute("wrap-count", "18");
+    label.setAttribute("scale", "1.95 1.95 1");
     button.appendChild(label);
 
     button.addEventListener("mouseenter", () => {

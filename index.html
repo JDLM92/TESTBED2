@@ -40,6 +40,14 @@
           id="asset-chicago-future"
           src="assets/chicago/future/Chicago Garfield Park future.png"
         />
+        <img
+          id="asset-london-present"
+          src="assets/london/present/London Present.png"
+        />
+        <img
+          id="asset-london-future"
+          src="assets/london/future/London Future.png"
+        />
       </a-assets>
 
       <a-entity id="rig" position="0 0 0">
@@ -75,7 +83,7 @@
       <a-entity id="homeMenu" position="0 1.5 -2">
         <a-plane
           width="2.1"
-          height="1.4"
+          height="1.8"
           color="#091017"
           opacity="0.9"
           material="shader: flat; side: double"
@@ -83,8 +91,8 @@
         ></a-plane>
         <a-text
           value="InflectionPoints: Mobility"
-          position="0 0.38 0.01"
-          width="1.9"
+          position="0 0.4 0.01"
+          width="2"
           align="center"
           color="#ffffff"
           shader="msdf"
@@ -92,15 +100,16 @@
         ></a-text>
         <a-text
           value="Select a scenario to explore future mobility."
-          position="0 0.12 0.01"
-          width="1.8"
+          position="0 0.2 0.01"
+          width="1.9"
           align="center"
           color="#ffffff"
           opacity="0.8"
           shader="msdf"
           font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+          wrap-count="42"
         ></a-text>
-        <a-entity id="scenarioButtonContainer" position="0 -0.3 0.01"></a-entity>
+        <a-entity id="scenarioButtonContainer" position="0 -0.08 0.01"></a-entity>
       </a-entity>
 
       <a-entity id="scenarioControls" position="0 0.32 -1.6" visible="false">
@@ -108,19 +117,19 @@
         <a-entity
           id="homeButton"
           class="clickable"
-          geometry="primitive: circle; radius: 0.1"
-          material="shader: flat; color: #ffffff; opacity: 0.95"
           position="1.1 0 0"
           render-order="3"
         >
           <a-text
             value="⌂"
             align="center"
-            width="0.4"
+            width="0.55"
             color="#091017"
             shader="msdf"
             font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
             position="0 0 0.01"
+            baseline="center"
+            scale="1.4 1.4 1"
           ></a-text>
         </a-entity>
       </a-entity>
