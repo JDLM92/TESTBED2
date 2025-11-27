@@ -334,7 +334,7 @@ function setTimeframeVisual(button, timeframe, state) {
 function styleHomeButton(state) {
   let color = mixColor(COLORS.future, COLORS.background, 0.15);
   let opacity = 0.97;
-  let scale = 1;
+  let scale = 3;
 
   if (state === "hover") {
     color = mixColor(COLORS.future, COLORS.text, 0.18);
@@ -387,7 +387,7 @@ function buildHomeMenu() {
     label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
     label.setAttribute("baseline", "center");
     label.setAttribute("wrap-count", "28");
-    label.setAttribute("scale", "1.85 1.85 1");
+    label.setAttribute("scale", "1.85 1.35 1");
     button.appendChild(label);
 
     styleScenarioButton(button, "default");
@@ -414,8 +414,8 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.55 0 0" },
-    { timeframe: "future", label: "Future", position: "0.55 0 0" }
+    { timeframe: "present", label: "Present", position: "-0.95 0 0" },
+    { timeframe: "future", label: "Future", position: "0.95 0 0" }
   ];
 
   entries.forEach((entry) => {
@@ -439,7 +439,7 @@ function buildTimeframeControls() {
     label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
     label.setAttribute("baseline", "center");
     label.setAttribute("wrap-count", "18");
-    label.setAttribute("scale", "1.95 1.95 1");
+    label.setAttribute("scale", "1.95 1.65 1");
     button.appendChild(label);
 
     button.addEventListener("mouseenter", () => {
