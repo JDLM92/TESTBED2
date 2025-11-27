@@ -359,8 +359,8 @@ function buildHomeMenu() {
   clearChildren(scenarioButtonContainer);
   scenarioButtons.clear();
 
-  const spacing = scenarios.length > 2 ? 0.5 : 0.6;
-  const startOffset = scenarios.length > 2 ? 0.2 : 0;
+  const spacing = scenarios.length > 2 ? 0.52 : 0.6;
+  const startOffset = 0;
   const startY = ((scenarios.length - 1) * spacing) / 2;
 
   scenarios.forEach((scenario, index) => {
