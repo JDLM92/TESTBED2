@@ -80,7 +80,7 @@ const BUTTON_SHADOW_OPACITY = 0.32;
 const BUTTON_TEXT_Z_OFFSET = 0.015;
 
 const BUTTON_DIMENSIONS = {
-  scenario: { width: 1.7, height: 0.5, radius: 0.25 },
+  scenario: { width: 1.46, height: 0.42, radius: 0.21 },
   timeframe: { width: 1.0, height: 0.38, radius: 0.19 },
   home: { width: 0.36, height: 0.36, radius: 0.18 }
 };
@@ -334,7 +334,7 @@ function setTimeframeVisual(button, timeframe, state) {
 function styleHomeButton(state) {
   let color = mixColor(COLORS.future, COLORS.background, 0.15);
   let opacity = 0.97;
-  let scale = 3;
+  let scale = 1;
 
   if (state === "hover") {
     color = mixColor(COLORS.future, COLORS.text, 0.18);
@@ -359,7 +359,7 @@ function buildHomeMenu() {
   clearChildren(scenarioButtonContainer);
   scenarioButtons.clear();
 
-  const spacing = scenarios.length > 2 ? 0.52 : 0.6;
+  const spacing = scenarios.length > 2 ? 0.48 : 0.58;
   const startOffset = 0;
   const startY = ((scenarios.length - 1) * spacing) / 2;
 
@@ -378,7 +378,7 @@ function buildHomeMenu() {
     const label = document.createElement("a-text");
     label.setAttribute("value", scenario.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "1.86");
+    label.setAttribute("width", "1.3");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
@@ -386,8 +386,8 @@ function buildHomeMenu() {
     );
     label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
     label.setAttribute("baseline", "center");
-    label.setAttribute("wrap-count", "28");
-    label.setAttribute("scale", "1.85 1.35 1");
+    label.setAttribute("wrap-count", "22");
+    label.setAttribute("scale", "1.4 1.4 1");
     button.appendChild(label);
 
     styleScenarioButton(button, "default");
@@ -414,8 +414,8 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.95 0 0" },
-    { timeframe: "future", label: "Future", position: "0.95 0 0" }
+    { timeframe: "present", label: "Present", position: "-0.55 0 0" },
+    { timeframe: "future", label: "Future", position: "0.55 0 0" }
   ];
 
   entries.forEach((entry) => {
@@ -430,7 +430,7 @@ function buildTimeframeControls() {
     const label = document.createElement("a-text");
     label.setAttribute("value", entry.label);
     label.setAttribute("align", "center");
-    label.setAttribute("width", "1.1");
+    label.setAttribute("width", "0.72");
     label.setAttribute("shader", "msdf");
     label.setAttribute(
       "font",
@@ -438,8 +438,8 @@ function buildTimeframeControls() {
     );
     label.setAttribute("position", `0 0 ${BUTTON_TEXT_Z_OFFSET}`);
     label.setAttribute("baseline", "center");
-    label.setAttribute("wrap-count", "18");
-    label.setAttribute("scale", "1.95 1.65 1");
+    label.setAttribute("wrap-count", "14");
+    label.setAttribute("scale", "1.55 1.55 1");
     button.appendChild(label);
 
     button.addEventListener("mouseenter", () => {
