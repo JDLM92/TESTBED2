@@ -191,12 +191,12 @@ const scenarios = [
     present: {
       asset: "#asset-london-present",
       description:
-        "A stretch of London's South Bank is lined with narrow footways, tour buses, and ad-hoc vendor carts crowding views of the Thames.\n\nVisitors weave between curbside parking, uneven paving, and fragmented cycle access while river traffic stays disconnected from street life."
+        "A parking-lined junction with painted bike symbols, minimal greenery, and kerb conflicts that swell at night."
     },
     future: {
       asset: "#asset-london-future",
       description:
-        "The same riverside becomes a shared promenade with continuous timber decking, climate-adaptive shade structures, and an integrated river ferry hub.\n\nModular kiosks, flexible seating, and protected micro-mobility lanes connect cultural venues while wetlands buffer tidal surges along the embankment."
+        "A green, calm Paul × Willow with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading/PHV bays."
     }
   }
 ];
@@ -359,8 +359,8 @@ function buildHomeMenu() {
   clearChildren(scenarioButtonContainer);
   scenarioButtons.clear();
 
-  const spacing = scenarios.length > 2 ? 0.52 : 0.6;
-  const startOffset = scenarios.length > 2 ? -0.05 : 0;
+  const spacing = scenarios.length > 2 ? 0.5 : 0.6;
+  const startOffset = scenarios.length > 2 ? 0.2 : 0;
   const startY = ((scenarios.length - 1) * spacing) / 2;
 
   scenarios.forEach((scenario, index) => {
