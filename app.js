@@ -159,7 +159,7 @@ function setShadowVisual(button, state) {
 const scenarios = [
   {
     id: "mexico-city",
-    label: "Mexico City Scenario",
+    label: "Mexico City center",
     present: {
       asset: "#asset-mexico-present",
       description:
