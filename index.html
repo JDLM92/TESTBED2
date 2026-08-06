@@ -4,6 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Immersive Experience Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
@@ -15,6 +21,15 @@
         Quest 3/3S or a mobile browser. Aim with your controllers or pointer to
         press the buttons floating in front of you.
       </p>
+      <div class="header-actions">
+        <button id="openAdmin" class="admin-launch" type="button">
+          Admin Studio
+        </button>
+        <span class="header-hint">
+          Build a new city flow, analyze the past scene, and generate the future
+          imaging prompt.
+        </span>
+      </div>
     </header>
 
     <a-scene
@@ -30,7 +45,7 @@
         />
         <img
           id="asset-mexico-future"
-          src="assets/mexico-city/future/Mexico City Future.jpeg"
+          src="assets/mexico-city/future/Mexico City Future.jpg"
         />
         <img
           id="asset-chicago-present"
@@ -148,6 +163,348 @@
         ></a-text>
       </a-entity>
     </a-scene>
+
+    <section id="adminOverlay" class="admin-overlay" aria-hidden="true">
+      <div
+        class="admin-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="adminTitle"
+      >
+        <div class="admin-panel__header">
+          <div>
+            <p class="eyebrow">Admin Studio</p>
+            <h2 id="adminTitle">New City: Past → Future Mobility Flow</h2>
+            <p class="admin-subtitle">
+              Use this flow to add a new city, reason through the past scene,
+              pull in world-class mobility references, and craft a precise
+              prompt for generating the future image.
+            </p>
+          </div>
+          <button id="closeAdmin" class="icon-button" type="button">
+            Close
+          </button>
+        </div>
+
+        <div class="admin-panel__body">
+          <section class="admin-step">
+            <h3>Flow Map</h3>
+            <ol class="flow-list">
+              <li>Capture or upload a 2:1 equirectangular past image.</li>
+              <li>Inventory what’s in the scene and what’s not working.</li>
+              <li>Choose reference initiatives to inspire the future.</li>
+              <li>Define the mobility interventions and outcomes.</li>
+              <li>Generate a detailed imaging prompt and edit externally.</li>
+              <li>Upload the future render and add the new city.</li>
+            </ol>
+          </section>
+
+          <section class="admin-step">
+            <h3>City Profile</h3>
+            <div class="field-grid">
+              <label class="field-block">
+                <span>City name</span>
+                <input id="cityName" type="text" placeholder="e.g. Bogotá" />
+              </label>
+              <label class="field-block">
+                <span>District / street</span>
+                <input
+                  id="cityDistrict"
+                  type="text"
+                  placeholder="e.g. Avenida 7 / La Candelaria"
+                />
+              </label>
+              <label class="field-block">
+                <span>Past snapshot year</span>
+                <input id="cityYear" type="text" placeholder="e.g. 2024" />
+              </label>
+              <label class="field-block">
+                <span>Menu label (short)</span>
+                <input
+                  id="cityLabel"
+                  type="text"
+                  placeholder="e.g. Bogotá Centro"
+                />
+              </label>
+            </div>
+          </section>
+
+          <section class="admin-step">
+            <h3>Past Image (Equirectangular 360°)</h3>
+            <div class="image-upload">
+              <div>
+                <label class="file-button">
+                  Upload past image
+                  <input
+                    id="pastImageInput"
+                    type="file"
+                    accept="image/*"
+                  />
+                </label>
+                <p class="hint">
+                  Use a 2:1 equirectangular image. Keep horizon level and camera
+                  height ~1.6m.
+                </p>
+                <p id="pastMeta" class="meta"></p>
+              </div>
+              <div class="image-preview">
+                <img id="pastPreview" alt="Past preview" />
+              </div>
+            </div>
+          </section>
+
+          <section class="admin-step">
+            <h3>Reasoning Canvas</h3>
+            <div class="canvas-grid">
+              <label class="field-block">
+                <span>Scene inventory (modes, infrastructure, land use)</span>
+                <textarea
+                  id="sceneInventory"
+                  placeholder="e.g. 4-lane roadway, curbside parking, painted bike lane, bus stop, storefronts."
+                ></textarea>
+              </label>
+              <label class="field-block">
+                <span>Pain points + conflicts</span>
+                <textarea
+                  id="sceneFrictions"
+                  placeholder="e.g. Vehicles dominate, unsafe crossings, delivery conflicts, noise, heat."
+                ></textarea>
+              </label>
+              <label class="field-block">
+                <span>Equity + access gaps</span>
+                <textarea
+                  id="sceneEquity"
+                  placeholder="e.g. No accessible curb ramps, limited shade, unsafe for kids/elders."
+                ></textarea>
+              </label>
+              <label class="field-block">
+                <span>Assets to preserve</span>
+                <textarea
+                  id="sceneAssets"
+                  placeholder="e.g. Historic façades, mature trees, active ground-floor retail."
+                ></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="admin-step">
+            <h3>Reference Initiatives</h3>
+            <div class="chip-group" id="referenceGroup">
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Barcelona Superblocks" />
+                <span>Barcelona Superblocks</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Paris 15-minute city" />
+                <span>Paris 15-minute city</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Copenhagen Cycle Superhighways" />
+                <span>Copenhagen Cycle Superhighways</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Bogotá Ciclovía / BRT" />
+                <span>Bogotá Ciclovía / BRT</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Seoul Cheonggyecheon restoration" />
+                <span>Seoul Cheonggyecheon</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Ghent circulation plan" />
+                <span>Ghent circulation plan</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="London LTN program" />
+                <span>London LTNs</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Oslo car-light city center" />
+                <span>Oslo car-light center</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Singapore congestion pricing" />
+                <span>Singapore congestion pricing</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="reference" value="Freiburg Vauban car-lite district" />
+                <span>Freiburg Vauban</span>
+              </label>
+            </div>
+            <label class="field-block">
+              <span>Additional references</span>
+              <textarea
+                id="refOther"
+                placeholder="Add any local or global initiatives you want the future image to echo."
+              ></textarea>
+            </label>
+          </section>
+
+          <section class="admin-step">
+            <h3>Future Mobility Outcomes</h3>
+            <div class="chip-group" id="interventionGroup">
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Protected cycle tracks" />
+                <span>Protected cycle tracks</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Dedicated transit priority lanes" />
+                <span>Transit priority lanes</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Car-free or low-traffic zone" />
+                <span>Car-free / low-traffic</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Wider shaded sidewalks" />
+                <span>Shaded sidewalks</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Green stormwater infrastructure" />
+                <span>Green stormwater</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Shared micromobility hubs" />
+                <span>Micromobility hubs</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Safe raised crossings" />
+                <span>Raised crossings</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Flexible curb management" />
+                <span>Flexible curbs</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Public space plazas" />
+                <span>Public plazas</span>
+              </label>
+              <label class="chip">
+                <input type="checkbox" name="intervention" value="Freight and delivery zones" />
+                <span>Freight zones</span>
+              </label>
+            </div>
+            <div class="field-grid">
+              <label class="field-block">
+                <span>Priority outcomes</span>
+                <input
+                  id="futurePriorities"
+                  type="text"
+                  placeholder="e.g. 70% fewer cars, safer crossings, cooler microclimate"
+                />
+              </label>
+              <label class="field-block">
+                <span>Mobility mix in future</span>
+                <input
+                  id="futureMobilityMix"
+                  type="text"
+                  placeholder="e.g. walking, cycling, BRT, delivery micro-hubs"
+                />
+              </label>
+              <label class="field-block">
+                <span>Public realm mood</span>
+                <input
+                  id="futurePublicRealm"
+                  type="text"
+                  placeholder="e.g. lively, shaded, safe at night, human-scale"
+                />
+              </label>
+              <label class="field-block">
+                <span>Climate + nature goals</span>
+                <input
+                  id="futureClimate"
+                  type="text"
+                  placeholder="e.g. bioswales, trees, permeable paving"
+                />
+              </label>
+            </div>
+            <label class="field-block">
+              <span>Other interventions</span>
+              <textarea
+                id="interventionOther"
+                placeholder="Add any local details or innovations to include."
+              ></textarea>
+            </label>
+          </section>
+
+          <section class="admin-step">
+            <h3>Imaging Prompt Builder</h3>
+            <p class="hint">
+              Optimized for tools like Nanobanana Pro or any 360 imaging model.
+            </p>
+            <div class="prompt-actions">
+              <button id="generatePrompt" type="button">Generate prompt</button>
+              <button id="copyPrompt" class="ghost" type="button">
+                Copy prompt
+              </button>
+            </div>
+            <textarea
+              id="promptOutput"
+              class="prompt-output"
+              placeholder="Your generated prompt will appear here."
+            ></textarea>
+            <p id="promptStatus" class="meta"></p>
+          </section>
+
+          <section class="admin-step">
+            <h3>Future Image + Scenario Details</h3>
+            <div class="image-upload">
+              <div>
+                <label class="file-button">
+                  Upload future image
+                  <input
+                    id="futureImageInput"
+                    type="file"
+                    accept="image/*"
+                  />
+                </label>
+                <p class="hint">
+                  Render with the generated prompt, then upload the future
+                  equirectangular image.
+                </p>
+                <p id="futureMeta" class="meta"></p>
+              </div>
+              <div class="image-preview">
+                <img id="futurePreview" alt="Future preview" />
+              </div>
+            </div>
+            <div class="field-grid">
+              <label class="field-block">
+                <span>Present description (VR label)</span>
+                <textarea
+                  id="presentDescription"
+                  placeholder="Short description of the past scene for the VR overlay."
+                ></textarea>
+              </label>
+              <label class="field-block">
+                <span>Future description (VR label)</span>
+                <textarea
+                  id="futureDescription"
+                  placeholder="Short description of the future scene for the VR overlay."
+                ></textarea>
+              </label>
+            </div>
+            <div class="admin-footer">
+              <button id="addScenarioButton" type="button">
+                Add city to experience
+              </button>
+              <p id="adminStatus" class="meta"></p>
+            </div>
+          </section>
+
+          <section class="admin-step">
+            <h3>Quality Checklist</h3>
+            <ul class="checklist">
+              <li>Match camera position, height, and horizon exactly.</li>
+              <li>Preserve key buildings and the skyline for continuity.</li>
+              <li>Keep lighting direction and time of day consistent.</li>
+              <li>Use realistic scale for people, bikes, buses, and trees.</li>
+              <li>Respect the 2:1 equirectangular format (no stretched poles).</li>
+            </ul>
+          </section>
+        </div>
+      </div>
+    </section>
 
     <script src="app.js"></script>
   </body>

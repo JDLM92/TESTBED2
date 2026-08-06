@@ -538,7 +538,471 @@ homeButton.addEventListener("mouseleave", () => {
   styleHomeButton("default");
 });
 
+const assetsContainer = document.querySelector("a-assets");
+const adminOverlay = document.getElementById("adminOverlay");
+const openAdminButton = document.getElementById("openAdmin");
+const closeAdminButton = document.getElementById("closeAdmin");
+const cityNameInput = document.getElementById("cityName");
+const cityDistrictInput = document.getElementById("cityDistrict");
+const cityYearInput = document.getElementById("cityYear");
+const cityLabelInput = document.getElementById("cityLabel");
+const pastImageInput = document.getElementById("pastImageInput");
+const futureImageInput = document.getElementById("futureImageInput");
+const pastPreview = document.getElementById("pastPreview");
+const futurePreview = document.getElementById("futurePreview");
+const pastMeta = document.getElementById("pastMeta");
+const futureMeta = document.getElementById("futureMeta");
+const sceneInventoryInput = document.getElementById("sceneInventory");
+const sceneFrictionsInput = document.getElementById("sceneFrictions");
+const sceneEquityInput = document.getElementById("sceneEquity");
+const sceneAssetsInput = document.getElementById("sceneAssets");
+const refOtherInput = document.getElementById("refOther");
+const interventionOtherInput = document.getElementById("interventionOther");
+const futurePrioritiesInput = document.getElementById("futurePriorities");
+const futureMobilityMixInput = document.getElementById("futureMobilityMix");
+const futurePublicRealmInput = document.getElementById("futurePublicRealm");
+const futureClimateInput = document.getElementById("futureClimate");
+const generatePromptButton = document.getElementById("generatePrompt");
+const copyPromptButton = document.getElementById("copyPrompt");
+const promptOutput = document.getElementById("promptOutput");
+const promptStatus = document.getElementById("promptStatus");
+const presentDescriptionInput = document.getElementById("presentDescription");
+const futureDescriptionInput = document.getElementById("futureDescription");
+const addScenarioButton = document.getElementById("addScenarioButton");
+const adminStatus = document.getElementById("adminStatus");
+
+const adminState = {
+  presentAssetId: null,
+  futureAssetId: null,
+  presentDataUrl: null,
+  futureDataUrl: null
+};
+
+let cityLabelTouched = false;
+
+function setStatus(el, message, status) {
+  if (!el) return;
+  el.textContent = message;
+  if (status) {
+    el.dataset.status = status;
+  } else {
+    el.removeAttribute("data-status");
+  }
+}
+
+function slugify(value) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
+}
+
+function createScenarioId(base) {
+  const slug = slugify(base || "custom-city");
+  let candidate = slug || "custom-city";
+  let counter = 1;
+  while (scenarios.some((scenario) => scenario.id === candidate)) {
+    counter += 1;
+    candidate = `${slug}-${counter}`;
+  }
+  return candidate;
+}
+
+function ensureAsset(id, dataUrl) {
+  if (!assetsContainer) return null;
+  let img = document.getElementById(id);
+  if (!img) {
+    img = document.createElement("img");
+    img.setAttribute("id", id);
+    assetsContainer.appendChild(img);
+  }
+  img.setAttribute("src", dataUrl);
+  return `#${id}`;
+}
+
+function updateAspectRatioMeta(metaEl, width, height) {
+  if (!metaEl || !width || !height) return;
+  const ratio = width / height;
+  const ratioLabel = ratio.toFixed(2);
+  const ratioOk = Math.abs(ratio - 2) <= 0.05;
+  const status = ratioOk ? "ok" : "warn";
+  const hint = ratioOk ? "✓ 2:1 equirectangular" : "Consider a 2:1 image";
+  setStatus(
+    metaEl,
+    `${width} × ${height} (${ratioLabel}:1) • ${hint}`,
+    status
+  );
+}
+
+function loadImageFile({
+  file,
+  previewEl,
+  metaEl,
+  stateKey,
+  assetPrefix
+}) {
+  if (!file) return;
+  const reader = new FileReader();
+  const objectUrl = URL.createObjectURL(file);
+  const probe = new Image();
+
+  probe.onload = () => {
+    updateAspectRatioMeta(metaEl, probe.width, probe.height);
+    URL.revokeObjectURL(objectUrl);
+  };
+  probe.src = objectUrl;
+
+  reader.onload = () => {
+    const dataUrl = reader.result;
+    if (typeof dataUrl !== "string") return;
+    if (previewEl) {
+      previewEl.src = dataUrl;
+    }
+    const assetId = `${assetPrefix}-${Date.now()}`;
+    const assetRef = ensureAsset(assetId, dataUrl);
+    adminState[stateKey] = dataUrl;
+    adminState[`${stateKey.replace("DataUrl", "AssetId")}`] = assetId;
+    updateAddScenarioButton();
+    if (!assetRef) return;
+  };
+
+  reader.readAsDataURL(file);
+}
+
+function getCheckedValues(name) {
+  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+    .map((input) => input.value)
+    .filter(Boolean);
+}
+
+function getValue(input) {
+  if (!input) return "";
+  return input.value.trim();
+}
+
+function buildPrompt() {
+  const city = getValue(cityNameInput);
+  const district = getValue(cityDistrictInput);
+  const year = getValue(cityYearInput);
+  const inventory = getValue(sceneInventoryInput);
+  const frictions = getValue(sceneFrictionsInput);
+  const equity = getValue(sceneEquityInput);
+  const assets = getValue(sceneAssetsInput);
+  const references = [
+    ...getCheckedValues("reference"),
+    getValue(refOtherInput)
+  ].filter(Boolean);
+  const interventions = [
+    ...getCheckedValues("intervention"),
+    getValue(interventionOtherInput)
+  ].filter(Boolean);
+  const priorities = getValue(futurePrioritiesInput);
+  const mobilityMix = getValue(futureMobilityMixInput);
+  const publicRealm = getValue(futurePublicRealmInput);
+  const climate = getValue(futureClimateInput);
+
+  const lines = [
+    "Edit the provided 2:1 equirectangular 360° photo to depict a preferable future for urban mobility.",
+    "Keep the exact camera position, horizon level, and overall perspective."
+  ];
+
+  if (city || district || year) {
+    const locationLine = [
+      city ? `City: ${city}` : null,
+      district ? `District: ${district}` : null,
+      year ? `Past snapshot year: ${year}` : null
+    ]
+      .filter(Boolean)
+      .join(" | ");
+    lines.push(locationLine);
+  }
+
+  if (inventory) {
+    lines.push(`Current scene inventory: ${inventory}`);
+  }
+  if (frictions) {
+    lines.push(`Mobility pain points: ${frictions}`);
+  }
+  if (equity) {
+    lines.push(`Equity + access gaps: ${equity}`);
+  }
+  if (assets) {
+    lines.push(`Assets to preserve: ${assets}`);
+  }
+  if (interventions.length) {
+    lines.push(
+      `Future interventions to add or amplify: ${interventions.join("; ")}.`
+    );
+  }
+  if (priorities) {
+    lines.push(`Priority outcomes: ${priorities}.`);
+  }
+  if (mobilityMix) {
+    lines.push(`Mobility mix to show: ${mobilityMix}.`);
+  }
+  if (publicRealm) {
+    lines.push(`Public realm mood: ${publicRealm}.`);
+  }
+  if (climate) {
+    lines.push(`Climate + nature goals: ${climate}.`);
+  }
+  if (references.length) {
+    lines.push(
+      `Reference initiatives and design cues: ${references.join("; ")}.`
+    );
+  }
+
+  lines.push(
+    "Rendering constraints: photorealistic, consistent lighting with the original, preserve building massing and skyline, realistic scale for people/vehicles, seamless 360° stitching, no warped poles, no text overlays or watermarks."
+  );
+
+  return lines.join("\n\n");
+}
+
+function buildPresentDescription() {
+  const city = getValue(cityNameInput);
+  const district = getValue(cityDistrictInput);
+  const inventory = getValue(sceneInventoryInput);
+  const frictions = getValue(sceneFrictionsInput);
+  const equity = getValue(sceneEquityInput);
+  const assets = getValue(sceneAssetsInput);
+  const parts = [];
+
+  if (city || district) {
+    parts.push(
+      `${district ? district + ", " : ""}${city || "This area"} shows the current mobility conditions.`
+    );
+  }
+  if (inventory) {
+    parts.push(inventory);
+  }
+  if (frictions) {
+    parts.push(frictions);
+  }
+  if (equity) {
+    parts.push(equity);
+  }
+  if (assets) {
+    parts.push(assets);
+  }
+
+  return parts.filter(Boolean).join("\n\n");
+}
+
+function buildFutureDescription() {
+  const priorities = getValue(futurePrioritiesInput);
+  const mobilityMix = getValue(futureMobilityMixInput);
+  const publicRealm = getValue(futurePublicRealmInput);
+  const climate = getValue(futureClimateInput);
+  const interventions = [
+    ...getCheckedValues("intervention"),
+    getValue(interventionOtherInput)
+  ].filter(Boolean);
+  const references = [
+    ...getCheckedValues("reference"),
+    getValue(refOtherInput)
+  ].filter(Boolean);
+  const parts = [];
+
+  if (interventions.length) {
+    parts.push(`Future interventions: ${interventions.join(", ")}.`);
+  }
+  if (priorities) {
+    parts.push(priorities);
+  }
+  if (mobilityMix) {
+    parts.push(mobilityMix);
+  }
+  if (publicRealm) {
+    parts.push(publicRealm);
+  }
+  if (climate) {
+    parts.push(climate);
+  }
+  if (references.length) {
+    parts.push(`Inspired by: ${references.join(", ")}.`);
+  }
+
+  return parts.filter(Boolean).join("\n\n");
+}
+
+function updateAddScenarioButton() {
+  if (!addScenarioButton) return;
+  const ready =
+    getValue(cityLabelInput) &&
+    adminState.presentAssetId &&
+    adminState.futureAssetId;
+  addScenarioButton.disabled = !ready;
+}
+
+function openAdmin() {
+  if (!adminOverlay) return;
+  adminOverlay.classList.add("is-visible");
+  adminOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("admin-open");
+}
+
+function closeAdmin() {
+  if (!adminOverlay) return;
+  adminOverlay.classList.remove("is-visible");
+  adminOverlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("admin-open");
+}
+
+async function copyToClipboard(text) {
+  if (!text) return false;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    await navigator.clipboard.writeText(text);
+    return true;
+  }
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "true");
+  textarea.style.position = "absolute";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+  const success = document.execCommand("copy");
+  document.body.removeChild(textarea);
+  return success;
+}
+
+function addScenarioFromAdmin() {
+  const label = getValue(cityLabelInput);
+  if (!label) {
+    setStatus(adminStatus, "Add a menu label before saving.", "warn");
+    return;
+  }
+  if (!adminState.presentAssetId || !adminState.futureAssetId) {
+    setStatus(
+      adminStatus,
+      "Upload both the past and future images before saving.",
+      "warn"
+    );
+    return;
+  }
+
+  const scenarioId = createScenarioId(label);
+  const presentDescription =
+    getValue(presentDescriptionInput) || buildPresentDescription();
+  const futureDescription =
+    getValue(futureDescriptionInput) || buildFutureDescription();
+
+  scenarios.push({
+    id: scenarioId,
+    label,
+    present: {
+      asset: `#${adminState.presentAssetId}`,
+      description: presentDescription
+    },
+    future: {
+      asset: `#${adminState.futureAssetId}`,
+      description: futureDescription
+    }
+  });
+
+  buildHomeMenu();
+  exitToHome();
+  setStatus(adminStatus, "City added to the experience.", "ok");
+  closeAdmin();
+}
+
+function initAdminStudio() {
+  if (openAdminButton) {
+    openAdminButton.addEventListener("click", openAdmin);
+  }
+  if (closeAdminButton) {
+    closeAdminButton.addEventListener("click", closeAdmin);
+  }
+  if (adminOverlay) {
+    adminOverlay.addEventListener("click", (event) => {
+      if (event.target === adminOverlay) {
+        closeAdmin();
+      }
+    });
+  }
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && adminOverlay?.classList.contains("is-visible")) {
+      closeAdmin();
+    }
+  });
+
+  if (cityNameInput && cityLabelInput) {
+    cityNameInput.addEventListener("input", () => {
+      if (cityLabelTouched) return;
+      cityLabelInput.value = getValue(cityNameInput);
+    });
+    cityLabelInput.addEventListener("input", () => {
+      cityLabelTouched = true;
+    });
+  }
+
+  if (pastImageInput) {
+    pastImageInput.addEventListener("change", (event) => {
+      const file = event.target.files?.[0];
+      loadImageFile({
+        file,
+        previewEl: pastPreview,
+        metaEl: pastMeta,
+        stateKey: "presentDataUrl",
+        assetPrefix: "asset-custom-present"
+      });
+    });
+  }
+
+  if (futureImageInput) {
+    futureImageInput.addEventListener("change", (event) => {
+      const file = event.target.files?.[0];
+      loadImageFile({
+        file,
+        previewEl: futurePreview,
+        metaEl: futureMeta,
+        stateKey: "futureDataUrl",
+        assetPrefix: "asset-custom-future"
+      });
+    });
+  }
+
+  if (generatePromptButton) {
+    generatePromptButton.addEventListener("click", () => {
+      const prompt = buildPrompt();
+      if (promptOutput) {
+        promptOutput.value = prompt;
+      }
+      setStatus(promptStatus, "Prompt generated.", "ok");
+    });
+  }
+
+  if (copyPromptButton) {
+    copyPromptButton.addEventListener("click", async () => {
+      const prompt = promptOutput ? promptOutput.value.trim() : "";
+      if (!prompt) {
+        setStatus(promptStatus, "Generate a prompt first.", "warn");
+        return;
+      }
+      try {
+        const success = await copyToClipboard(prompt);
+        setStatus(
+          promptStatus,
+          success ? "Prompt copied to clipboard." : "Copy failed.",
+          success ? "ok" : "warn"
+        );
+      } catch (error) {
+        setStatus(promptStatus, "Copy failed.", "warn");
+      }
+    });
+  }
+
+  if (addScenarioButton) {
+    addScenarioButton.addEventListener("click", addScenarioFromAdmin);
+  }
+
+  updateAddScenarioButton();
+}
+
 buildHomeMenu();
 buildTimeframeControls();
 styleHomeButton("default");
 exitToHome();
+initAdminStudio();
