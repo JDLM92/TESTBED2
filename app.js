@@ -541,6 +541,10 @@ homeButton.addEventListener("mouseleave", () => {
 const assetsContainer = document.querySelector("a-assets");
 const adminOverlay = document.getElementById("adminOverlay");
 const openAdminButton = document.getElementById("openAdmin");
+const showExplorerButton = document.getElementById("showExplorer");
+const landingWorkspace = document.getElementById("landingWorkspace");
+const explorerWorkspace = document.getElementById("explorerWorkspace");
+const backToLandingButton = document.getElementById("backToLanding");
 const closeAdminButton = document.getElementById("closeAdmin");
 const cityNameInput = document.getElementById("cityName");
 const cityDistrictInput = document.getElementById("cityDistrict");
@@ -836,18 +840,41 @@ function updateAddScenarioButton() {
   addScenarioButton.disabled = !ready;
 }
 
+function showLanding() {
+  adminOverlay?.classList.remove("is-visible");
+  adminOverlay?.setAttribute("aria-hidden", "true");
+  landingWorkspace?.removeAttribute("hidden");
+  explorerWorkspace?.setAttribute("hidden", "");
+  document.body.classList.remove("admin-open");
+  document.body.dataset.workspace = "landing";
+  showExplorerButton?.focus();
+}
+
+function showExplorer() {
+  adminOverlay?.classList.remove("is-visible");
+  adminOverlay?.setAttribute("aria-hidden", "true");
+  landingWorkspace?.setAttribute("hidden", "");
+  explorerWorkspace?.removeAttribute("hidden");
+  document.body.classList.remove("admin-open");
+  document.body.dataset.workspace = "explorer";
+  requestAnimationFrame(() => {
+    window.dispatchEvent(new Event("resize"));
+  });
+}
+
 function openAdmin() {
   if (!adminOverlay) return;
+  landingWorkspace?.setAttribute("hidden", "");
+  explorerWorkspace?.setAttribute("hidden", "");
   adminOverlay.classList.add("is-visible");
   adminOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("admin-open");
+  document.body.dataset.workspace = "builder";
+  closeAdminButton?.focus();
 }
 
 function closeAdmin() {
-  if (!adminOverlay) return;
-  adminOverlay.classList.remove("is-visible");
-  adminOverlay.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("admin-open");
+  showLanding();
 }
 
 async function copyToClipboard(text) {
@@ -905,12 +932,18 @@ function addScenarioFromAdmin() {
   buildHomeMenu();
   exitToHome();
   setStatus(adminStatus, "City added to the experience.", "ok");
-  closeAdmin();
+  showExplorer();
 }
 
 function initAdminStudio() {
   if (openAdminButton) {
     openAdminButton.addEventListener("click", openAdmin);
+  }
+  if (showExplorerButton) {
+    showExplorerButton.addEventListener("click", showExplorer);
+  }
+  if (backToLandingButton) {
+    backToLandingButton.addEventListener("click", showLanding);
   }
   if (closeAdminButton) {
     closeAdminButton.addEventListener("click", closeAdmin);

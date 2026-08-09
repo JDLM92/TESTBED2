@@ -3,41 +3,90 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Immersive Experience Playground</title>
+    <title>Mobility Scenario Studio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Unbounded:wght@500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Unbounded:wght@500;700&amp;display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   </head>
-  <body>
+  <body data-workspace="landing">
     <header class="page-header">
-      <h1>Immersive Experience Playground</h1>
-      <p>
-        Launch a 360° scene and click the VR button to step inside using a Meta
-        Quest 3/3S or a mobile browser. Aim with your controllers or pointer to
-        press the buttons floating in front of you.
-      </p>
-      <div class="header-actions">
-        <button id="openAdmin" class="admin-launch" type="button">
-          Admin Studio
-        </button>
-        <span class="header-hint">
-          Build a new city flow, analyze the past scene, and generate the future
-          imaging prompt.
-        </span>
+      <div class="brand-block">
+        <p class="eyebrow">InflectionPoints: Mobility</p>
+        <h1>Mobility Scenario Studio</h1>
+        <p>
+          Explore existing city transformations in 360°, or build a new
+          present-to-future mobility scenario.
+        </p>
       </div>
     </header>
 
-    <a-scene
-      background="color: #000"
-      renderer="antialias: true"
-      webxr="optionalFeatures: local-floor, bounded-floor"
-      vr-mode-ui="enabled: true"
-    >
+    <main id="landingWorkspace" class="landing-workspace">
+      <div class="landing-intro">
+        <p class="eyebrow">Start Here</p>
+        <h2>What would you like to do?</h2>
+        <p>
+          Choose one path. You can return here at any time to switch between
+          experiencing scenarios and creating a new one.
+        </p>
+      </div>
+      <nav class="mode-switcher" aria-label="Choose an experience">
+        <button
+          id="showExplorer"
+          class="mode-card"
+          type="button"
+        >
+          <span class="mode-card__number">01</span>
+          <span class="mode-card__copy">
+            <strong>Explore scenarios</strong>
+            <small>
+              Enter a built city experience and compare now with next.
+            </small>
+          </span>
+        </button>
+        <button
+          id="openAdmin"
+          class="mode-card"
+          type="button"
+        >
+          <span class="mode-card__number">02</span>
+          <span class="mode-card__copy">
+            <strong>Build a scenario</strong>
+            <small>
+              Turn a city image and mobility idea into a new experience.
+            </small>
+          </span>
+        </button>
+      </nav>
+    </main>
+
+    <main id="explorerWorkspace" class="explorer-workspace" hidden>
+      <div class="workspace-heading">
+        <div>
+          <p class="eyebrow">Scenario Explorer</p>
+          <h2>Choose a city to begin</h2>
+        </div>
+        <div class="workspace-heading__actions">
+          <p>
+            Select a scenario inside the viewer, then switch between Present
+            and Future. Use the VR control for a headset experience.
+          </p>
+          <button id="backToLanding" class="icon-button" type="button">
+            Back to main menu
+          </button>
+        </div>
+      </div>
+
+      <a-scene
+        background="color: #000"
+        renderer="antialias: true"
+        webxr="optionalFeatures: local-floor, bounded-floor"
+        vr-mode-ui="enabled: true"
+      >
       <a-assets timeout="30000">
         <img
           id="asset-mexico-present"
@@ -162,7 +211,8 @@
           wrap-count="48"
         ></a-text>
       </a-entity>
-    </a-scene>
+      </a-scene>
+    </main>
 
     <section id="adminOverlay" class="admin-overlay" aria-hidden="true">
       <div
@@ -173,8 +223,8 @@
       >
         <div class="admin-panel__header">
           <div>
-            <p class="eyebrow">Admin Studio</p>
-            <h2 id="adminTitle">New City: Past → Future Mobility Flow</h2>
+            <p class="eyebrow">Scenario Builder</p>
+            <h2 id="adminTitle">Build a present → future city scenario</h2>
             <p class="admin-subtitle">
               Use this flow to add a new city, reason through the past scene,
               pull in world-class mobility references, and craft a precise
@@ -182,12 +232,12 @@
             </p>
           </div>
           <button id="closeAdmin" class="icon-button" type="button">
-            Close
+            Back to main menu
           </button>
         </div>
 
         <div class="admin-panel__body">
-          <section class="admin-step">
+          <section class="admin-step admin-step--overview">
             <h3>Flow Map</h3>
             <ol class="flow-list">
               <li>Capture or upload a 2:1 equirectangular past image.</li>
@@ -199,7 +249,7 @@
             </ol>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="01 · Define">
             <h3>City Profile</h3>
             <div class="field-grid">
               <label class="field-block">
@@ -229,7 +279,7 @@
             </div>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="02 · Source">
             <h3>Past Image (Equirectangular 360°)</h3>
             <div class="image-upload">
               <div>
@@ -253,7 +303,7 @@
             </div>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="03 · Analyze">
             <h3>Reasoning Canvas</h3>
             <div class="canvas-grid">
               <label class="field-block">
@@ -287,7 +337,7 @@
             </div>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="04 · Learn">
             <h3>Reference Initiatives</h3>
             <div class="chip-group" id="referenceGroup">
               <label class="chip">
@@ -340,7 +390,7 @@
             </label>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="05 · Imagine">
             <h3>Future Mobility Outcomes</h3>
             <div class="chip-group" id="interventionGroup">
               <label class="chip">
@@ -427,7 +477,7 @@
             </label>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="06 · Generate">
             <h3>Imaging Prompt Builder</h3>
             <p class="hint">
               Optimized for tools like Nanobanana Pro or any 360 imaging model.
@@ -446,7 +496,7 @@
             <p id="promptStatus" class="meta"></p>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="07 · Assemble">
             <h3>Future Image + Scenario Details</h3>
             <div class="image-upload">
               <div>
@@ -492,7 +542,7 @@
             </div>
           </section>
 
-          <section class="admin-step">
+          <section class="admin-step" data-phase="08 · Review">
             <h3>Quality Checklist</h3>
             <ul class="checklist">
               <li>Match camera position, height, and horizon exactly.</li>
