@@ -164,9 +164,9 @@ const scenarios = [
     summary:
       "A historic intersection where traffic gives way to shade, movement, and street life.",
     themes: ["Shared streets", "Active mobility", "Urban greening"],
-    thumbnail: "assets/mexico-city/present/Mexico City Present.png",
+    thumbnail: "assets/thumbnails/mexico-city.jpg",
     present: {
-      asset: "#asset-mexico-present",
+      asset: "assets/mexico-city/present/Mexico City Present.png",
       description:
         "A narrow colonial intersection is dominated by asphalt, faded crossings, scattered bollards, minimal greenery, and occasional delivery vans.\n\nWalking, cycling, shade, and everyday street life compete with through-traffic and hard surfaces."
     },
@@ -175,7 +175,7 @@ const scenarios = [
         id: "people-first-superblock",
         label: "People-first superblock",
         horizon: "Possible 2040",
-        asset: "#asset-mexico-future",
+        asset: "assets/mexico-city/future/Mexico City Future.jpg",
         description:
           "Through-traffic gives way to a shared street with cobblestone paving, shaded cycle movement, wider sidewalks, and space for deliveries, vendors, and lingering.\n\nThe visual keeps the historic fabric intact while giving people—not parked or passing vehicles—the clearest priority."
       }
@@ -186,18 +186,29 @@ const scenarios = [
         "A compact historic junction with active edges and high walking potential, but little shade or protected space for people moving through it.",
       direction:
         "Rebalance access around a people-first superblock: keep essential deliveries, slow through-traffic, and turn the public realm into shade, movement, and street life.",
+      rationale: {
+        recommendation:
+          "Recommended because this compact historic junction has high walking potential, constrained historic fabric, and delivery requirements. Managed shared access addresses all three conditions.",
+        tradeoff:
+          "A fully pedestrianized alternative is not shown because essential deliveries and the street's everyday working life still need managed access."
+      },
       references: [
         {
+          type: "Local condition",
           location: "Centro Histórico · Mexico City",
           label: "Shared-street access",
           detail:
-            "Use access management to make more room for everyday movement without erasing the street’s working life."
+            "The verified pilot view shows active street edges and delivery pressure alongside high walking potential.",
+          provenance: "Verified pilot panorama · precomputed scene reading"
         },
         {
+          type: "Transferable precedent",
           location: "South Bank · London",
           label: "Cooling + crossings",
           detail:
-            "Pair safer movement with planted edges and a more comfortable walking environment."
+            "Pair safer movement with planted edges and a more comfortable walking environment.",
+          provenance:
+            "Prototype reference record · source, date, outcomes, and ranking details connect with the live repository"
         }
       ],
       analysisSteps: [
@@ -226,9 +237,9 @@ const scenarios = [
     summary:
       "A corridor beneath the L becomes a brighter, safer route for everyday journeys.",
     themes: ["Transit priority", "Public realm", "Micromobility"],
-    thumbnail: "assets/chicago/present/Chicago Garfield Park Today.png",
+    thumbnail: "assets/thumbnails/chicago.jpg",
     present: {
-      asset: "#asset-chicago-present",
+      asset: "assets/chicago/present/Chicago Garfield Park Today.png",
       description:
         "A Lake Street viaduct in downtown Chicago is framed by elevated train tracks, multi-lane car traffic, narrow sidewalks, and sparse greenery.\n\nCars and delivery trucks dominate every level of the corridor, making the space noisy, dark, and difficult to navigate on foot or by bike."
     },
@@ -237,7 +248,7 @@ const scenarios = [
         id: "transit-promenade",
         label: "Transit promenade",
         horizon: "Possible 2040",
-        asset: "#asset-chicago-future",
+        asset: "assets/chicago/future/Chicago Future.jpg",
         description:
           "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
       }
@@ -248,18 +259,30 @@ const scenarios = [
         "An active transit street where elevated infrastructure, vehicle lanes, and narrow sidewalks make everyday walking and cycling feel secondary.",
       direction:
         "Turn the corridor into a transit promenade: let rail remain the backbone while better lighting, protected cycling, planted edges, and managed kerbs support life beneath it.",
+      rationale: {
+        recommendation:
+          "Recommended because the corridor already carries high transit activity, while vehicle lanes, low light, and narrow sidewalks make transfers and short trips feel secondary.",
+        tradeoff:
+          "Full vehicle removal is not shown because service, emergency access, and managed kerb activity still need a legible route beneath the elevated structure."
+      },
       references: [
         {
+          type: "Transferable precedent",
           location: "Centro Histórico · Mexico City",
           label: "Active street life",
           detail:
-            "Make necessary access and daily activity work together instead of giving the corridor entirely to passing traffic."
+            "Make necessary access and daily activity work together instead of giving the corridor entirely to passing traffic.",
+          provenance:
+            "Prototype reference record · source, date, outcomes, and ranking details connect with the live repository"
         },
         {
+          type: "Transferable precedent",
           location: "South Bank · London",
           label: "Safe local movement",
           detail:
-            "Use continuous crossings and calmer kerb conditions to make short journeys more comfortable."
+            "Use continuous crossings and calmer kerb conditions to make short journeys more comfortable.",
+          provenance:
+            "Prototype reference record · source, date, outcomes, and ranking details connect with the live repository"
         }
       ],
       analysisSteps: [
@@ -288,9 +311,9 @@ const scenarios = [
     summary:
       "A car-led junction becomes a calmer, greener street for people moving through it.",
     themes: ["Climate resilience", "Safe crossings", "Cycle network"],
-    thumbnail: "assets/london/present/London Present.png",
+    thumbnail: "assets/thumbnails/london.jpg",
     present: {
-      asset: "#asset-london-present",
+      asset: "assets/london/present/London Present.png",
       description:
         "A parking-lined junction with painted bike symbols, minimal greenery, and kerb conflicts that swell at night."
     },
@@ -299,7 +322,7 @@ const scenarios = [
         id: "green-neighborhood-street",
         label: "Green neighborhood street",
         horizon: "Possible 2040",
-        asset: "#asset-london-future",
+        asset: "assets/london/future/London Future.png",
         description:
           "A calmer South Bank junction with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading bays.\n\nThe future gives walking and cycling a continuous, legible route while helping the street hold more shade and rainwater."
       }
@@ -310,18 +333,30 @@ const scenarios = [
         "A junction where parked cars, turning traffic, and thin green cover make walking and cycling feel like afterthoughts.",
       direction:
         "Create a green neighbourhood street with slower turning movements, continuous crossings, protected cycle flow, and planted rain-garden corners.",
+      rationale: {
+        recommendation:
+          "Recommended because turning traffic, parking, and thin green cover interrupt short walking and cycling journeys at a compact local junction.",
+        tradeoff:
+          "A full street closure is not shown because local access and loading still need to work while crossings and cycle movement become continuous."
+      },
       references: [
         {
+          type: "Transferable precedent",
           location: "Centro Histórico · Mexico City",
           label: "Shared space + shade",
           detail:
-            "Use public-realm materials and trees to make a street feel more useful and comfortable at walking speed."
+            "Use public-realm materials and trees to make a street feel more useful and comfortable at walking speed.",
+          provenance:
+            "Prototype reference record · source, date, outcomes, and ranking details connect with the live repository"
         },
         {
+          type: "Transferable precedent",
           location: "Garfield Park · Chicago",
           label: "Networked movement",
           detail:
-            "Make cycling and walking continuous rather than isolated markings between vehicle lanes."
+            "Make cycling and walking continuous rather than isolated markings between vehicle lanes.",
+          provenance:
+            "Prototype reference record · source, date, outcomes, and ranking details connect with the live repository"
         }
       ],
       analysisSteps: [
@@ -378,9 +413,15 @@ const scenarioInfoDescription = document.getElementById(
   "scenarioInfoDescription"
 );
 const scenarioInfoThemes = document.getElementById("scenarioInfoThemes");
+const scenarioInfoProvenance = document.getElementById(
+  "scenarioInfoProvenance"
+);
 const timeframeToggle = document.getElementById("timeframeToggle");
 const homeButton = document.getElementById("homeButton");
 const sceneElement = immersiveViewer?.querySelector("a-scene");
+const player = document.getElementById("player");
+const shareScenarioButton = document.getElementById("shareScenario");
+const viewerLiveStatus = document.getElementById("viewerLiveStatus");
 
 if (homeButton) {
   homeButton.removeAttribute("geometry");
@@ -401,11 +442,90 @@ let activeScenario = null;
 let activeTimeframe = "present";
 let activeFutureIndex = 0;
 let comparisonReturnTimeframe = null;
+let loadedFutureAsset = "";
+let queuedFutureAsset = "";
+let futureLoadHandle = null;
+let isApplyingRoute = false;
+let lastAppliedHash = null;
 
 function clearChildren(el) {
   while (el.firstChild) {
     el.removeChild(el.firstChild);
   }
+}
+
+function setViewerLiveStatus(message) {
+  if (viewerLiveStatus) viewerLiveStatus.textContent = message;
+}
+
+function disposePanoramaTexture(sphere) {
+  const mesh = sphere?.getObject3D?.("mesh");
+  const material = mesh?.material;
+  if (!material?.map) return;
+  material.map.dispose?.();
+  material.map = null;
+  material.needsUpdate = true;
+}
+
+function cancelQueuedFutureLoad() {
+  if (futureLoadHandle == null) return;
+  if (window.cancelIdleCallback) {
+    window.cancelIdleCallback(futureLoadHandle);
+  } else {
+    window.clearTimeout(futureLoadHandle);
+  }
+  futureLoadHandle = null;
+  queuedFutureAsset = "";
+}
+
+function loadFuturePanorama(asset) {
+  if (!futureSphere || !asset) return;
+  cancelQueuedFutureLoad();
+  if (loadedFutureAsset !== asset) {
+    futureSphere.setAttribute("src", asset);
+    loadedFutureAsset = asset;
+  }
+  futureSphere.setAttribute("visible", true);
+}
+
+function queueFuturePanorama(asset) {
+  if (!asset || loadedFutureAsset === asset || queuedFutureAsset === asset) return;
+  cancelQueuedFutureLoad();
+  queuedFutureAsset = asset;
+  const load = () => {
+    futureLoadHandle = null;
+    queuedFutureAsset = "";
+    if (getActiveFuture()?.asset !== asset) return;
+    loadFuturePanorama(asset);
+    setFutureBlend(activeTimeframe, true);
+  };
+  futureLoadHandle = window.requestIdleCallback
+    ? window.requestIdleCallback(load, { timeout: 1200 })
+    : window.setTimeout(load, 320);
+}
+
+function releasePanoramas() {
+  cancelQueuedFutureLoad();
+  photoSphere?.setAttribute("visible", false);
+  futureSphere?.setAttribute("visible", false);
+  photoSphere?.removeAttribute("src");
+  futureSphere?.removeAttribute("src");
+  disposePanoramaTexture(photoSphere);
+  disposePanoramaTexture(futureSphere);
+  loadedFutureAsset = "";
+}
+
+function syncAframeAuxiliaryAccessibility() {
+  const isViewerActive = Boolean(
+    activeScenario && !immersiveViewer?.hasAttribute("hidden")
+  );
+  document
+    .querySelectorAll(
+      ".a-enter-vr, .a-enter-vr-button, .a-orientation-modal, .a-dialog"
+    )
+    .forEach((element) => {
+      element.setAttribute("aria-hidden", String(!isViewerActive));
+    });
 }
 
 function hexToRgb(hex) {
@@ -576,9 +696,7 @@ function buildHomeMenu() {
       styleScenarioButton(button, "default");
     });
 
-    button.addEventListener("click", () => {
-      enterScenario(scenario);
-    });
+    button.addEventListener("click", () => openScenarioRoute(scenario));
 
     scenarioButtonContainer.appendChild(button);
     scenarioButtons.set(scenario.id, button);
@@ -658,7 +776,7 @@ function buildScenarioCatalog() {
     footer.append(futureCount, action);
     body.append(location, title, summary, themes, footer);
     card.append(media, body);
-    card.addEventListener("click", () => enterScenario(scenario));
+    card.addEventListener("click", () => openScenarioRoute(scenario));
     scenarioCardGrid.appendChild(card);
     scenarioCards.set(scenario.id, card);
   });
@@ -824,6 +942,12 @@ function updateScenarioInfo() {
       scenarioInfoThemes.appendChild(chip);
     });
   }
+  if (scenarioInfoProvenance) {
+    scenarioInfoProvenance.textContent =
+      activeTimeframe === "present"
+        ? "Prototype provenance · verified pilot panorama"
+        : "Prototype provenance · verified paired panorama and precomputed reference rationale";
+  }
 }
 
 function updateComparisonControls(displayedTimeframe = activeTimeframe) {
@@ -879,13 +1003,14 @@ function buildFutureOptions() {
     button.textContent = future.label;
     button.addEventListener("click", () => {
       activeFutureIndex = index;
-      futureSphere?.setAttribute("src", future.asset);
+      loadFuturePanorama(future.asset);
       buildFutureOptions();
       updateComparisonControls();
       updateScenarioInfo();
       if (activeTimeframe === "future") {
         setFutureBlend("future", true);
       }
+      syncViewerRoute();
       futureDirectionButton.focus();
     });
     futureOptionsMenu.appendChild(button);
@@ -895,10 +1020,14 @@ function buildFutureOptions() {
 function setActiveTimeframe(timeframe) {
   if (!activeScenario || activeTimeframe === timeframe) return;
   activeTimeframe = timeframe;
+  if (timeframe === "future") {
+    loadFuturePanorama(getActiveFuture()?.asset);
+  }
   updateTimeframeButtons();
   setFutureBlend(timeframe);
   updateComparisonControls();
   updateScenarioInfo();
+  syncViewerRoute();
 }
 
 function applyScenarioFrame(immediate = false) {
@@ -908,8 +1037,18 @@ function applyScenarioFrame(immediate = false) {
 
   photoSphere.setAttribute("src", activeScenario.present.asset);
   photoSphere.setAttribute("visible", true);
-  futureSphere?.setAttribute("src", future.asset);
-  futureSphere?.setAttribute("visible", true);
+  if (loadedFutureAsset && loadedFutureAsset !== future.asset) {
+    futureSphere?.setAttribute("visible", false);
+    futureSphere?.removeAttribute("src");
+    disposePanoramaTexture(futureSphere);
+    loadedFutureAsset = "";
+  }
+  if (activeTimeframe === "future") {
+    loadFuturePanorama(future.asset);
+  } else {
+    futureSphere?.setAttribute("visible", false);
+    queueFuturePanorama(future.asset);
+  }
   infoText.setAttribute("value", "");
   setFutureBlend(activeTimeframe, immediate);
   buildFutureOptions();
@@ -917,9 +1056,9 @@ function applyScenarioFrame(immediate = false) {
   updateScenarioInfo();
 }
 
-function enterScenario(scenario) {
+function enterScenario(scenario, { timeframe = "present", focus = true } = {}) {
   activeScenario = scenario;
-  activeTimeframe = "present";
+  activeTimeframe = timeframe === "future" ? "future" : "present";
   activeFutureIndex = 0;
 
   homeMenu.setAttribute("visible", false);
@@ -930,6 +1069,7 @@ function enterScenario(scenario) {
   scenarioCatalog?.setAttribute("hidden", "");
   immersiveViewer?.removeAttribute("hidden");
   document.body.classList.add("scenario-active");
+  syncAframeAuxiliaryAccessibility();
   if (activeScenarioLocation) {
     activeScenarioLocation.textContent = scenario.location || "City scenario";
   }
@@ -948,18 +1088,17 @@ function enterScenario(scenario) {
     const scene = immersiveViewer?.querySelector("a-scene");
     scene?.resize?.();
     window.dispatchEvent(new Event("resize"));
-    immersiveViewer?.focus({ preventScroll: true });
+    if (focus) immersiveViewer?.focus({ preventScroll: true });
   });
 }
 
-function exitToHome() {
+function exitToHome({ restoreFocus = true } = {}) {
   const previousScenarioId = activeScenario?.id;
   activeScenario = null;
   activeTimeframe = "present";
   activeFutureIndex = 0;
 
-  photoSphere.setAttribute("visible", false);
-  futureSphere?.setAttribute("visible", false);
+  releasePanoramas();
   infoText.setAttribute("value", "");
 
   homeMenu.setAttribute("visible", false);
@@ -967,6 +1106,7 @@ function exitToHome() {
   immersiveViewer?.setAttribute("hidden", "");
   scenarioCatalog?.removeAttribute("hidden");
   document.body.classList.remove("scenario-active");
+  syncAframeAuxiliaryAccessibility();
 
   scenarioButtons.forEach((button) => {
     styleScenarioButton(button, "default");
@@ -976,7 +1116,7 @@ function exitToHome() {
   closeFutureOptions();
   scenarioInfoSheet?.setAttribute("hidden", "");
   openScenarioInfoButton?.setAttribute("aria-expanded", "false");
-  if (previousScenarioId) {
+  if (restoreFocus && previousScenarioId) {
     scenarioCards.get(previousScenarioId)?.focus();
   }
 }
@@ -987,7 +1127,8 @@ homeButton.addEventListener("click", async () => {
       await sceneElement.exitVR();
     } catch (error) {}
   }
-  exitToHome();
+  showExplorer();
+  navigateTo("/explore");
 });
 
 homeButton.addEventListener("mouseenter", () => {
@@ -999,7 +1140,10 @@ homeButton.addEventListener("mouseleave", () => {
   styleHomeButton("default");
 });
 
-backToCatalogButton?.addEventListener("click", exitToHome);
+backToCatalogButton?.addEventListener("click", () => {
+  showExplorer();
+  navigateTo("/explore");
+});
 
 selectPresentButton?.addEventListener("click", () => {
   setActiveTimeframe("present");
@@ -1171,6 +1315,8 @@ function clearLensTimers() {
   lensTimers.forEach((timer) => window.clearTimeout(timer));
   lensTimers = [];
   lensRunActive = false;
+  analysisAgentSteps?.setAttribute("aria-busy", "false");
+  generationAgentSteps?.setAttribute("aria-busy", "false");
 }
 
 function scheduleLensTask(callback, delay) {
@@ -1197,8 +1343,18 @@ function setLensStage(stageName) {
   const currentIndex = lensStageOrder.indexOf(stageName);
   document.querySelectorAll("[data-lens-progress]").forEach((item) => {
     const itemIndex = lensStageOrder.indexOf(item.dataset.lensProgress);
+    const label = item.querySelector("strong")?.textContent || "Step";
     item.classList.toggle("is-current", itemIndex === currentIndex);
     item.classList.toggle("is-complete", itemIndex < currentIndex);
+    if (itemIndex === currentIndex) {
+      item.setAttribute("aria-current", "step");
+    } else {
+      item.removeAttribute("aria-current");
+    }
+    item.setAttribute(
+      "aria-label",
+      `Step ${itemIndex + 1} of ${lensStageOrder.length}, ${label}, ${itemIndex === currentIndex ? "current" : itemIndex < currentIndex ? "complete" : "upcoming"}`
+    );
   });
 }
 
@@ -1239,6 +1395,16 @@ function renderPlaceSearchResults() {
       .toLowerCase();
     return !query || searchable.includes(query);
   });
+
+  if (
+    selectedLensScenario &&
+    !matches.some((scenario) => scenario.id === selectedLensScenario.id)
+  ) {
+    selectedLensScenario = null;
+    startPlaceAnalysisButton?.setAttribute("disabled", "");
+    renderPlaceSelection();
+    if (!isApplyingRoute) navigateTo("/analyze", {}, { replace: true });
+  }
 
   clearChildren(placeSearchResults);
   clearPlaceSearchButton?.toggleAttribute("hidden", !query);
@@ -1282,18 +1448,11 @@ function renderPlaceSelection() {
   clearChildren(placeSelection);
 
   if (!selectedLensScenario) {
-    const empty = createElement("div", "place-selection__empty");
-    empty.append(
-      createElement("strong", "", "Choose a place to begin."),
-      createElement(
-        "span",
-        "",
-        "The system will use its verified current view and the reference network already behind it."
-      )
-    );
-    placeSelection.appendChild(empty);
+    placeSelection.setAttribute("hidden", "");
     return;
   }
+
+  placeSelection.removeAttribute("hidden");
 
   const card = createElement("article", "place-selection__card");
   const image = document.createElement("img");
@@ -1317,6 +1476,7 @@ function selectLensScenario(scenario) {
   renderPlaceSelection();
   renderPlaceSearchResults();
   setLensLiveStatus(`${scenario.label} selected. Understand this place to continue.`);
+  if (!isApplyingRoute) navigateTo(`/analyze/${scenario.id}`);
 }
 
 function createAgentStep(label) {
@@ -1344,6 +1504,7 @@ function runAgentSteps(container, labels, onComplete) {
   if (!container) return;
   clearLensTimers();
   clearChildren(container);
+  container.setAttribute("aria-busy", "true");
   const items = labels.map((label) => {
     const item = createAgentStep(label);
     container.appendChild(item);
@@ -1356,6 +1517,7 @@ function runAgentSteps(container, labels, onComplete) {
     if (!lensRunActive) return;
     if (index >= items.length) {
       lensRunActive = false;
+      container.setAttribute("aria-busy", "false");
       onComplete?.();
       return;
     }
@@ -1371,6 +1533,18 @@ function runAgentSteps(container, labels, onComplete) {
   };
 
   advance();
+}
+
+function renderCompletedAgentSteps(container, labels) {
+  if (!container) return;
+  clearLensTimers();
+  clearChildren(container);
+  labels.forEach((label) => {
+    const item = createAgentStep(label);
+    setAgentStepState(item, "complete");
+    container.appendChild(item);
+  });
+  container.setAttribute("aria-busy", "false");
 }
 
 function renderAnalysisOutcome() {
@@ -1410,13 +1584,31 @@ function renderGrounding() {
   );
   groundingBrief.append(now, futureState);
 
+  const rationale = createElement("article", "recommendation-rationale");
+  rationale.append(
+    createElement("p", "eyebrow", "Why this direction"),
+    createElement("h4", "", "Recommendation rationale"),
+    createElement("p", "", scenario.lens.rationale.recommendation),
+    createElement(
+      "p",
+      "recommendation-rationale__tradeoff",
+      `Trade-off considered: ${scenario.lens.rationale.tradeoff}`
+    ),
+    createElement(
+      "p",
+      "recommendation-rationale__status",
+      "Prototype rationale · source records, implementation dates, outcomes, and ranking evidence connect with the live repository."
+    )
+  );
+  groundingBrief.appendChild(rationale);
+
   const networkHeading = createElement("div", "reference-network__heading");
   networkHeading.append(
     createElement("p", "eyebrow", "What informs this?"),
     createElement(
       "p",
       "",
-      "The system transfers relevant moves, not the appearance of another city."
+      "The system transfers relevant moves, not the appearance of another city. Prototype records mark local conditions separately from transferable precedents."
     )
   );
   referenceNetwork.appendChild(networkHeading);
@@ -1425,9 +1617,11 @@ function renderGrounding() {
   scenario.lens.references.forEach((reference) => {
     const card = createElement("article", "reference-card");
     card.append(
+      createElement("p", "reference-card__type", reference.type),
       createElement("p", "reference-card__location", reference.location),
       createElement("h4", "", reference.label),
-      createElement("p", "", reference.detail)
+      createElement("p", "", reference.detail),
+      createElement("p", "reference-card__provenance", reference.provenance)
     );
     grid.appendChild(card);
   });
@@ -1460,6 +1654,7 @@ function renderGenerationOutcome() {
 
 function startLensAnalysis() {
   if (!selectedLensScenario) return;
+  if (!isApplyingRoute) navigateTo(`/analyze/${selectedLensScenario.id}/read`);
   setLensStage("analysis");
   analysisOutcome?.setAttribute("hidden", "");
   continueToGroundingButton?.setAttribute("disabled", "");
@@ -1476,24 +1671,45 @@ function startLensAnalysis() {
 
 function startLensGeneration() {
   if (!selectedLensScenario) return;
+  if (!isApplyingRoute) navigateTo(`/analyze/${selectedLensScenario.id}/visualize`);
   setLensStage("generation");
   generationOutcome?.setAttribute("hidden", "");
   viewGeneratedScenarioButton?.setAttribute("disabled", "");
+  if (cancelGenerationButton) {
+    cancelGenerationButton.textContent = "Cancel run";
+    cancelGenerationButton.dataset.runState = "running";
+  }
   runAgentSteps(
     generationAgentSteps,
     selectedLensScenario.lens.generationSteps,
     () => {
       renderGenerationOutcome();
       viewGeneratedScenarioButton?.removeAttribute("disabled");
+      if (cancelGenerationButton) {
+        cancelGenerationButton.textContent = "Back to direction";
+        cancelGenerationButton.dataset.runState = "complete";
+      }
       setLensLiveStatus("Visual quality check complete. The comparison is ready.");
     }
   );
 }
 
 function cancelLensGeneration() {
+  const completed = cancelGenerationButton?.dataset.runState === "complete";
   clearLensTimers();
+  if (cancelGenerationButton) {
+    cancelGenerationButton.textContent = "Cancel run";
+    cancelGenerationButton.dataset.runState = "idle";
+  }
   setLensStage("grounding");
-  setLensLiveStatus("Generation cancelled. The evidence-led direction is saved.");
+  if (!isApplyingRoute && selectedLensScenario) {
+    navigateTo(`/analyze/${selectedLensScenario.id}/direction`);
+  }
+  setLensLiveStatus(
+    completed
+      ? "Returned to the evidence-led direction."
+      : "Generation cancelled. The evidence-led direction is saved."
+  );
 }
 
 function hidePlaceLens() {
@@ -1505,6 +1721,7 @@ function hidePlaceLens() {
 }
 
 function showLanding({ focusTarget = showExplorerButton } = {}) {
+  if (activeScenario) exitToHome({ restoreFocus: false });
   hidePlaceLens();
   landingWorkspace?.removeAttribute("hidden");
   landingWorkspace?.setAttribute("aria-hidden", "false");
@@ -1523,7 +1740,7 @@ function showExplorer({ focusTarget = backToLandingButton } = {}) {
   explorerWorkspace?.removeAttribute("hidden");
   explorerWorkspace?.setAttribute("aria-hidden", "false");
   document.body.dataset.workspace = "explorer";
-  exitToHome();
+  exitToHome({ restoreFocus: false });
   requestAnimationFrame(() => {
     const scene = explorerWorkspace?.querySelector("a-scene");
     scene?.resize?.();
@@ -1532,8 +1749,9 @@ function showExplorer({ focusTarget = backToLandingButton } = {}) {
   });
 }
 
-function openPlaceLens() {
+function openPlaceLens({ focus = true } = {}) {
   if (!placeLensOverlay) return;
+  if (activeScenario) exitToHome({ restoreFocus: false });
   lensLastFocusedElement = document.activeElement instanceof HTMLElement
     ? document.activeElement
     : null;
@@ -1550,11 +1768,12 @@ function openPlaceLens() {
   startPlaceAnalysisButton?.toggleAttribute("disabled", !selectedLensScenario);
   renderPlaceSearchResults();
   renderPlaceSelection();
-  requestAnimationFrame(() => placeSearchInput?.focus());
+  if (focus) requestAnimationFrame(() => placeSearchInput?.focus());
 }
 
 function closePlaceLens() {
   showLanding({ focusTarget: lensLastFocusedElement || openPlaceLensButton });
+  navigateTo("/");
 }
 
 function getFocusableElements(container) {
@@ -1586,10 +1805,272 @@ function trapPlaceLensFocus(event) {
   }
 }
 
+function findScenarioById(id) {
+  return scenarios.find((scenario) => scenario.id === id) || null;
+}
+
+function buildRouteHash(path, params = {}) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  const search = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== "") {
+      search.set(key, String(value));
+    }
+  });
+  const query = search.toString();
+  return `#${normalizedPath}${query ? `?${query}` : ""}`;
+}
+
+function navigateTo(path, params = {}, { replace = false, apply = false } = {}) {
+  const hash = buildRouteHash(path, params);
+  if (window.location.hash === hash) {
+    if (apply) applyRoute();
+    return;
+  }
+  window.history[replace ? "replaceState" : "pushState"](null, "", hash);
+  if (apply) {
+    lastAppliedHash = null;
+    applyRoute();
+  } else {
+    lastAppliedHash = hash;
+  }
+}
+
+function getRoute() {
+  const routeValue = window.location.hash.slice(1) || "/";
+  const [rawPath, rawQuery = ""] = routeValue.split("?");
+  const path = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
+  return {
+    hash: window.location.hash || "#/",
+    path,
+    parts: path.split("/").filter(Boolean),
+    params: new URLSearchParams(rawQuery)
+  };
+}
+
+function parseRouteNumber(params, key, minimum, maximum) {
+  const value = Number(params.get(key));
+  if (!Number.isFinite(value)) return null;
+  return Math.min(Math.max(value, minimum), maximum);
+}
+
+function getCameraRouteState() {
+  const lookControls = player?.components?.["look-controls"];
+  const camera = sceneElement?.camera;
+  const yaw = lookControls?.yawObject?.rotation?.y ?? camera?.rotation?.y;
+  const pitch = lookControls?.pitchObject?.rotation?.x ?? camera?.rotation?.x;
+  const toDegrees = (radians) =>
+    Number.isFinite(radians) ? Math.round((radians * 1800) / Math.PI) / 10 : null;
+  const fov = Number.isFinite(camera?.fov) ? Math.round(camera.fov * 10) / 10 : null;
+  return {
+    yaw: toDegrees(yaw),
+    pitch: toDegrees(pitch),
+    fov
+  };
+}
+
+function applyCameraRoute(params) {
+  const yaw = parseRouteNumber(params, "yaw", -360, 360);
+  const pitch = parseRouteNumber(params, "pitch", -85, 85);
+  const fov = parseRouteNumber(params, "fov", 30, 100);
+  if (yaw === null && pitch === null && fov === null) return;
+
+  const apply = () => {
+    const lookControls = player?.components?.["look-controls"];
+    const toRadians = (degrees) => (degrees * Math.PI) / 180;
+    if (yaw !== null) {
+      if (lookControls?.yawObject) {
+        lookControls.yawObject.rotation.y = toRadians(yaw);
+      } else {
+        player?.setAttribute("rotation", `0 ${yaw} 0`);
+      }
+    }
+    if (pitch !== null) {
+      if (lookControls?.pitchObject) {
+        lookControls.pitchObject.rotation.x = toRadians(pitch);
+      } else {
+        player?.setAttribute("rotation", `${pitch} ${yaw ?? 0} 0`);
+      }
+    }
+    if (fov !== null && sceneElement?.camera) {
+      sceneElement.camera.fov = fov;
+      sceneElement.camera.updateProjectionMatrix();
+    }
+  };
+
+  if (sceneElement?.hasLoaded) {
+    requestAnimationFrame(apply);
+  } else {
+    sceneElement?.addEventListener("loaded", apply, { once: true });
+  }
+}
+
+function getViewerRouteParams(includeCamera = false) {
+  const params = { view: activeTimeframe };
+  if (includeCamera) Object.assign(params, getCameraRouteState());
+  return params;
+}
+
+function syncViewerRoute({ includeCamera = false } = {}) {
+  if (!activeScenario || isApplyingRoute) return;
+  navigateTo(
+    `/places/${activeScenario.id}`,
+    getViewerRouteParams(includeCamera),
+    { replace: true }
+  );
+}
+
+function openScenarioRoute(scenario) {
+  showExplorer({ focusTarget: null });
+  enterScenario(scenario);
+  navigateTo(`/places/${scenario.id}`, { view: "present" });
+}
+
+function restoreLensStage(scenario, stage) {
+  if (!scenario || !stage) {
+    setLensStage("place");
+    return;
+  }
+
+  if (stage === "read") {
+    renderCompletedAgentSteps(analysisAgentSteps, scenario.lens.analysisSteps);
+    renderAnalysisOutcome();
+    continueToGroundingButton?.removeAttribute("disabled");
+    setLensStage("analysis");
+    setLensLiveStatus("Precomputed place read ready.");
+    return;
+  }
+
+  renderCompletedAgentSteps(analysisAgentSteps, scenario.lens.analysisSteps);
+  renderAnalysisOutcome();
+  continueToGroundingButton?.removeAttribute("disabled");
+  renderGrounding();
+
+  if (stage === "direction") {
+    setLensStage("grounding");
+    setLensLiveStatus("Precomputed direction ready.");
+    return;
+  }
+
+  if (stage === "visualize") {
+    renderCompletedAgentSteps(generationAgentSteps, scenario.lens.generationSteps);
+    renderGenerationOutcome();
+    viewGeneratedScenarioButton?.removeAttribute("disabled");
+    if (cancelGenerationButton) {
+      cancelGenerationButton.textContent = "Back to direction";
+      cancelGenerationButton.dataset.runState = "complete";
+    }
+    setLensStage("generation");
+    setLensLiveStatus("Precomputed verified comparison ready.");
+    return;
+  }
+
+  setLensStage("place");
+}
+
+function applyRoute() {
+  const route = getRoute();
+  if (isApplyingRoute || route.hash === lastAppliedHash) return;
+  lastAppliedHash = route.hash;
+  isApplyingRoute = true;
+
+  try {
+    const [section, scenarioId, stage] = route.parts;
+
+    if (section === "analyze") {
+      const scenario = scenarioId ? findScenarioById(scenarioId) : null;
+      if (scenarioId && !scenario) {
+        window.history.replaceState(null, "", buildRouteHash("/analyze"));
+        lastAppliedHash = "#/analyze";
+      }
+      if (
+        scenario &&
+        stage &&
+        !["read", "direction", "visualize"].includes(stage)
+      ) {
+        window.history.replaceState(
+          null,
+          "",
+          buildRouteHash(`/analyze/${scenario.id}`)
+        );
+        lastAppliedHash = `#/analyze/${scenario.id}`;
+      }
+      selectedLensScenario = scenario;
+      if (placeSearchInput) placeSearchInput.value = "";
+      openPlaceLens({ focus: false });
+      startPlaceAnalysisButton?.toggleAttribute("disabled", !selectedLensScenario);
+      renderPlaceSearchResults();
+      renderPlaceSelection();
+      restoreLensStage(selectedLensScenario, stage);
+      return;
+    }
+
+    if (section === "places") {
+      const scenario = findScenarioById(scenarioId);
+      if (scenario) {
+        showExplorer({ focusTarget: null });
+        enterScenario(scenario, {
+          timeframe: route.params.get("view"),
+          focus: false
+        });
+        applyCameraRoute(route.params);
+        return;
+      }
+      window.history.replaceState(null, "", buildRouteHash("/explore"));
+      lastAppliedHash = "#/explore";
+      showExplorer({ focusTarget: null });
+      return;
+    }
+
+    if (section === "explore") {
+      showExplorer({ focusTarget: null });
+      return;
+    }
+
+    showLanding({ focusTarget: null });
+  } finally {
+    isApplyingRoute = false;
+  }
+}
+
+async function shareActiveScenario() {
+  if (!activeScenario) return;
+  syncViewerRoute({ includeCamera: true });
+  const url = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
+  const shareData = {
+    title: `${activeScenario.label} · InflectionPoints`,
+    text: `Explore ${activeScenario.label} as it is now and as a possible future.`,
+    url
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+      setViewerLiveStatus("Share sheet opened.");
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    setViewerLiveStatus("Share link copied. It restores this view and comparison state.");
+  } catch (error) {
+    if (error?.name === "AbortError") return;
+    window.prompt("Copy this share link", url);
+    setViewerLiveStatus("Share link ready to copy.");
+  }
+}
+
 function initPlaceLens() {
-  openPlaceLensButton?.addEventListener("click", openPlaceLens);
-  showExplorerButton?.addEventListener("click", () => showExplorer());
-  backToLandingButton?.addEventListener("click", () => showLanding());
+  openPlaceLensButton?.addEventListener("click", () => {
+    openPlaceLens();
+    navigateTo("/analyze");
+  });
+  showExplorerButton?.addEventListener("click", () => {
+    showExplorer();
+    navigateTo("/explore");
+  });
+  backToLandingButton?.addEventListener("click", () => {
+    showLanding();
+    navigateTo("/");
+  });
   closePlaceLensButton?.addEventListener("click", closePlaceLens);
   placeSearchInput?.addEventListener("input", renderPlaceSearchResults);
   clearPlaceSearchButton?.addEventListener("click", () => {
@@ -1618,13 +2099,20 @@ function initPlaceLens() {
     clearLensTimers();
     setLensStage("place");
     placeSearchInput?.focus();
+    if (selectedLensScenario) navigateTo(`/analyze/${selectedLensScenario.id}`);
   });
   continueToGroundingButton?.addEventListener("click", () => {
     renderGrounding();
     setLensStage("grounding");
     generateScenarioButton?.focus();
+    if (selectedLensScenario) {
+      navigateTo(`/analyze/${selectedLensScenario.id}/direction`);
+    }
   });
-  backToAnalysisButton?.addEventListener("click", () => setLensStage("analysis"));
+  backToAnalysisButton?.addEventListener("click", () => {
+    setLensStage("analysis");
+    if (selectedLensScenario) navigateTo(`/analyze/${selectedLensScenario.id}/read`);
+  });
   generateScenarioButton?.addEventListener("click", startLensGeneration);
   cancelGenerationButton?.addEventListener("click", cancelLensGeneration);
   viewGeneratedScenarioButton?.addEventListener("click", () => {
@@ -1632,14 +2120,17 @@ function initPlaceLens() {
     hidePlaceLens();
     showExplorer({ focusTarget: null });
     enterScenario(selectedLensScenario);
+    navigateTo(`/places/${selectedLensScenario.id}`, { view: "present" });
   });
+  shareScenarioButton?.addEventListener("click", shareActiveScenario);
   document.addEventListener("keydown", trapPlaceLensFocus);
-  renderPlaceSearchResults();
-  renderPlaceSelection();
 }
 
 buildScenarioCatalog();
 buildTimeframeControls();
 styleHomeButton("default");
-exitToHome();
 initPlaceLens();
+sceneElement?.addEventListener("loaded", syncAframeAuxiliaryAccessibility);
+window.addEventListener("popstate", applyRoute);
+window.addEventListener("hashchange", applyRoute);
+applyRoute();

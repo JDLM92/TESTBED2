@@ -509,6 +509,8 @@ html:not(.a-fullscreen) body.a-body {
 .viewer-badges {
   display: flex;
   gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .viewer-badges span {
@@ -817,6 +819,12 @@ html:not(.a-fullscreen) body.a-body {
   color: var(--accent);
   background: rgba(68, 241, 166, 0.07);
   font-size: 0.7rem;
+}
+
+.scenario-info-provenance {
+  margin: 0.9rem 0 0;
+  color: rgba(183, 196, 210, 0.7);
+  font-size: 0.72rem;
 }
 
 .immersive-viewer.is-vr .viewer-toolbar,
@@ -1336,6 +1344,25 @@ body.admin-open a-scene {
     font-size: 0.72rem;
   }
 
+  #shareScenario,
+  #openScenarioInfo {
+    width: 44px;
+    padding-inline: 0;
+    font-size: 0;
+  }
+
+  #shareScenario::after {
+    content: "↗";
+    font-size: 1.05rem;
+  }
+
+  #openScenarioInfo::after {
+    content: "i";
+    font-family: Georgia, serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
   .comparison-dock {
     bottom: max(0.5rem, env(safe-area-inset-bottom));
     width: calc(100% - 1rem);
@@ -1506,12 +1533,11 @@ input:focus-visible {
   z-index: 40;
   display: none;
   overflow-y: auto;
-  padding: clamp(0.75rem, 4vw, 3rem);
+  padding: 0;
   background:
     radial-gradient(circle at 12% 6%, rgba(68, 241, 166, 0.2), transparent 32%),
     radial-gradient(circle at 88% 88%, rgba(255, 180, 84, 0.14), transparent 36%),
     rgba(2, 7, 11, 0.94);
-  backdrop-filter: blur(18px);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1520,12 +1546,11 @@ input:focus-visible {
 }
 
 .place-lens-panel {
-  width: min(1080px, 100%);
-  min-height: min(720px, calc(100dvh - 1.5rem));
+  width: 100%;
+  min-height: 100dvh;
   margin: 0 auto;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 30px;
+  border: 0;
+  border-radius: 0;
   background:
     linear-gradient(145deg, rgba(24, 39, 50, 0.92), rgba(6, 12, 18, 0.98) 48%),
     var(--panel-strong);
@@ -1549,10 +1574,24 @@ input:focus-visible {
   line-height: 1.2;
 }
 
-.place-lens__header p:last-child {
+.place-lens__header > div > p:not(.eyebrow) {
   max-width: 64ch;
   margin: 0;
   color: var(--muted);
+}
+
+.prototype-disclosure {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.8rem !important;
+  color: var(--muted) !important;
+  font-size: 0.76rem;
+}
+
+.prototype-disclosure strong {
+  color: var(--accent);
+  font-weight: 700;
 }
 
 .place-lens__header .icon-button {
@@ -1685,6 +1724,12 @@ input:focus-visible {
 
 .place-search__field input::placeholder {
   color: rgba(183, 196, 210, 0.64);
+}
+
+.place-search__field input[type="search"]::-webkit-search-cancel-button,
+.place-search__field input[type="search"]::-webkit-search-decoration {
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .place-search__clear {
@@ -2047,6 +2092,37 @@ input:focus-visible {
   font-size: 0.92rem;
 }
 
+.recommendation-rationale {
+  grid-column: 1 / -1;
+  padding: 1.15rem;
+  border: 1px solid rgba(255, 180, 84, 0.32);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255, 180, 84, 0.1), rgba(4, 10, 15, 0.68));
+}
+
+.recommendation-rationale h4 {
+  margin: 0.35rem 0 0.55rem;
+  font-family: "Unbounded", "Space Grotesk", sans-serif;
+  font-size: 1rem;
+}
+
+.recommendation-rationale > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.recommendation-rationale__tradeoff {
+  margin-top: 0.75rem !important;
+  color: var(--ink) !important;
+}
+
+.recommendation-rationale__status {
+  margin-top: 0.8rem !important;
+  color: rgba(183, 196, 210, 0.72) !important;
+  font-size: 0.78rem !important;
+}
+
 .reference-network {
   display: grid;
   gap: 0.8rem;
@@ -2088,6 +2164,15 @@ input:focus-visible {
   text-transform: uppercase;
 }
 
+.reference-card__type {
+  margin: 0 0 0.35rem;
+  color: var(--accent-warm);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .reference-card h4 {
   margin: 0.35rem 0 0.45rem;
   font-size: 0.98rem;
@@ -2097,6 +2182,12 @@ input:focus-visible {
   margin: 0;
   color: var(--muted);
   font-size: 0.86rem;
+}
+
+.reference-card__provenance {
+  margin-top: 0.8rem !important;
+  color: rgba(183, 196, 210, 0.68) !important;
+  font-size: 0.74rem !important;
 }
 
 .generation-outcome__heading {
@@ -2133,12 +2224,12 @@ body.place-lens-open {
 
 @media (max-width: 720px) {
   .place-lens-overlay {
-    padding: max(0.5rem, env(safe-area-inset-top)) 0.5rem max(0.5rem, env(safe-area-inset-bottom));
+    padding: 0;
   }
 
   .place-lens-panel {
-    min-height: calc(100dvh - 1rem);
-    border-radius: 22px;
+    min-height: 100dvh;
+    border-radius: 0;
   }
 
   .place-lens__header {
@@ -2150,7 +2241,7 @@ body.place-lens-open {
     font-size: 1.48rem;
   }
 
-  .place-lens__header p:last-child {
+  .place-lens__header > div > p:not(.eyebrow) {
     font-size: 0.88rem;
   }
 
