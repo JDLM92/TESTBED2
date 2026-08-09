@@ -25,7 +25,11 @@
       </div>
     </header>
 
-    <main id="landingWorkspace" class="landing-workspace">
+    <main
+      id="landingWorkspace"
+      class="landing-workspace"
+      aria-hidden="false"
+    >
       <div class="landing-intro">
         <p class="eyebrow">Start Here</p>
         <h2>What would you like to do?</h2>
@@ -64,16 +68,21 @@
       </nav>
     </main>
 
-    <main id="explorerWorkspace" class="explorer-workspace" hidden>
+    <main
+      id="explorerWorkspace"
+      class="explorer-workspace"
+      aria-hidden="true"
+      hidden
+    >
       <div class="workspace-heading">
         <div>
-          <p class="eyebrow">Scenario Explorer</p>
-          <h2>Choose a city to begin</h2>
+          <p class="eyebrow">Scenario Library</p>
+          <h2>Explore mobility futures</h2>
         </div>
         <div class="workspace-heading__actions">
           <p>
-            Select a scenario inside the viewer, then switch between Present
-            and Future. Use the VR control for a headset experience.
+            Choose a place, enter its 360° environment, and compare present
+            conditions with a possible future.
           </p>
           <button id="backToLanding" class="icon-button" type="button">
             Back to main menu
@@ -81,7 +90,56 @@
         </div>
       </div>
 
-      <a-scene
+      <section id="scenarioCatalog" class="scenario-catalog">
+        <div class="catalog-intro">
+          <div>
+            <p class="catalog-kicker">Featured scenarios</p>
+            <h3>Three places. Three mobility inflection points.</h3>
+          </div>
+          <p>
+            Each experience pairs a current urban condition with an immersive
+            future direction. Additional futures and sound layers can extend
+            each story over time.
+          </p>
+        </div>
+        <div id="scenarioCardGrid" class="scenario-card-grid"></div>
+        <div class="capability-strip" aria-label="Experience capabilities">
+          <span><strong>Now</strong> Present-to-future 360° comparison</span>
+          <span><strong>Expandable</strong> Multiple future pathways</span>
+          <span><strong>Next layer</strong> Spatial city soundscapes</span>
+        </div>
+      </section>
+
+      <section
+        id="immersiveViewer"
+        class="immersive-viewer"
+        aria-label="Immersive scenario viewer"
+        tabindex="-1"
+        hidden
+      >
+        <div class="viewer-toolbar">
+          <button id="backToCatalog" class="icon-button" type="button">
+            ← All scenarios
+          </button>
+          <div class="viewer-context">
+            <p id="activeScenarioLocation" class="eyebrow"></p>
+            <h3 id="activeScenarioTitle"></h3>
+          </div>
+          <div class="viewer-badges" aria-label="Viewer format">
+            <span>360°</span>
+            <button
+              id="openScenarioInfo"
+              class="viewer-info-button"
+              type="button"
+              aria-expanded="false"
+            >
+              About
+            </button>
+          </div>
+        </div>
+
+        <a-scene
+        embedded
         background="color: #000"
         renderer="antialias: true"
         webxr="optionalFeatures: local-floor, bounded-floor"
@@ -142,38 +200,20 @@
         ></a-entity>
       </a-entity>
 
-      <a-sky id="photoSphere" radius="100" visible="false"></a-sky>
+      <a-sky
+        id="photoSphere"
+        radius="100"
+        visible="false"
+        material="shader: flat; side: back"
+      ></a-sky>
+      <a-sky
+        id="futureSphere"
+        radius="99.9"
+        visible="false"
+        material="shader: flat; side: back; transparent: true; opacity: 0; depthWrite: false"
+      ></a-sky>
 
-      <a-entity id="homeMenu" position="0 1.5 -2">
-        <a-plane
-          width="2.1"
-          height="1.8"
-          color="#091017"
-          opacity="0.9"
-          material="shader: flat; side: double"
-          class="menu-surface"
-        ></a-plane>
-        <a-text
-          value="InflectionPoints: Mobility"
-          position="0.1 1.5 0.01"
-          width="2"
-          align="center"
-          color="#ffffff"
-          shader="msdf"
-          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
-          scale="1.8 1.8 1"
-        ></a-text>
-        <a-text
-          value="Select a scenario to explore future mobility."
-          position="0.1 1 0.01"
-          width="1.9"
-          align="center"
-          color="#ffffff"
-          opacity="0.8"
-          shader="msdf"
-          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
-          wrap-count="42"
-        ></a-text>
+      <a-entity id="homeMenu" position="0 1.5 -2" visible="false">
         <a-entity id="scenarioButtonContainer" position="0 -0.15 0.01"></a-entity>
       </a-entity>
 
@@ -182,11 +222,11 @@
         <a-entity
           id="homeButton"
           class="clickable"
-          position="1.35 0 0"
+          position="1.55 0 0"
           render-order="3"
         >
           <a-text
-            value="Home"
+            value="All"
             align="center"
             width="0.55"
             color="#091017"
@@ -199,7 +239,12 @@
         </a-entity>
       </a-entity>
 
-      <a-entity id="infoLabel" position="0 1.05 -1.55" render-order="2">
+      <a-entity
+        id="infoLabel"
+        position="0 1.05 -1.55"
+        render-order="2"
+        visible="false"
+      >
         <a-text
           id="infoText"
           value=""
@@ -211,7 +256,107 @@
           wrap-count="48"
         ></a-text>
       </a-entity>
-      </a-scene>
+        </a-scene>
+
+        <div
+          id="comparisonDock"
+          class="comparison-dock"
+          aria-label="Compare present and future"
+        >
+          <div class="comparison-dock__header">
+            <div class="comparison-state" aria-live="polite">
+              <span>Viewing</span>
+              <strong id="dockStateLabel">Today</strong>
+            </div>
+            <button
+              id="toggleComparisonDock"
+              class="dock-collapse-button"
+              type="button"
+              aria-label="Collapse comparison controls"
+              aria-expanded="true"
+            >
+              <span aria-hidden="true">⌄</span>
+            </button>
+          </div>
+
+          <div class="comparison-dock__body">
+            <button
+              id="futureDirectionButton"
+              class="future-direction-button"
+              type="button"
+              aria-haspopup="listbox"
+              aria-expanded="false"
+              disabled
+            >
+              <span>Future direction</span>
+              <strong id="futureDirectionLabel">Future</strong>
+              <span class="future-direction-button__arrow" aria-hidden="true">▾</span>
+            </button>
+
+            <div
+              id="futureOptionsMenu"
+              class="future-options-menu"
+              role="listbox"
+              aria-label="Choose a future direction"
+              hidden
+            ></div>
+
+            <div class="comparison-controls">
+              <button
+                id="selectPresent"
+                class="comparison-state-button comparison-state-button--present is-active"
+                type="button"
+                aria-pressed="true"
+              >
+                Today
+              </button>
+              <button
+                id="holdCompare"
+                class="hold-compare-button"
+                type="button"
+              >
+                <span aria-hidden="true">↔</span>
+                <strong id="holdCompareLabel">Hold for Future</strong>
+              </button>
+              <button
+                id="selectFuture"
+                class="comparison-state-button comparison-state-button--future"
+                type="button"
+                aria-pressed="false"
+              >
+                Future
+              </button>
+            </div>
+            <p class="comparison-shortcut">Desktop: hold Space to compare</p>
+          </div>
+        </div>
+
+        <aside
+          id="scenarioInfoSheet"
+          class="scenario-info-sheet"
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="scenarioInfoTitle"
+          hidden
+        >
+          <div class="scenario-info-sheet__header">
+            <div>
+              <p id="scenarioInfoEyebrow" class="eyebrow"></p>
+              <h3 id="scenarioInfoTitle"></h3>
+            </div>
+            <button
+              id="closeScenarioInfo"
+              class="icon-button"
+              type="button"
+              aria-label="Close scenario information"
+            >
+              Close
+            </button>
+          </div>
+          <p id="scenarioInfoDescription" class="scenario-info-description"></p>
+          <div id="scenarioInfoThemes" class="scenario-info-themes"></div>
+        </aside>
+      </section>
     </main>
 
     <section id="adminOverlay" class="admin-overlay" aria-hidden="true">

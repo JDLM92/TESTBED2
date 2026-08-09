@@ -82,7 +82,7 @@ const BUTTON_TEXT_Z_OFFSET = 0.015;
 const BUTTON_DIMENSIONS = {
   scenario: { width: 1.46, height: 0.42, radius: 0.21 },
   timeframe: { width: 1.0, height: 0.38, radius: 0.19 },
-  home: { width: 0.36, height: 0.36, radius: 0.18 }
+  home: { width: 0.72, height: 0.38, radius: 0.19 }
 };
 
 function pillSpec({ width, height, radius, depth }) {
@@ -160,54 +160,110 @@ const scenarios = [
   {
     id: "mexico-city",
     label: "Mexico City center",
+    location: "Centro Histórico · Mexico City",
+    summary:
+      "A historic intersection rebalanced around walking, cycling, shade, and flexible shared space.",
+    themes: ["Shared streets", "Active mobility", "Urban greening"],
+    thumbnail: "assets/mexico-city/present/Mexico City Present.png",
     present: {
       asset: "#asset-mexico-present",
       description:
         "A narrow colonial intersection in Mexico City’s Centro Histórico is dominated by asphalt, faded crosswalks, scattered bollards, minimal greenery, and occasional delivery vans.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
     },
-    future: {
-      asset: "#asset-mexico-future",
-      description:
-        "The same intersection becomes a superblock shared-space with cobblestone paving, shaded cycle tracks lined by trees, modular vendor and cargo kiosks, wider sidewalks, and car-free priority for people.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
-    }
+    futures: [
+      {
+        id: "people-first-superblock",
+        label: "People-first superblock",
+        asset: "#asset-mexico-future",
+        description:
+          "The same intersection becomes a superblock shared-space with cobblestone paving, shaded cycle tracks lined by trees, modular vendor and cargo kiosks, wider sidewalks, and car-free priority for people.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
+      }
+    ]
   },
   {
     id: "chicago",
     label: "Chicago Garfield Park",
+    location: "Garfield Park · Chicago",
+    summary:
+      "An elevated transit corridor becomes a brighter, greener connection for everyday movement and public life.",
+    themes: ["Transit priority", "Public realm", "Micromobility"],
+    thumbnail: "assets/chicago/present/Chicago Garfield Park Today.png",
     present: {
       asset: "#asset-chicago-present",
       description:
         "A Lake Street viaduct in downtown Chicago is framed by elevated train tracks, multi-lane car traffic, narrow sidewalks, and sparse greenery.\n\nCars and delivery trucks dominate every level of the corridor, making the space noisy, dark, and difficult to navigate on foot or by bike."
     },
-    future: {
-      asset: "#asset-chicago-future",
-      description:
-        "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
-    }
+    futures: [
+      {
+        id: "transit-promenade",
+        label: "Transit promenade",
+        asset: "#asset-chicago-future",
+        description:
+          "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
+      }
+    ]
   },
   {
     id: "london",
     label: "London South Bank",
+    location: "South Bank · London",
+    summary:
+      "A parking-led junction evolves into a calm, climate-ready neighborhood street with safer crossings.",
+    themes: ["Climate resilience", "Safe crossings", "Cycle network"],
+    thumbnail: "assets/london/present/London Present.png",
     present: {
       asset: "#asset-london-present",
       description:
         "A parking-lined junction with painted bike symbols, minimal greenery, and kerb conflicts that swell at night."
     },
-    future: {
-      asset: "#asset-london-future",
-      description:
-        "A green, calm Paul × Willow with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading/PHV bays."
-    }
+    futures: [
+      {
+        id: "green-neighborhood-street",
+        label: "Green neighborhood street",
+        asset: "#asset-london-future",
+        description:
+          "A green, calm Paul × Willow with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading/PHV bays."
+      }
+    ]
   }
 ];
 
 const photoSphere = document.getElementById("photoSphere");
+const futureSphere = document.getElementById("futureSphere");
 const infoText = document.getElementById("infoText");
 const homeMenu = document.getElementById("homeMenu");
 const scenarioControls = document.getElementById("scenarioControls");
 const scenarioButtonContainer = document.getElementById("scenarioButtonContainer");
+const scenarioCatalog = document.getElementById("scenarioCatalog");
+const scenarioCardGrid = document.getElementById("scenarioCardGrid");
+const immersiveViewer = document.getElementById("immersiveViewer");
+const backToCatalogButton = document.getElementById("backToCatalog");
+const activeScenarioLocation = document.getElementById("activeScenarioLocation");
+const activeScenarioTitle = document.getElementById("activeScenarioTitle");
+const comparisonDock = document.getElementById("comparisonDock");
+const toggleComparisonDockButton = document.getElementById(
+  "toggleComparisonDock"
+);
+const dockStateLabel = document.getElementById("dockStateLabel");
+const futureDirectionButton = document.getElementById("futureDirectionButton");
+const futureDirectionLabel = document.getElementById("futureDirectionLabel");
+const futureOptionsMenu = document.getElementById("futureOptionsMenu");
+const selectPresentButton = document.getElementById("selectPresent");
+const selectFutureButton = document.getElementById("selectFuture");
+const holdCompareButton = document.getElementById("holdCompare");
+const holdCompareLabel = document.getElementById("holdCompareLabel");
+const openScenarioInfoButton = document.getElementById("openScenarioInfo");
+const closeScenarioInfoButton = document.getElementById("closeScenarioInfo");
+const scenarioInfoSheet = document.getElementById("scenarioInfoSheet");
+const scenarioInfoEyebrow = document.getElementById("scenarioInfoEyebrow");
+const scenarioInfoTitle = document.getElementById("scenarioInfoTitle");
+const scenarioInfoDescription = document.getElementById(
+  "scenarioInfoDescription"
+);
+const scenarioInfoThemes = document.getElementById("scenarioInfoThemes");
 const timeframeToggle = document.getElementById("timeframeToggle");
 const homeButton = document.getElementById("homeButton");
+const sceneElement = immersiveViewer?.querySelector("a-scene");
 
 if (homeButton) {
   homeButton.removeAttribute("geometry");
@@ -222,9 +278,12 @@ if (homeButton) {
 
 const timeframeButtons = new Map();
 const scenarioButtons = new Map();
+const scenarioCards = new Map();
 
 let activeScenario = null;
 let activeTimeframe = "present";
+let activeFutureIndex = 0;
+let comparisonReturnTimeframe = null;
 
 function clearChildren(el) {
   while (el.firstChild) {
@@ -409,6 +468,122 @@ function buildHomeMenu() {
   });
 }
 
+function buildScenarioCatalog() {
+  if (!scenarioCardGrid) return;
+  clearChildren(scenarioCardGrid);
+  scenarioCards.clear();
+
+  scenarios.forEach((scenario, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "scenario-card";
+    card.dataset.scenarioId = scenario.id;
+    card.setAttribute(
+      "aria-label",
+      `Explore ${scenario.label} as a 360 degree scenario`
+    );
+
+    const media = document.createElement("span");
+    media.className = "scenario-card__media";
+
+    if (scenario.thumbnail) {
+      const image = document.createElement("img");
+      image.src = scenario.thumbnail;
+      image.alt = "";
+      image.loading = index === 0 ? "eager" : "lazy";
+      image.decoding = "async";
+      media.appendChild(image);
+    }
+
+    const formatBadge = document.createElement("span");
+    formatBadge.className = "scenario-card__format";
+    formatBadge.textContent = "360° experience";
+    media.appendChild(formatBadge);
+
+    const body = document.createElement("span");
+    body.className = "scenario-card__body";
+
+    const location = document.createElement("span");
+    location.className = "scenario-card__location";
+    location.textContent = scenario.location || "New city scenario";
+
+    const title = document.createElement("strong");
+    title.className = "scenario-card__title";
+    title.textContent = scenario.label;
+
+    const summary = document.createElement("span");
+    summary.className = "scenario-card__summary";
+    summary.textContent =
+      scenario.summary || "Explore this place across present and future states.";
+
+    const themes = document.createElement("span");
+    themes.className = "scenario-card__themes";
+    const themeList = scenario.themes?.length
+      ? scenario.themes
+      : ["Mobility future"];
+    themeList.forEach((theme) => {
+      const chip = document.createElement("span");
+      chip.textContent = theme;
+      themes.appendChild(chip);
+    });
+
+    const footer = document.createElement("span");
+    footer.className = "scenario-card__footer";
+
+    const futureCount = document.createElement("span");
+    const count = scenario.futures?.length || 1;
+    futureCount.textContent = `Present + ${count} future ${count === 1 ? "vision" : "visions"}`;
+
+    const action = document.createElement("span");
+    action.className = "scenario-card__action";
+    action.textContent = "Explore in 360° →";
+
+    footer.append(futureCount, action);
+    body.append(location, title, summary, themes, footer);
+    card.append(media, body);
+    card.addEventListener("click", () => enterScenario(scenario));
+    scenarioCardGrid.appendChild(card);
+    scenarioCards.set(scenario.id, card);
+  });
+
+  const placeholder = document.createElement("article");
+  placeholder.className = "scenario-card scenario-card--placeholder";
+  placeholder.setAttribute("aria-label", "Space for more city scenarios");
+
+  const placeholderMark = document.createElement("span");
+  placeholderMark.className = "scenario-card__placeholder-mark";
+  placeholderMark.textContent = "+";
+
+  const placeholderBody = document.createElement("span");
+  placeholderBody.className = "scenario-card__body";
+
+  const placeholderLocation = document.createElement("span");
+  placeholderLocation.className = "scenario-card__location";
+  placeholderLocation.textContent = "Growing collection";
+
+  const placeholderTitle = document.createElement("strong");
+  placeholderTitle.className = "scenario-card__title";
+  placeholderTitle.textContent = "More scenarios to come";
+
+  const placeholderSummary = document.createElement("span");
+  placeholderSummary.className = "scenario-card__summary";
+  placeholderSummary.textContent =
+    "A flexible slot for the next city, district, or alternative future pathway.";
+
+  const placeholderStatus = document.createElement("span");
+  placeholderStatus.className = "scenario-card__placeholder-status";
+  placeholderStatus.textContent = "Collection designed to expand";
+
+  placeholderBody.append(
+    placeholderLocation,
+    placeholderTitle,
+    placeholderSummary,
+    placeholderStatus
+  );
+  placeholder.append(placeholderMark, placeholderBody);
+  scenarioCardGrid.appendChild(placeholder);
+}
+
 function buildTimeframeControls() {
   clearChildren(timeframeToggle);
   timeframeButtons.clear();
@@ -479,53 +654,220 @@ function updateTimeframeButtons() {
   });
 }
 
+function getActiveFuture() {
+  return activeScenario?.futures?.[activeFutureIndex] || null;
+}
+
+function setFutureBlend(timeframe, immediate = false) {
+  if (!futureSphere) return;
+  const opacity = timeframe === "future" ? 1 : 0;
+  const reduceMotion = window.matchMedia?.(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  futureSphere.removeAttribute("animation__blend");
+  if (immediate || reduceMotion) {
+    futureSphere.setAttribute("material", "opacity", opacity);
+    return;
+  }
+
+  futureSphere.setAttribute(
+    "animation__blend",
+    `property: material.opacity; to: ${opacity}; dur: 220; easing: easeInOutQuad`
+  );
+}
+
+function updateScenarioInfo() {
+  if (!activeScenario) return;
+  const future = getActiveFuture();
+  const frame = activeTimeframe === "present" ? activeScenario.present : future;
+  const stateLabel = activeTimeframe === "present" ? "Today" : "Future";
+
+  if (scenarioInfoEyebrow) {
+    scenarioInfoEyebrow.textContent = `${stateLabel} · ${activeScenario.location || "City scenario"}`;
+  }
+  if (scenarioInfoTitle) {
+    scenarioInfoTitle.textContent =
+      activeTimeframe === "present"
+        ? activeScenario.label
+        : future?.label || activeScenario.label;
+  }
+  if (scenarioInfoDescription) {
+    scenarioInfoDescription.textContent = frame?.description || activeScenario.summary;
+  }
+  if (scenarioInfoThemes) {
+    clearChildren(scenarioInfoThemes);
+    const themes = activeScenario.themes?.length
+      ? activeScenario.themes
+      : ["Mobility future"];
+    themes.forEach((theme) => {
+      const chip = document.createElement("span");
+      chip.textContent = theme;
+      scenarioInfoThemes.appendChild(chip);
+    });
+  }
+}
+
+function updateComparisonControls(displayedTimeframe = activeTimeframe) {
+  if (!activeScenario) return;
+  const future = getActiveFuture();
+  const isPreviewing = comparisonReturnTimeframe !== null;
+  const displayedLabel =
+    displayedTimeframe === "present" ? "Today" : future?.label || "Future";
+
+  if (dockStateLabel) {
+    dockStateLabel.textContent = isPreviewing
+      ? `Comparing · ${displayedLabel}`
+      : displayedLabel;
+  }
+  if (futureDirectionLabel) {
+    futureDirectionLabel.textContent = future?.label || "Future";
+  }
+  if (holdCompareLabel) {
+    holdCompareLabel.textContent =
+      activeTimeframe === "future" ? "Hold for Today" : "Hold for Future";
+  }
+
+  const presentActive = activeTimeframe === "present";
+  selectPresentButton?.classList.toggle("is-active", presentActive);
+  selectPresentButton?.setAttribute("aria-pressed", String(presentActive));
+  selectFutureButton?.classList.toggle("is-active", !presentActive);
+  selectFutureButton?.setAttribute("aria-pressed", String(!presentActive));
+  comparisonDock?.classList.toggle("is-comparing", isPreviewing);
+}
+
+function closeFutureOptions() {
+  futureOptionsMenu?.setAttribute("hidden", "");
+  futureDirectionButton?.setAttribute("aria-expanded", "false");
+}
+
+function buildFutureOptions() {
+  if (!activeScenario || !futureOptionsMenu || !futureDirectionButton) return;
+  clearChildren(futureOptionsMenu);
+  const futures = activeScenario.futures || [];
+  const hasOptions = futures.length > 1;
+
+  futureDirectionButton.disabled = !hasOptions;
+  futureDirectionButton.classList.toggle("has-options", hasOptions);
+  closeFutureOptions();
+
+  futures.forEach((future, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "future-option-button";
+    button.setAttribute("role", "option");
+    button.setAttribute("aria-selected", String(index === activeFutureIndex));
+    button.textContent = future.label;
+    button.addEventListener("click", () => {
+      activeFutureIndex = index;
+      futureSphere?.setAttribute("src", future.asset);
+      buildFutureOptions();
+      updateComparisonControls();
+      updateScenarioInfo();
+      if (activeTimeframe === "future") {
+        setFutureBlend("future", true);
+      }
+      futureDirectionButton.focus();
+    });
+    futureOptionsMenu.appendChild(button);
+  });
+}
+
 function setActiveTimeframe(timeframe) {
   if (!activeScenario || activeTimeframe === timeframe) return;
   activeTimeframe = timeframe;
   updateTimeframeButtons();
-  applyScenarioFrame();
+  setFutureBlend(timeframe);
+  updateComparisonControls();
+  updateScenarioInfo();
 }
 
-function applyScenarioFrame() {
+function applyScenarioFrame(immediate = false) {
   if (!activeScenario) return;
-  const frame = activeScenario[activeTimeframe];
-  if (!frame) return;
+  const future = getActiveFuture();
+  if (!activeScenario.present || !future) return;
 
-  photoSphere.setAttribute("src", frame.asset);
+  photoSphere.setAttribute("src", activeScenario.present.asset);
   photoSphere.setAttribute("visible", true);
-  infoText.setAttribute("value", frame.description);
+  futureSphere?.setAttribute("src", future.asset);
+  futureSphere?.setAttribute("visible", true);
+  infoText.setAttribute("value", "");
+  setFutureBlend(activeTimeframe, immediate);
+  buildFutureOptions();
+  updateComparisonControls();
+  updateScenarioInfo();
 }
 
 function enterScenario(scenario) {
   activeScenario = scenario;
   activeTimeframe = "present";
+  activeFutureIndex = 0;
 
   homeMenu.setAttribute("visible", false);
-  scenarioControls.setAttribute("visible", true);
+  scenarioControls.setAttribute(
+    "visible",
+    Boolean(sceneElement?.is?.("vr-mode"))
+  );
+  scenarioCatalog?.setAttribute("hidden", "");
+  immersiveViewer?.removeAttribute("hidden");
+  document.body.classList.add("scenario-active");
+  if (activeScenarioLocation) {
+    activeScenarioLocation.textContent = scenario.location || "City scenario";
+  }
+  if (activeScenarioTitle) {
+    activeScenarioTitle.textContent = scenario.label;
+  }
   styleHomeButton("default");
 
   updateTimeframeButtons();
-  applyScenarioFrame();
+  comparisonDock?.classList.remove("is-collapsed", "is-comparing");
+  toggleComparisonDockButton?.setAttribute("aria-expanded", "true");
+  scenarioInfoSheet?.setAttribute("hidden", "");
+  openScenarioInfoButton?.setAttribute("aria-expanded", "false");
+  applyScenarioFrame(true);
+  requestAnimationFrame(() => {
+    const scene = immersiveViewer?.querySelector("a-scene");
+    scene?.resize?.();
+    window.dispatchEvent(new Event("resize"));
+    immersiveViewer?.focus({ preventScroll: true });
+  });
 }
 
 function exitToHome() {
+  const previousScenarioId = activeScenario?.id;
   activeScenario = null;
   activeTimeframe = "present";
+  activeFutureIndex = 0;
 
   photoSphere.setAttribute("visible", false);
+  futureSphere?.setAttribute("visible", false);
   infoText.setAttribute("value", "");
 
-  homeMenu.setAttribute("visible", true);
+  homeMenu.setAttribute("visible", false);
   scenarioControls.setAttribute("visible", false);
+  immersiveViewer?.setAttribute("hidden", "");
+  scenarioCatalog?.removeAttribute("hidden");
+  document.body.classList.remove("scenario-active");
 
   scenarioButtons.forEach((button) => {
     styleScenarioButton(button, "default");
   });
 
   updateTimeframeButtons();
+  closeFutureOptions();
+  scenarioInfoSheet?.setAttribute("hidden", "");
+  openScenarioInfoButton?.setAttribute("aria-expanded", "false");
+  if (previousScenarioId) {
+    scenarioCards.get(previousScenarioId)?.focus();
+  }
 }
 
-homeButton.addEventListener("click", () => {
+homeButton.addEventListener("click", async () => {
+  if (sceneElement?.is?.("vr-mode")) {
+    try {
+      await sceneElement.exitVR();
+    } catch (error) {}
+  }
   exitToHome();
 });
 
@@ -536,6 +878,118 @@ homeButton.addEventListener("mouseenter", () => {
 
 homeButton.addEventListener("mouseleave", () => {
   styleHomeButton("default");
+});
+
+backToCatalogButton?.addEventListener("click", exitToHome);
+
+selectPresentButton?.addEventListener("click", () => {
+  setActiveTimeframe("present");
+});
+
+selectFutureButton?.addEventListener("click", () => {
+  setActiveTimeframe("future");
+});
+
+function startComparison(event) {
+  if (!activeScenario || comparisonReturnTimeframe !== null) return;
+  event?.preventDefault();
+  comparisonReturnTimeframe = activeTimeframe;
+  const previewTimeframe = activeTimeframe === "present" ? "future" : "present";
+  if (event?.pointerId != null) {
+    holdCompareButton?.setPointerCapture?.(event.pointerId);
+  }
+  setFutureBlend(previewTimeframe);
+  updateComparisonControls(previewTimeframe);
+}
+
+function endComparison(event) {
+  if (comparisonReturnTimeframe === null) return;
+  event?.preventDefault();
+  const returnTimeframe = comparisonReturnTimeframe;
+  comparisonReturnTimeframe = null;
+  setFutureBlend(returnTimeframe);
+  updateComparisonControls(returnTimeframe);
+}
+
+holdCompareButton?.addEventListener("pointerdown", startComparison);
+holdCompareButton?.addEventListener("pointerup", endComparison);
+holdCompareButton?.addEventListener("pointercancel", endComparison);
+holdCompareButton?.addEventListener("lostpointercapture", endComparison);
+holdCompareButton?.addEventListener("click", (event) => event.preventDefault());
+
+toggleComparisonDockButton?.addEventListener("click", () => {
+  const collapsed = comparisonDock?.classList.toggle("is-collapsed") || false;
+  toggleComparisonDockButton.setAttribute("aria-expanded", String(!collapsed));
+  toggleComparisonDockButton.setAttribute(
+    "aria-label",
+    collapsed ? "Expand comparison controls" : "Collapse comparison controls"
+  );
+  closeFutureOptions();
+});
+
+futureDirectionButton?.addEventListener("click", () => {
+  if (futureDirectionButton.disabled) return;
+  const expanded = futureDirectionButton.getAttribute("aria-expanded") === "true";
+  futureOptionsMenu?.toggleAttribute("hidden", expanded);
+  futureDirectionButton.setAttribute("aria-expanded", String(!expanded));
+});
+
+function openScenarioInfo() {
+  if (!activeScenario || !scenarioInfoSheet) return;
+  updateScenarioInfo();
+  scenarioInfoSheet.removeAttribute("hidden");
+  openScenarioInfoButton?.setAttribute("aria-expanded", "true");
+  closeScenarioInfoButton?.focus();
+}
+
+function closeScenarioInfo() {
+  const wasOpen = scenarioInfoSheet && !scenarioInfoSheet.hasAttribute("hidden");
+  scenarioInfoSheet?.setAttribute("hidden", "");
+  openScenarioInfoButton?.setAttribute("aria-expanded", "false");
+  if (wasOpen) openScenarioInfoButton?.focus();
+}
+
+openScenarioInfoButton?.addEventListener("click", openScenarioInfo);
+closeScenarioInfoButton?.addEventListener("click", closeScenarioInfo);
+
+document.addEventListener("keydown", (event) => {
+  if (!activeScenario || immersiveViewer?.hasAttribute("hidden")) return;
+  const target = event.target;
+  const isFormControl =
+    target instanceof HTMLInputElement ||
+    target instanceof HTMLTextAreaElement ||
+    target instanceof HTMLSelectElement ||
+    target instanceof HTMLButtonElement;
+  if (isFormControl) return;
+
+  if (event.code === "Space") {
+    event.preventDefault();
+    if (!event.repeat) startComparison(event);
+  } else if (event.key === "1") {
+    setActiveTimeframe("present");
+  } else if (event.key === "2") {
+    setActiveTimeframe("future");
+  } else if (event.key.toLowerCase() === "i") {
+    openScenarioInfo();
+  } else if (event.key === "Escape") {
+    closeScenarioInfo();
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.code === "Space") endComparison(event);
+});
+
+window.addEventListener("blur", endComparison);
+
+sceneElement?.addEventListener("enter-vr", () => {
+  immersiveViewer?.classList.add("is-vr");
+  if (activeScenario) scenarioControls?.setAttribute("visible", true);
+});
+
+sceneElement?.addEventListener("exit-vr", () => {
+  immersiveViewer?.classList.remove("is-vr");
+  scenarioControls?.setAttribute("visible", false);
 });
 
 const assetsContainer = document.querySelector("a-assets");
@@ -844,7 +1298,9 @@ function showLanding() {
   adminOverlay?.classList.remove("is-visible");
   adminOverlay?.setAttribute("aria-hidden", "true");
   landingWorkspace?.removeAttribute("hidden");
+  landingWorkspace?.setAttribute("aria-hidden", "false");
   explorerWorkspace?.setAttribute("hidden", "");
+  explorerWorkspace?.setAttribute("aria-hidden", "true");
   document.body.classList.remove("admin-open");
   document.body.dataset.workspace = "landing";
   showExplorerButton?.focus();
@@ -854,18 +1310,26 @@ function showExplorer() {
   adminOverlay?.classList.remove("is-visible");
   adminOverlay?.setAttribute("aria-hidden", "true");
   landingWorkspace?.setAttribute("hidden", "");
+  landingWorkspace?.setAttribute("aria-hidden", "true");
   explorerWorkspace?.removeAttribute("hidden");
+  explorerWorkspace?.setAttribute("aria-hidden", "false");
   document.body.classList.remove("admin-open");
   document.body.dataset.workspace = "explorer";
+  exitToHome();
   requestAnimationFrame(() => {
+    const scene = explorerWorkspace?.querySelector("a-scene");
+    scene?.resize?.();
     window.dispatchEvent(new Event("resize"));
+    backToLandingButton?.focus();
   });
 }
 
 function openAdmin() {
   if (!adminOverlay) return;
   landingWorkspace?.setAttribute("hidden", "");
+  landingWorkspace?.setAttribute("aria-hidden", "true");
   explorerWorkspace?.setAttribute("hidden", "");
+  explorerWorkspace?.setAttribute("aria-hidden", "true");
   adminOverlay.classList.add("is-visible");
   adminOverlay.setAttribute("aria-hidden", "false");
   document.body.classList.add("admin-open");
@@ -919,17 +1383,29 @@ function addScenarioFromAdmin() {
   scenarios.push({
     id: scenarioId,
     label,
+    location: [getValue(cityDistrictInput), getValue(cityNameInput)]
+      .filter(Boolean)
+      .join(" · "),
+    summary:
+      presentDescription.split("\n")[0] ||
+      "A newly created present-to-future mobility scenario.",
+    themes: getCheckedValues("intervention").slice(0, 3),
+    thumbnail: adminState.presentDataUrl,
     present: {
       asset: `#${adminState.presentAssetId}`,
       description: presentDescription
     },
-    future: {
-      asset: `#${adminState.futureAssetId}`,
-      description: futureDescription
-    }
+    futures: [
+      {
+        id: `${scenarioId}-future-1`,
+        label: "Future direction",
+        asset: `#${adminState.futureAssetId}`,
+        description: futureDescription
+      }
+    ]
   });
 
-  buildHomeMenu();
+  buildScenarioCatalog();
   exitToHome();
   setStatus(adminStatus, "City added to the experience.", "ok");
   showExplorer();
@@ -1034,7 +1510,7 @@ function initAdminStudio() {
   updateAddScenarioButton();
 }
 
-buildHomeMenu();
+buildScenarioCatalog();
 buildTimeframeControls();
 styleHomeButton("default");
 exitToHome();
