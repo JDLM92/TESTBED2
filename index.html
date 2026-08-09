@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mobility Scenario Studio</title>
+    <meta name="theme-color" content="#091017" />
+    <title>InflectionPoints: Mobility</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -17,72 +18,64 @@
     <header class="page-header">
       <div class="brand-block">
         <p class="eyebrow">InflectionPoints: Mobility</p>
-        <h1>Mobility Scenario Studio</h1>
+        <h1>See what a different street could feel like.</h1>
         <p>
-          Explore existing city transformations in 360°, or build a new
-          present-to-future mobility scenario.
+          Step into urban places in 360°, compare today with a possible future,
+          or bring a supported place into the InflectionPoints lens.
         </p>
       </div>
     </header>
 
-    <main
-      id="landingWorkspace"
-      class="landing-workspace"
-      aria-hidden="false"
-    >
+    <main id="appContent">
+      <section
+        id="landingWorkspace"
+        class="landing-workspace"
+        aria-hidden="false"
+      >
       <div class="landing-intro">
-        <p class="eyebrow">Start Here</p>
-        <h2>What would you like to do?</h2>
+        <p class="eyebrow">Choose your route</p>
+        <h2>Where would you like to begin?</h2>
         <p>
-          Choose one path. You can return here at any time to switch between
-          experiencing scenarios and creating a new one.
+          Explore an existing place, or let the reference library build an
+          evidence-led possible future for one of its supported sites.
         </p>
       </div>
       <nav class="mode-switcher" aria-label="Choose an experience">
-        <button
-          id="showExplorer"
-          class="mode-card"
-          type="button"
-        >
+        <button id="showExplorer" class="mode-card" type="button">
           <span class="mode-card__number">01</span>
           <span class="mode-card__copy">
             <strong>Explore scenarios</strong>
-            <small>
-              Enter a built city experience and compare now with next.
-            </small>
+            <small>Enter a place and reveal how it could change.</small>
           </span>
         </button>
-        <button
-          id="openAdmin"
-          class="mode-card"
-          type="button"
-        >
+        <button id="openPlaceLens" class="mode-card" type="button">
           <span class="mode-card__number">02</span>
           <span class="mode-card__copy">
-            <strong>Build a scenario</strong>
+            <strong>Analyze a place</strong>
             <small>
-              Turn a city image and mobility idea into a new experience.
+              See how the InflectionPoints reference library grounds one
+              possible future.
             </small>
           </span>
         </button>
       </nav>
-    </main>
+      </section>
 
-    <main
-      id="explorerWorkspace"
-      class="explorer-workspace"
-      aria-hidden="true"
-      hidden
-    >
+      <section
+        id="explorerWorkspace"
+        class="explorer-workspace"
+        aria-hidden="true"
+        hidden
+      >
       <div class="workspace-heading">
         <div>
-          <p class="eyebrow">Scenario Library</p>
-          <h2>Explore mobility futures</h2>
+          <p class="eyebrow">Scenario library</p>
+          <h2>Places at a turning point.</h2>
         </div>
         <div class="workspace-heading__actions">
           <p>
-            Choose a place, enter its 360° environment, and compare present
-            conditions with a possible future.
+            Each scene begins with a street as it is now, then makes one
+            evidence-led possible future visible.
           </p>
           <button id="backToLanding" class="icon-button" type="button">
             Back to main menu
@@ -93,20 +86,20 @@
       <section id="scenarioCatalog" class="scenario-catalog">
         <div class="catalog-intro">
           <div>
-            <p class="catalog-kicker">Featured scenarios</p>
-            <h3>Three places. Three mobility inflection points.</h3>
+            <p class="catalog-kicker">Reference places</p>
+            <h3>Three streets. Three ways change can begin.</h3>
           </div>
           <p>
-            Each experience pairs a current urban condition with an immersive
-            future direction. Additional futures and sound layers can extend
-            each story over time.
+            These places are the first nodes in a growing mobility reference
+            network. Explore the scene, the proposed shift, and what informs
+            it.
           </p>
         </div>
         <div id="scenarioCardGrid" class="scenario-card-grid"></div>
         <div class="capability-strip" aria-label="Experience capabilities">
-          <span><strong>Now</strong> Present-to-future 360° comparison</span>
-          <span><strong>Expandable</strong> Multiple future pathways</span>
-          <span><strong>Next layer</strong> Spatial city soundscapes</span>
+          <span><strong>360° view</strong> Compare the same place over time</span>
+          <span><strong>Evidence-led</strong> See what informs the shift</span>
+          <span><strong>Growing library</strong> New places add new lessons</span>
         </div>
       </section>
 
@@ -119,7 +112,7 @@
       >
         <div class="viewer-toolbar">
           <button id="backToCatalog" class="icon-button" type="button">
-            ← All scenarios
+            ← Explore places
           </button>
           <div class="viewer-context">
             <p id="activeScenarioLocation" class="eyebrow"></p>
@@ -133,142 +126,149 @@
               type="button"
               aria-expanded="false"
             >
-              About
+              What changes?
             </button>
           </div>
         </div>
 
         <a-scene
-        embedded
-        background="color: #000"
-        renderer="antialias: true"
-        webxr="optionalFeatures: local-floor, bounded-floor"
-        vr-mode-ui="enabled: true"
-      >
-      <a-assets timeout="30000">
-        <img
-          id="asset-mexico-present"
-          src="assets/mexico-city/present/Mexico City Present.png"
-        />
-        <img
-          id="asset-mexico-future"
-          src="assets/mexico-city/future/Mexico City Future.jpg"
-        />
-        <img
-          id="asset-chicago-present"
-          src="assets/chicago/present/Chicago Garfield Park Today.png"
-        />
-        <img
-          id="asset-chicago-future"
-          src="assets/chicago/future/Chicago Future.jpeg"
-        />
-        <img
-          id="asset-london-present"
-          src="assets/london/present/London Present.png"
-        />
-        <img
-          id="asset-london-future"
-          src="assets/london/future/London Future.png"
-        />
-      </a-assets>
-
-      <a-entity id="rig" position="0 0 0">
-        <a-entity
-          id="player"
-          camera
-          look-controls="magicWindowTrackingEnabled: true"
-          wasd-controls="enabled: false"
-          position="0 1.6 0"
+          embedded
+          background="color: #000"
+          renderer="antialias: true"
+          webxr="optionalFeatures: local-floor, bounded-floor"
+          vr-mode-ui="enabled: true"
         >
+          <a-assets timeout="30000">
+            <img
+              id="asset-mexico-present"
+              src="assets/mexico-city/present/Mexico City Present.png"
+            />
+            <img
+              id="asset-mexico-future"
+              src="assets/mexico-city/future/Mexico City Future.jpg"
+            />
+            <img
+              id="asset-chicago-present"
+              src="assets/chicago/present/Chicago Garfield Park Today.png"
+            />
+            <img
+              id="asset-chicago-future"
+              src="assets/chicago/future/Chicago Future.jpg"
+            />
+            <img
+              id="asset-london-present"
+              src="assets/london/present/London Present.png"
+            />
+            <img
+              id="asset-london-future"
+              src="assets/london/future/London Future.png"
+            />
+          </a-assets>
+
+          <a-entity id="rig" position="0 0 0">
+            <a-entity
+              id="player"
+              camera
+              look-controls="magicWindowTrackingEnabled: true"
+              wasd-controls="enabled: false"
+              position="0 1.6 0"
+            >
+              <a-entity
+                id="mouseCursor"
+                cursor="rayOrigin: mouse"
+                raycaster="objects: .clickable"
+                position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.008"
+                material="color: #fff; shader: flat; opacity: 0.9"
+              ></a-entity>
+            </a-entity>
+
+            <a-entity
+              laser-controls="hand: left"
+              raycaster="objects: .clickable"
+            ></a-entity>
+            <a-entity
+              laser-controls="hand: right"
+              raycaster="objects: .clickable"
+            ></a-entity>
+          </a-entity>
+
+          <a-sky
+            id="photoSphere"
+            radius="100"
+            position="0 1.6 0"
+            visible="false"
+            material="shader: flat; side: back"
+          ></a-sky>
+          <a-sky
+            id="futureSphere"
+            radius="85"
+            position="0 1.6 0"
+            visible="false"
+            material="shader: flat; side: back; transparent: true; opacity: 0; depthWrite: false"
+          ></a-sky>
+
+          <a-entity id="homeMenu" position="0 1.5 -2" visible="false">
+            <a-entity
+              id="scenarioButtonContainer"
+              position="0 -0.15 0.01"
+            ></a-entity>
+          </a-entity>
+
           <a-entity
-            id="mouseCursor"
-            cursor="rayOrigin: mouse"
-            raycaster="objects: .clickable"
-            position="0 0 -1"
-            geometry="primitive: ring; radiusInner: 0.005; radiusOuter: 0.008"
-            material="color: #fff; shader: flat; opacity: 0.9"
-          ></a-entity>
-        </a-entity>
+            id="scenarioControls"
+            position="0 0.32 -1.6"
+            visible="false"
+          >
+            <a-entity id="timeframeToggle" position="0 0 0"></a-entity>
+            <a-entity
+              id="homeButton"
+              class="clickable"
+              position="1.55 0 0"
+              render-order="3"
+            >
+              <a-text
+                value="All"
+                align="center"
+                width="0.55"
+                color="#091017"
+                shader="msdf"
+                font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+                position="0 0 0.01"
+                baseline="center"
+                scale="1.5 1.5 1"
+              ></a-text>
+            </a-entity>
+          </a-entity>
 
-        <a-entity
-          laser-controls="hand: left"
-          raycaster="objects: .clickable"
-        ></a-entity>
-        <a-entity
-          laser-controls="hand: right"
-          raycaster="objects: .clickable"
-        ></a-entity>
-      </a-entity>
-
-      <a-sky
-        id="photoSphere"
-        radius="100"
-        position="0 1.6 0"
-        visible="false"
-        material="shader: flat; side: back"
-      ></a-sky>
-      <a-sky
-        id="futureSphere"
-        radius="85"
-        position="0 1.6 0"
-        visible="false"
-        material="shader: flat; side: back; transparent: true; opacity: 0; depthWrite: false"
-      ></a-sky>
-
-      <a-entity id="homeMenu" position="0 1.5 -2" visible="false">
-        <a-entity id="scenarioButtonContainer" position="0 -0.15 0.01"></a-entity>
-      </a-entity>
-
-      <a-entity id="scenarioControls" position="0 0.32 -1.6" visible="false">
-        <a-entity id="timeframeToggle" position="0 0 0"></a-entity>
-        <a-entity
-          id="homeButton"
-          class="clickable"
-          position="1.55 0 0"
-          render-order="3"
-        >
-          <a-text
-            value="All"
-            align="center"
-            width="0.55"
-            color="#091017"
-            shader="msdf"
-            font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
-            position="0 0 0.01"
-            baseline="center"
-            scale="1.5 1.5 1"
-          ></a-text>
-        </a-entity>
-      </a-entity>
-
-      <a-entity
-        id="infoLabel"
-        position="0 1.05 -1.55"
-        render-order="2"
-        visible="false"
-      >
-        <a-text
-          id="infoText"
-          value=""
-          width="2.4"
-          align="center"
-          color="#f4f4f4"
-          shader="msdf"
-          font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
-          wrap-count="48"
-        ></a-text>
-      </a-entity>
+          <a-entity
+            id="infoLabel"
+            position="0 1.05 -1.55"
+            render-order="2"
+            visible="false"
+          >
+            <a-text
+              id="infoText"
+              value=""
+              width="2.4"
+              align="center"
+              color="#f4f4f4"
+              shader="msdf"
+              font="https://cdn.aframe.io/fonts/Roboto-msdf.json"
+              wrap-count="48"
+            ></a-text>
+          </a-entity>
         </a-scene>
 
         <div
           id="comparisonDock"
           class="comparison-dock"
-          aria-label="Compare present and future"
+          aria-label="Compare now and possible future"
         >
           <div class="comparison-dock__header">
             <div class="comparison-state" aria-live="polite">
               <span>Viewing</span>
-              <strong id="dockStateLabel">Today</strong>
+              <strong id="dockStateLabel">Now</strong>
             </div>
             <button
               id="toggleComparisonDock"
@@ -290,7 +290,7 @@
               aria-expanded="false"
               disabled
             >
-              <span>Future direction</span>
+              <span>Possible future</span>
               <strong id="futureDirectionLabel">Future</strong>
               <span class="future-direction-button__arrow" aria-hidden="true">▾</span>
             </button>
@@ -299,7 +299,7 @@
               id="futureOptionsMenu"
               class="future-options-menu"
               role="listbox"
-              aria-label="Choose a future direction"
+              aria-label="Choose a possible future"
               hidden
             ></div>
 
@@ -310,15 +310,11 @@
                 type="button"
                 aria-pressed="true"
               >
-                Today
+                Now
               </button>
-              <button
-                id="holdCompare"
-                class="hold-compare-button"
-                type="button"
-              >
+              <button id="holdCompare" class="hold-compare-button" type="button">
                 <span aria-hidden="true">↔</span>
-                <strong id="holdCompareLabel">Hold for Future</strong>
+                <strong id="holdCompareLabel">Hold to compare</strong>
               </button>
               <button
                 id="selectFuture"
@@ -326,7 +322,7 @@
                 type="button"
                 aria-pressed="false"
               >
-                Future
+                Possible future
               </button>
             </div>
             <p class="comparison-shortcut">Desktop: hold Space to compare</p>
@@ -359,345 +355,175 @@
           <div id="scenarioInfoThemes" class="scenario-info-themes"></div>
         </aside>
       </section>
+      </section>
     </main>
 
-    <section id="adminOverlay" class="admin-overlay" aria-hidden="true">
+    <section
+      id="placeLensOverlay"
+      class="place-lens-overlay"
+      aria-hidden="true"
+      hidden
+    >
       <div
-        class="admin-panel"
+        id="placeLensPanel"
+        class="place-lens-panel"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="adminTitle"
+        aria-labelledby="placeLensTitle"
+        tabindex="-1"
       >
-        <div class="admin-panel__header">
+        <header class="place-lens__header">
           <div>
-            <p class="eyebrow">Scenario Builder</p>
-            <h2 id="adminTitle">Build a present → future city scenario</h2>
-            <p class="admin-subtitle">
-              Use this flow to add a new city, reason through the past scene,
-              pull in world-class mobility references, and craft a precise
-              prompt for generating the future image.
+            <p class="eyebrow">InflectionPoints lens</p>
+            <h2 id="placeLensTitle">Start with a place.</h2>
+            <p>
+              Choose a supported 360° site. The reference library will ground
+              one possible future without asking you to design it.
             </p>
           </div>
-          <button id="closeAdmin" class="icon-button" type="button">
-            Back to main menu
+          <button id="closePlaceLens" class="icon-button" type="button">
+            Close
           </button>
-        </div>
+        </header>
 
-        <div class="admin-panel__body">
-          <section class="admin-step admin-step--overview">
-            <h3>Flow Map</h3>
-            <ol class="flow-list">
-              <li>Capture or upload a 2:1 equirectangular past image.</li>
-              <li>Inventory what’s in the scene and what’s not working.</li>
-              <li>Choose reference initiatives to inspire the future.</li>
-              <li>Define the mobility interventions and outcomes.</li>
-              <li>Generate a detailed imaging prompt and edit externally.</li>
-              <li>Upload the future render and add the new city.</li>
-            </ol>
-          </section>
+        <ol class="place-lens__progress" aria-label="Scenario analysis progress">
+          <li data-lens-progress="place"><span>01</span><strong>Place</strong></li>
+          <li data-lens-progress="analysis"><span>02</span><strong>Read</strong></li>
+          <li data-lens-progress="grounding"><span>03</span><strong>Ground</strong></li>
+          <li data-lens-progress="generation"><span>04</span><strong>Visualize</strong></li>
+        </ol>
 
-          <section class="admin-step" data-phase="01 · Define">
-            <h3>City Profile</h3>
-            <div class="field-grid">
-              <label class="field-block">
-                <span>City name</span>
-                <input id="cityName" type="text" placeholder="e.g. Bogotá" />
-              </label>
-              <label class="field-block">
-                <span>District / street</span>
-                <input
-                  id="cityDistrict"
-                  type="text"
-                  placeholder="e.g. Avenida 7 / La Candelaria"
-                />
-              </label>
-              <label class="field-block">
-                <span>Past snapshot year</span>
-                <input id="cityYear" type="text" placeholder="e.g. 2024" />
-              </label>
-              <label class="field-block">
-                <span>Menu label (short)</span>
-                <input
-                  id="cityLabel"
-                  type="text"
-                  placeholder="e.g. Bogotá Centro"
-                />
-              </label>
+        <p id="lensLiveStatus" class="sr-only" role="status" aria-live="polite"></p>
+
+        <div class="place-lens__body">
+          <section id="placeLensPlace" class="place-lens__stage">
+            <div class="place-lens__stage-intro">
+              <p class="eyebrow">Choose a supported place</p>
+              <h3>Bring us to a street.</h3>
+              <p>
+                This static prototype works with the verified scenes already
+                in the library. A live location and rendering service connects
+                at this point later.
+              </p>
             </div>
-          </section>
 
-          <section class="admin-step" data-phase="02 · Source">
-            <h3>Past Image (Equirectangular 360°)</h3>
-            <div class="image-upload">
-              <div>
-                <label class="file-button">
-                  Upload past image
-                  <input
-                    id="pastImageInput"
-                    type="file"
-                    accept="image/*"
-                  />
-                </label>
-                <p class="hint">
-                  Use a 2:1 equirectangular image. Keep horizon level and camera
-                  height ~1.6m.
-                </p>
-                <p id="pastMeta" class="meta"></p>
+            <form id="placeSearchForm" class="place-search" novalidate>
+              <label for="placeSearch">Search supported places</label>
+              <div class="place-search__field">
+                <span aria-hidden="true">⌕</span>
+                <input
+                  id="placeSearch"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="Search Mexico City, Chicago, or London"
+                />
+                <button
+                  id="clearPlaceSearch"
+                  class="place-search__clear"
+                  type="button"
+                  aria-label="Clear place search"
+                  hidden
+                >
+                  ×
+                </button>
               </div>
-              <div class="image-preview">
-                <img id="pastPreview" alt="Past preview" />
-              </div>
-            </div>
-          </section>
+            </form>
 
-          <section class="admin-step" data-phase="03 · Analyze">
-            <h3>Reasoning Canvas</h3>
-            <div class="canvas-grid">
-              <label class="field-block">
-                <span>Scene inventory (modes, infrastructure, land use)</span>
-                <textarea
-                  id="sceneInventory"
-                  placeholder="e.g. 4-lane roadway, curbside parking, painted bike lane, bus stop, storefronts."
-                ></textarea>
-              </label>
-              <label class="field-block">
-                <span>Pain points + conflicts</span>
-                <textarea
-                  id="sceneFrictions"
-                  placeholder="e.g. Vehicles dominate, unsafe crossings, delivery conflicts, noise, heat."
-                ></textarea>
-              </label>
-              <label class="field-block">
-                <span>Equity + access gaps</span>
-                <textarea
-                  id="sceneEquity"
-                  placeholder="e.g. No accessible curb ramps, limited shade, unsafe for kids/elders."
-                ></textarea>
-              </label>
-              <label class="field-block">
-                <span>Assets to preserve</span>
-                <textarea
-                  id="sceneAssets"
-                  placeholder="e.g. Historic façades, mature trees, active ground-floor retail."
-                ></textarea>
-              </label>
-            </div>
-          </section>
+            <div
+              id="placeSearchResults"
+              class="place-search-results"
+            ></div>
 
-          <section class="admin-step" data-phase="04 · Learn">
-            <h3>Reference Initiatives</h3>
-            <div class="chip-group" id="referenceGroup">
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Barcelona Superblocks" />
-                <span>Barcelona Superblocks</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Paris 15-minute city" />
-                <span>Paris 15-minute city</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Copenhagen Cycle Superhighways" />
-                <span>Copenhagen Cycle Superhighways</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Bogotá Ciclovía / BRT" />
-                <span>Bogotá Ciclovía / BRT</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Seoul Cheonggyecheon restoration" />
-                <span>Seoul Cheonggyecheon</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Ghent circulation plan" />
-                <span>Ghent circulation plan</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="London LTN program" />
-                <span>London LTNs</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Oslo car-light city center" />
-                <span>Oslo car-light center</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Singapore congestion pricing" />
-                <span>Singapore congestion pricing</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="reference" value="Freiburg Vauban car-lite district" />
-                <span>Freiburg Vauban</span>
-              </label>
-            </div>
-            <label class="field-block">
-              <span>Additional references</span>
-              <textarea
-                id="refOther"
-                placeholder="Add any local or global initiatives you want the future image to echo."
-              ></textarea>
-            </label>
-          </section>
+            <div id="placeSelection" class="place-selection" aria-live="polite"></div>
 
-          <section class="admin-step" data-phase="05 · Imagine">
-            <h3>Future Mobility Outcomes</h3>
-            <div class="chip-group" id="interventionGroup">
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Protected cycle tracks" />
-                <span>Protected cycle tracks</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Dedicated transit priority lanes" />
-                <span>Transit priority lanes</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Car-free or low-traffic zone" />
-                <span>Car-free / low-traffic</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Wider shaded sidewalks" />
-                <span>Shaded sidewalks</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Green stormwater infrastructure" />
-                <span>Green stormwater</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Shared micromobility hubs" />
-                <span>Micromobility hubs</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Safe raised crossings" />
-                <span>Raised crossings</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Flexible curb management" />
-                <span>Flexible curbs</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Public space plazas" />
-                <span>Public plazas</span>
-              </label>
-              <label class="chip">
-                <input type="checkbox" name="intervention" value="Freight and delivery zones" />
-                <span>Freight zones</span>
-              </label>
-            </div>
-            <div class="field-grid">
-              <label class="field-block">
-                <span>Priority outcomes</span>
-                <input
-                  id="futurePriorities"
-                  type="text"
-                  placeholder="e.g. 70% fewer cars, safer crossings, cooler microclimate"
-                />
-              </label>
-              <label class="field-block">
-                <span>Mobility mix in future</span>
-                <input
-                  id="futureMobilityMix"
-                  type="text"
-                  placeholder="e.g. walking, cycling, BRT, delivery micro-hubs"
-                />
-              </label>
-              <label class="field-block">
-                <span>Public realm mood</span>
-                <input
-                  id="futurePublicRealm"
-                  type="text"
-                  placeholder="e.g. lively, shaded, safe at night, human-scale"
-                />
-              </label>
-              <label class="field-block">
-                <span>Climate + nature goals</span>
-                <input
-                  id="futureClimate"
-                  type="text"
-                  placeholder="e.g. bioswales, trees, permeable paving"
-                />
-              </label>
-            </div>
-            <label class="field-block">
-              <span>Other interventions</span>
-              <textarea
-                id="interventionOther"
-                placeholder="Add any local details or innovations to include."
-              ></textarea>
-            </label>
-          </section>
-
-          <section class="admin-step" data-phase="06 · Generate">
-            <h3>Imaging Prompt Builder</h3>
-            <p class="hint">
-              Optimized for tools like Nanobanana Pro or any 360 imaging model.
-            </p>
-            <div class="prompt-actions">
-              <button id="generatePrompt" type="button">Generate prompt</button>
-              <button id="copyPrompt" class="ghost" type="button">
-                Copy prompt
+            <div class="place-lens__footer">
+              <p class="place-lens__scope">
+                Coverage is deliberately limited while the evidence and visual
+                quality checks mature.
+              </p>
+              <button
+                id="startPlaceAnalysis"
+                class="primary-button"
+                type="button"
+                disabled
+              >
+                Understand this place
               </button>
             </div>
-            <textarea
-              id="promptOutput"
-              class="prompt-output"
-              placeholder="Your generated prompt will appear here."
-            ></textarea>
-            <p id="promptStatus" class="meta"></p>
           </section>
 
-          <section class="admin-step" data-phase="07 · Assemble">
-            <h3>Future Image + Scenario Details</h3>
-            <div class="image-upload">
-              <div>
-                <label class="file-button">
-                  Upload future image
-                  <input
-                    id="futureImageInput"
-                    type="file"
-                    accept="image/*"
-                  />
-                </label>
-                <p class="hint">
-                  Render with the generated prompt, then upload the future
-                  equirectangular image.
-                </p>
-                <p id="futureMeta" class="meta"></p>
-              </div>
-              <div class="image-preview">
-                <img id="futurePreview" alt="Future preview" />
-              </div>
+          <section id="placeLensAnalysis" class="place-lens__stage" hidden>
+            <div class="place-lens__stage-intro">
+              <p class="eyebrow">Agent run</p>
+              <h3>Understanding this place.</h3>
+              <p>
+                The system reads the current scene, then finds transferable
+                mobility lessons from the reference library.
+              </p>
             </div>
-            <div class="field-grid">
-              <label class="field-block">
-                <span>Present description (VR label)</span>
-                <textarea
-                  id="presentDescription"
-                  placeholder="Short description of the past scene for the VR overlay."
-                ></textarea>
-              </label>
-              <label class="field-block">
-                <span>Future description (VR label)</span>
-                <textarea
-                  id="futureDescription"
-                  placeholder="Short description of the future scene for the VR overlay."
-                ></textarea>
-              </label>
-            </div>
-            <div class="admin-footer">
-              <button id="addScenarioButton" type="button">
-                Add city to experience
+            <div id="analysisAgentSteps" class="agent-run" aria-live="polite"></div>
+            <div id="analysisOutcome" class="agent-outcome" hidden></div>
+            <div class="place-lens__footer">
+              <button id="backToPlace" class="secondary-button" type="button">
+                Choose another place
               </button>
-              <p id="adminStatus" class="meta"></p>
+              <button
+                id="continueToGrounding"
+                class="primary-button"
+                type="button"
+                disabled
+              >
+                See the direction
+              </button>
             </div>
           </section>
 
-          <section class="admin-step" data-phase="08 · Review">
-            <h3>Quality Checklist</h3>
-            <ul class="checklist">
-              <li>Match camera position, height, and horizon exactly.</li>
-              <li>Preserve key buildings and the skyline for continuity.</li>
-              <li>Keep lighting direction and time of day consistent.</li>
-              <li>Use realistic scale for people, bikes, buses, and trees.</li>
-              <li>Respect the 2:1 equirectangular format (no stretched poles).</li>
-            </ul>
+          <section id="placeLensGrounding" class="place-lens__stage" hidden>
+            <div class="place-lens__stage-intro">
+              <p class="eyebrow">Evidence-led direction</p>
+              <h3>A future takes shape.</h3>
+              <p>
+                This is the strongest available direction for the place—not a
+                menu of aesthetic choices.
+              </p>
+            </div>
+            <div id="groundingBrief" class="scenario-brief"></div>
+            <div id="referenceNetwork" class="reference-network"></div>
+            <div class="place-lens__footer">
+              <button id="backToAnalysis" class="secondary-button" type="button">
+                Back to the read
+              </button>
+              <button id="generateScenario" class="primary-button" type="button">
+                Create the possible future
+              </button>
+            </div>
+          </section>
+
+          <section id="placeLensGeneration" class="place-lens__stage" hidden>
+            <div class="place-lens__stage-intro">
+              <p class="eyebrow">Visual quality gate</p>
+              <h3>Making the scenario visible.</h3>
+              <p>
+                The renderer and visual evaluator are separate roles. A result
+                is only shown once it preserves the place and makes the shift
+                legible.
+              </p>
+            </div>
+            <div id="generationAgentSteps" class="agent-run" aria-live="polite"></div>
+            <div id="generationOutcome" class="generation-outcome" hidden></div>
+            <div class="place-lens__footer">
+              <button id="cancelGeneration" class="secondary-button" type="button">
+                Cancel run
+              </button>
+              <button
+                id="viewGeneratedScenario"
+                class="primary-button"
+                type="button"
+                disabled
+              >
+                View the comparison
+              </button>
+            </div>
           </section>
         </div>
       </div>

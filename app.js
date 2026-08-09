@@ -162,30 +162,69 @@ const scenarios = [
     label: "Mexico City center",
     location: "Centro Histórico · Mexico City",
     summary:
-      "A historic intersection rebalanced around walking, cycling, shade, and flexible shared space.",
+      "A historic intersection where traffic gives way to shade, movement, and street life.",
     themes: ["Shared streets", "Active mobility", "Urban greening"],
     thumbnail: "assets/mexico-city/present/Mexico City Present.png",
     present: {
       asset: "#asset-mexico-present",
       description:
-        "A narrow colonial intersection in Mexico City’s Centro Histórico is dominated by asphalt, faded crosswalks, scattered bollards, minimal greenery, and occasional delivery vans.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
+        "A narrow colonial intersection is dominated by asphalt, faded crossings, scattered bollards, minimal greenery, and occasional delivery vans.\n\nWalking, cycling, shade, and everyday street life compete with through-traffic and hard surfaces."
     },
     futures: [
       {
         id: "people-first-superblock",
         label: "People-first superblock",
+        horizon: "Possible 2040",
         asset: "#asset-mexico-future",
         description:
-          "The same intersection becomes a superblock shared-space with cobblestone paving, shaded cycle tracks lined by trees, modular vendor and cargo kiosks, wider sidewalks, and car-free priority for people.\n\nThe space shifted from car-oriented, asphalt-heavy streets to a pedestrian- and cyclist-first environment with integrated greenery, flexible curb use, and inclusive mobility infrastructure."
+          "Through-traffic gives way to a shared street with cobblestone paving, shaded cycle movement, wider sidewalks, and space for deliveries, vendors, and lingering.\n\nThe visual keeps the historic fabric intact while giving people—not parked or passing vehicles—the clearest priority."
       }
-    ]
+    ],
+    lens: {
+      sceneType: "Historic city intersection",
+      currentRead:
+        "A compact historic junction with active edges and high walking potential, but little shade or protected space for people moving through it.",
+      direction:
+        "Rebalance access around a people-first superblock: keep essential deliveries, slow through-traffic, and turn the public realm into shade, movement, and street life.",
+      references: [
+        {
+          location: "Centro Histórico · Mexico City",
+          label: "Shared-street access",
+          detail:
+            "Use access management to make more room for everyday movement without erasing the street’s working life."
+        },
+        {
+          location: "South Bank · London",
+          label: "Cooling + crossings",
+          detail:
+            "Pair safer movement with planted edges and a more comfortable walking environment."
+        }
+      ],
+      analysisSteps: [
+        "Checking the 360° source view",
+        "Reading movement, shade, and street edges",
+        "Matching comparable mobility situations",
+        "Preparing a place-specific direction"
+      ],
+      generationSteps: [
+        "Building the visual brief",
+        "Creating candidate scene changes",
+        "Checking historic fabric and camera continuity",
+        "Verifying people-first mobility is visible"
+      ],
+      qualityChecks: [
+        "Camera position and street geometry retained",
+        "Historic façades and local street activity preserved",
+        "People, trees, and mobility changes remain plausible"
+      ]
+    }
   },
   {
     id: "chicago",
     label: "Chicago Garfield Park",
     location: "Garfield Park · Chicago",
     summary:
-      "An elevated transit corridor becomes a brighter, greener connection for everyday movement and public life.",
+      "A corridor beneath the L becomes a brighter, safer route for everyday journeys.",
     themes: ["Transit priority", "Public realm", "Micromobility"],
     thumbnail: "assets/chicago/present/Chicago Garfield Park Today.png",
     present: {
@@ -197,18 +236,57 @@ const scenarios = [
       {
         id: "transit-promenade",
         label: "Transit promenade",
+        horizon: "Possible 2040",
         asset: "#asset-chicago-future",
         description:
           "The same corridor is converted into a people-first transit promenade with wider sidewalks, continuous protected bike lanes, bright lighting, and lush planters beneath the elevated tracks.\n\nFlexible curb uses support shared shuttles, micromobility docks, and street-level retail that animate the space throughout the day."
       }
-    ]
+    ],
+    lens: {
+      sceneType: "Elevated transit corridor",
+      currentRead:
+        "An active transit street where elevated infrastructure, vehicle lanes, and narrow sidewalks make everyday walking and cycling feel secondary.",
+      direction:
+        "Turn the corridor into a transit promenade: let rail remain the backbone while better lighting, protected cycling, planted edges, and managed kerbs support life beneath it.",
+      references: [
+        {
+          location: "Centro Histórico · Mexico City",
+          label: "Active street life",
+          detail:
+            "Make necessary access and daily activity work together instead of giving the corridor entirely to passing traffic."
+        },
+        {
+          location: "South Bank · London",
+          label: "Safe local movement",
+          detail:
+            "Use continuous crossings and calmer kerb conditions to make short journeys more comfortable."
+        }
+      ],
+      analysisSteps: [
+        "Checking the 360° source view",
+        "Reading transit, vehicle, and walking conditions",
+        "Finding corridor and public-realm precedents",
+        "Preparing a transit-led direction"
+      ],
+      generationSteps: [
+        "Building the visual brief",
+        "Creating candidate scene changes",
+        "Checking elevated structure and street continuity",
+        "Verifying transit, walking, and cycling remain legible"
+      ],
+      qualityChecks: [
+        "Elevated infrastructure and camera geometry retained",
+        "Street scale, buildings, and human activity preserved",
+        "New movement layers read clearly without visual artifacts"
+      ]
+    }
   },
   {
     id: "london",
     label: "London South Bank",
     location: "South Bank · London",
     summary:
-      "A parking-led junction evolves into a calm, climate-ready neighborhood street with safer crossings.",
+      "A car-led junction becomes a calmer, greener street for people moving through it.",
     themes: ["Climate resilience", "Safe crossings", "Cycle network"],
     thumbnail: "assets/london/present/London Present.png",
     present: {
@@ -220,11 +298,50 @@ const scenarios = [
       {
         id: "green-neighborhood-street",
         label: "Green neighborhood street",
+        horizon: "Possible 2040",
         asset: "#asset-london-future",
         description:
-          "A green, calm Paul × Willow with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading/PHV bays."
+          "A calmer South Bank junction with rain-garden corners, tree canopy, raised continuous crossings, protected cycle flow, and organised loading bays.\n\nThe future gives walking and cycling a continuous, legible route while helping the street hold more shade and rainwater."
       }
-    ]
+    ],
+    lens: {
+      sceneType: "Neighbourhood junction",
+      currentRead:
+        "A junction where parked cars, turning traffic, and thin green cover make walking and cycling feel like afterthoughts.",
+      direction:
+        "Create a green neighbourhood street with slower turning movements, continuous crossings, protected cycle flow, and planted rain-garden corners.",
+      references: [
+        {
+          location: "Centro Histórico · Mexico City",
+          label: "Shared space + shade",
+          detail:
+            "Use public-realm materials and trees to make a street feel more useful and comfortable at walking speed."
+        },
+        {
+          location: "Garfield Park · Chicago",
+          label: "Networked movement",
+          detail:
+            "Make cycling and walking continuous rather than isolated markings between vehicle lanes."
+        }
+      ],
+      analysisSteps: [
+        "Checking the 360° source view",
+        "Reading crossings, parking, and green cover",
+        "Matching calm-street and resilience precedents",
+        "Preparing a climate-ready direction"
+      ],
+      generationSteps: [
+        "Building the visual brief",
+        "Creating candidate scene changes",
+        "Checking buildings, kerbs, and camera continuity",
+        "Verifying crossings, shade, and cycle flow are visible"
+      ],
+      qualityChecks: [
+        "Street geometry and building context retained",
+        "Greenery reads as mature and plausible for the horizon",
+        "Crossings, cycle movement, and kerb changes remain clear"
+      ]
+    }
   }
 ];
 
@@ -532,11 +649,11 @@ function buildScenarioCatalog() {
 
     const futureCount = document.createElement("span");
     const count = scenario.futures?.length || 1;
-    futureCount.textContent = `Present + ${count} future ${count === 1 ? "vision" : "visions"}`;
+    futureCount.textContent = `Now + ${count} possible future${count === 1 ? "" : "s"}`;
 
     const action = document.createElement("span");
     action.className = "scenario-card__action";
-    action.textContent = "Explore in 360° →";
+    action.textContent = "Enter the scene →";
 
     footer.append(futureCount, action);
     body.append(location, title, summary, themes, footer);
@@ -563,16 +680,16 @@ function buildScenarioCatalog() {
 
   const placeholderTitle = document.createElement("strong");
   placeholderTitle.className = "scenario-card__title";
-  placeholderTitle.textContent = "More scenarios to come";
+  placeholderTitle.textContent = "More places to explore";
 
   const placeholderSummary = document.createElement("span");
   placeholderSummary.className = "scenario-card__summary";
   placeholderSummary.textContent =
-    "A flexible slot for the next city, district, or alternative future pathway.";
+    "New streets, questions, and evidence-led possible futures are on their way.";
 
   const placeholderStatus = document.createElement("span");
   placeholderStatus.className = "scenario-card__placeholder-status";
-  placeholderStatus.textContent = "Collection designed to expand";
+  placeholderStatus.textContent = "Reference network in progress";
 
   placeholderBody.append(
     placeholderLocation,
@@ -589,8 +706,8 @@ function buildTimeframeControls() {
   timeframeButtons.clear();
 
   const entries = [
-    { timeframe: "present", label: "Present", position: "-0.55 0 0" },
-    { timeframe: "future", label: "Future", position: "0.55 0 0" }
+    { timeframe: "present", label: "Now", position: "-0.55 0 0" },
+    { timeframe: "future", label: "Possible future", position: "0.55 0 0" }
   ];
 
   entries.forEach((entry) => {
@@ -681,7 +798,8 @@ function updateScenarioInfo() {
   if (!activeScenario) return;
   const future = getActiveFuture();
   const frame = activeTimeframe === "present" ? activeScenario.present : future;
-  const stateLabel = activeTimeframe === "present" ? "Today" : "Future";
+  const stateLabel =
+    activeTimeframe === "present" ? "Now" : future?.horizon || "Possible future";
 
   if (scenarioInfoEyebrow) {
     scenarioInfoEyebrow.textContent = `${stateLabel} · ${activeScenario.location || "City scenario"}`;
@@ -713,7 +831,9 @@ function updateComparisonControls(displayedTimeframe = activeTimeframe) {
   const future = getActiveFuture();
   const isPreviewing = comparisonReturnTimeframe !== null;
   const displayedLabel =
-    displayedTimeframe === "present" ? "Today" : future?.label || "Future";
+    displayedTimeframe === "present"
+      ? "Now"
+      : future?.horizon || future?.label || "Possible future";
 
   if (dockStateLabel) {
     dockStateLabel.textContent = isPreviewing
@@ -721,11 +841,10 @@ function updateComparisonControls(displayedTimeframe = activeTimeframe) {
       : displayedLabel;
   }
   if (futureDirectionLabel) {
-    futureDirectionLabel.textContent = future?.label || "Future";
+    futureDirectionLabel.textContent = future?.label || "Possible future";
   }
   if (holdCompareLabel) {
-    holdCompareLabel.textContent =
-      activeTimeframe === "future" ? "Hold for Today" : "Hold for Future";
+    holdCompareLabel.textContent = "Hold to compare";
   }
 
   const presentActive = activeTimeframe === "present";
@@ -992,526 +1111,535 @@ sceneElement?.addEventListener("exit-vr", () => {
   scenarioControls?.setAttribute("visible", false);
 });
 
-const assetsContainer = document.querySelector("a-assets");
-const adminOverlay = document.getElementById("adminOverlay");
-const openAdminButton = document.getElementById("openAdmin");
+const openPlaceLensButton = document.getElementById("openPlaceLens");
 const showExplorerButton = document.getElementById("showExplorer");
 const landingWorkspace = document.getElementById("landingWorkspace");
 const explorerWorkspace = document.getElementById("explorerWorkspace");
 const backToLandingButton = document.getElementById("backToLanding");
-const closeAdminButton = document.getElementById("closeAdmin");
-const cityNameInput = document.getElementById("cityName");
-const cityDistrictInput = document.getElementById("cityDistrict");
-const cityYearInput = document.getElementById("cityYear");
-const cityLabelInput = document.getElementById("cityLabel");
-const pastImageInput = document.getElementById("pastImageInput");
-const futureImageInput = document.getElementById("futureImageInput");
-const pastPreview = document.getElementById("pastPreview");
-const futurePreview = document.getElementById("futurePreview");
-const pastMeta = document.getElementById("pastMeta");
-const futureMeta = document.getElementById("futureMeta");
-const sceneInventoryInput = document.getElementById("sceneInventory");
-const sceneFrictionsInput = document.getElementById("sceneFrictions");
-const sceneEquityInput = document.getElementById("sceneEquity");
-const sceneAssetsInput = document.getElementById("sceneAssets");
-const refOtherInput = document.getElementById("refOther");
-const interventionOtherInput = document.getElementById("interventionOther");
-const futurePrioritiesInput = document.getElementById("futurePriorities");
-const futureMobilityMixInput = document.getElementById("futureMobilityMix");
-const futurePublicRealmInput = document.getElementById("futurePublicRealm");
-const futureClimateInput = document.getElementById("futureClimate");
-const generatePromptButton = document.getElementById("generatePrompt");
-const copyPromptButton = document.getElementById("copyPrompt");
-const promptOutput = document.getElementById("promptOutput");
-const promptStatus = document.getElementById("promptStatus");
-const presentDescriptionInput = document.getElementById("presentDescription");
-const futureDescriptionInput = document.getElementById("futureDescription");
-const addScenarioButton = document.getElementById("addScenarioButton");
-const adminStatus = document.getElementById("adminStatus");
+const placeLensOverlay = document.getElementById("placeLensOverlay");
+const placeLensPanel = document.getElementById("placeLensPanel");
+const closePlaceLensButton = document.getElementById("closePlaceLens");
+const placeSearchForm = document.getElementById("placeSearchForm");
+const placeSearchInput = document.getElementById("placeSearch");
+const clearPlaceSearchButton = document.getElementById("clearPlaceSearch");
+const placeSearchResults = document.getElementById("placeSearchResults");
+const placeSelection = document.getElementById("placeSelection");
+const startPlaceAnalysisButton = document.getElementById("startPlaceAnalysis");
+const backToPlaceButton = document.getElementById("backToPlace");
+const continueToGroundingButton = document.getElementById(
+  "continueToGrounding"
+);
+const backToAnalysisButton = document.getElementById("backToAnalysis");
+const generateScenarioButton = document.getElementById("generateScenario");
+const cancelGenerationButton = document.getElementById("cancelGeneration");
+const viewGeneratedScenarioButton = document.getElementById(
+  "viewGeneratedScenario"
+);
+const analysisAgentSteps = document.getElementById("analysisAgentSteps");
+const generationAgentSteps = document.getElementById("generationAgentSteps");
+const analysisOutcome = document.getElementById("analysisOutcome");
+const groundingBrief = document.getElementById("groundingBrief");
+const referenceNetwork = document.getElementById("referenceNetwork");
+const generationOutcome = document.getElementById("generationOutcome");
+const lensLiveStatus = document.getElementById("lensLiveStatus");
 
-const adminState = {
-  presentAssetId: null,
-  futureAssetId: null,
-  presentDataUrl: null,
-  futureDataUrl: null
+const lensStages = {
+  place: document.getElementById("placeLensPlace"),
+  analysis: document.getElementById("placeLensAnalysis"),
+  grounding: document.getElementById("placeLensGrounding"),
+  generation: document.getElementById("placeLensGeneration")
 };
 
-let cityLabelTouched = false;
+const lensStageOrder = ["place", "analysis", "grounding", "generation"];
+let selectedLensScenario = null;
+let lensTimers = [];
+let lensRunActive = false;
+let lensLastFocusedElement = null;
 
-function setStatus(el, message, status) {
-  if (!el) return;
-  el.textContent = message;
-  if (status) {
-    el.dataset.status = status;
-  } else {
-    el.removeAttribute("data-status");
-  }
+function createElement(tagName, className, textContent) {
+  const element = document.createElement(tagName);
+  if (className) element.className = className;
+  if (textContent) element.textContent = textContent;
+  return element;
 }
 
-function slugify(value) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
+function setLensLiveStatus(message) {
+  if (lensLiveStatus) lensLiveStatus.textContent = message;
 }
 
-function createScenarioId(base) {
-  const slug = slugify(base || "custom-city");
-  let candidate = slug || "custom-city";
-  let counter = 1;
-  while (scenarios.some((scenario) => scenario.id === candidate)) {
-    counter += 1;
-    candidate = `${slug}-${counter}`;
-  }
-  return candidate;
+function clearLensTimers() {
+  lensTimers.forEach((timer) => window.clearTimeout(timer));
+  lensTimers = [];
+  lensRunActive = false;
 }
 
-function ensureAsset(id, dataUrl) {
-  if (!assetsContainer) return null;
-  let img = document.getElementById(id);
-  if (!img) {
-    img = document.createElement("img");
-    img.setAttribute("id", id);
-    assetsContainer.appendChild(img);
-  }
-  img.setAttribute("src", dataUrl);
-  return `#${id}`;
+function scheduleLensTask(callback, delay) {
+  const timer = window.setTimeout(() => {
+    lensTimers = lensTimers.filter((activeTimer) => activeTimer !== timer);
+    callback();
+  }, delay);
+  lensTimers.push(timer);
 }
 
-function updateAspectRatioMeta(metaEl, width, height) {
-  if (!metaEl || !width || !height) return;
-  const ratio = width / height;
-  const ratioLabel = ratio.toFixed(2);
-  const ratioOk = Math.abs(ratio - 2) <= 0.05;
-  const status = ratioOk ? "ok" : "warn";
-  const hint = ratioOk ? "✓ 2:1 equirectangular" : "Consider a 2:1 image";
-  setStatus(
-    metaEl,
-    `${width} × ${height} (${ratioLabel}:1) • ${hint}`,
-    status
+function getLensDelay() {
+  return window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    ? 0
+    : 520;
+}
+
+function setLensStage(stageName) {
+  lensStageOrder.forEach((name) => {
+    const stage = lensStages[name];
+    if (!stage) return;
+    stage.toggleAttribute("hidden", name !== stageName);
+  });
+
+  const currentIndex = lensStageOrder.indexOf(stageName);
+  document.querySelectorAll("[data-lens-progress]").forEach((item) => {
+    const itemIndex = lensStageOrder.indexOf(item.dataset.lensProgress);
+    item.classList.toggle("is-current", itemIndex === currentIndex);
+    item.classList.toggle("is-complete", itemIndex < currentIndex);
+  });
+}
+
+function createPlaceResult(scenario) {
+  const button = createElement("button", "place-search-result");
+  button.type = "button";
+  button.setAttribute("aria-pressed", String(selectedLensScenario?.id === scenario.id));
+
+  const image = document.createElement("img");
+  image.src = scenario.thumbnail;
+  image.alt = "";
+  image.loading = "lazy";
+
+  const copy = createElement("span", "place-search-result__copy");
+  copy.append(
+    createElement("strong", "", scenario.label),
+    createElement("span", "", scenario.location),
+    createElement("small", "", scenario.lens.sceneType)
   );
+
+  const marker = createElement("span", "place-search-result__marker", "↗");
+  marker.setAttribute("aria-hidden", "true");
+  button.append(image, copy, marker);
+  button.addEventListener("click", () => selectLensScenario(scenario));
+  return button;
 }
 
-function loadImageFile({
-  file,
-  previewEl,
-  metaEl,
-  stateKey,
-  assetPrefix
-}) {
-  if (!file) return;
-  const reader = new FileReader();
-  const objectUrl = URL.createObjectURL(file);
-  const probe = new Image();
-
-  probe.onload = () => {
-    updateAspectRatioMeta(metaEl, probe.width, probe.height);
-    URL.revokeObjectURL(objectUrl);
-  };
-  probe.src = objectUrl;
-
-  reader.onload = () => {
-    const dataUrl = reader.result;
-    if (typeof dataUrl !== "string") return;
-    if (previewEl) {
-      previewEl.src = dataUrl;
-    }
-    const assetId = `${assetPrefix}-${Date.now()}`;
-    const assetRef = ensureAsset(assetId, dataUrl);
-    adminState[stateKey] = dataUrl;
-    adminState[`${stateKey.replace("DataUrl", "AssetId")}`] = assetId;
-    updateAddScenarioButton();
-    if (!assetRef) return;
-  };
-
-  reader.readAsDataURL(file);
-}
-
-function getCheckedValues(name) {
-  return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
-    .map((input) => input.value)
-    .filter(Boolean);
-}
-
-function getValue(input) {
-  if (!input) return "";
-  return input.value.trim();
-}
-
-function buildPrompt() {
-  const city = getValue(cityNameInput);
-  const district = getValue(cityDistrictInput);
-  const year = getValue(cityYearInput);
-  const inventory = getValue(sceneInventoryInput);
-  const frictions = getValue(sceneFrictionsInput);
-  const equity = getValue(sceneEquityInput);
-  const assets = getValue(sceneAssetsInput);
-  const references = [
-    ...getCheckedValues("reference"),
-    getValue(refOtherInput)
-  ].filter(Boolean);
-  const interventions = [
-    ...getCheckedValues("intervention"),
-    getValue(interventionOtherInput)
-  ].filter(Boolean);
-  const priorities = getValue(futurePrioritiesInput);
-  const mobilityMix = getValue(futureMobilityMixInput);
-  const publicRealm = getValue(futurePublicRealmInput);
-  const climate = getValue(futureClimateInput);
-
-  const lines = [
-    "Edit the provided 2:1 equirectangular 360° photo to depict a preferable future for urban mobility.",
-    "Keep the exact camera position, horizon level, and overall perspective."
-  ];
-
-  if (city || district || year) {
-    const locationLine = [
-      city ? `City: ${city}` : null,
-      district ? `District: ${district}` : null,
-      year ? `Past snapshot year: ${year}` : null
+function renderPlaceSearchResults() {
+  if (!placeSearchResults || !placeSearchInput) return;
+  const query = placeSearchInput.value.trim().toLowerCase();
+  const matches = scenarios.filter((scenario) => {
+    const searchable = [
+      scenario.label,
+      scenario.location,
+      scenario.lens.sceneType
     ]
-      .filter(Boolean)
-      .join(" | ");
-    lines.push(locationLine);
+      .join(" ")
+      .toLowerCase();
+    return !query || searchable.includes(query);
+  });
+
+  clearChildren(placeSearchResults);
+  clearPlaceSearchButton?.toggleAttribute("hidden", !query);
+
+  const heading = createElement(
+    "p",
+    "place-search-results__heading",
+    query ? `${matches.length} matching supported place${matches.length === 1 ? "" : "s"}` : "Supported pilot places"
+  );
+  placeSearchResults.appendChild(heading);
+
+  if (!matches.length) {
+    const empty = createElement("div", "place-search-empty");
+    empty.append(
+      createElement("strong", "", `No supported place matches “${placeSearchInput.value.trim()}”.`),
+      createElement(
+        "span",
+        "",
+        "Coverage is growing. Browse the verified reference places below."
+      )
+    );
+    const browseButton = createElement("button", "secondary-button", "Browse places");
+    browseButton.type = "button";
+    browseButton.addEventListener("click", () => {
+      placeSearchInput.value = "";
+      renderPlaceSearchResults();
+      placeSearchInput.focus();
+    });
+    empty.appendChild(browseButton);
+    placeSearchResults.appendChild(empty);
+    setLensLiveStatus("No supported places matched the search. Browse verified places.");
+    return;
   }
 
-  if (inventory) {
-    lines.push(`Current scene inventory: ${inventory}`);
-  }
-  if (frictions) {
-    lines.push(`Mobility pain points: ${frictions}`);
-  }
-  if (equity) {
-    lines.push(`Equity + access gaps: ${equity}`);
-  }
-  if (assets) {
-    lines.push(`Assets to preserve: ${assets}`);
-  }
-  if (interventions.length) {
-    lines.push(
-      `Future interventions to add or amplify: ${interventions.join("; ")}.`
+  matches.forEach((scenario) => placeSearchResults.appendChild(createPlaceResult(scenario)));
+  setLensLiveStatus(`${matches.length} supported place${matches.length === 1 ? "" : "s"} available.`);
+}
+
+function renderPlaceSelection() {
+  if (!placeSelection) return;
+  clearChildren(placeSelection);
+
+  if (!selectedLensScenario) {
+    const empty = createElement("div", "place-selection__empty");
+    empty.append(
+      createElement("strong", "", "Choose a place to begin."),
+      createElement(
+        "span",
+        "",
+        "The system will use its verified current view and the reference network already behind it."
+      )
     );
-  }
-  if (priorities) {
-    lines.push(`Priority outcomes: ${priorities}.`);
-  }
-  if (mobilityMix) {
-    lines.push(`Mobility mix to show: ${mobilityMix}.`);
-  }
-  if (publicRealm) {
-    lines.push(`Public realm mood: ${publicRealm}.`);
-  }
-  if (climate) {
-    lines.push(`Climate + nature goals: ${climate}.`);
-  }
-  if (references.length) {
-    lines.push(
-      `Reference initiatives and design cues: ${references.join("; ")}.`
-    );
+    placeSelection.appendChild(empty);
+    return;
   }
 
-  lines.push(
-    "Rendering constraints: photorealistic, consistent lighting with the original, preserve building massing and skyline, realistic scale for people/vehicles, seamless 360° stitching, no warped poles, no text overlays or watermarks."
+  const card = createElement("article", "place-selection__card");
+  const image = document.createElement("img");
+  image.src = selectedLensScenario.thumbnail;
+  image.alt = `Current 360° view of ${selectedLensScenario.label}`;
+
+  const copy = createElement("div", "place-selection__copy");
+  copy.append(
+    createElement("p", "eyebrow", "Selected place"),
+    createElement("h4", "", selectedLensScenario.label),
+    createElement("p", "", selectedLensScenario.location),
+    createElement("span", "place-selection__tag", selectedLensScenario.lens.sceneType)
+  );
+  card.append(image, copy);
+  placeSelection.appendChild(card);
+}
+
+function selectLensScenario(scenario) {
+  selectedLensScenario = scenario;
+  startPlaceAnalysisButton?.removeAttribute("disabled");
+  renderPlaceSelection();
+  renderPlaceSearchResults();
+  setLensLiveStatus(`${scenario.label} selected. Understand this place to continue.`);
+}
+
+function createAgentStep(label) {
+  const item = createElement("div", "agent-step");
+  item.dataset.state = "pending";
+  const indicator = createElement("span", "agent-step__indicator");
+  indicator.setAttribute("aria-hidden", "true");
+  const copy = createElement("div", "agent-step__copy");
+  copy.append(
+    createElement("strong", "", label),
+    createElement("span", "", "Waiting")
+  );
+  item.append(indicator, copy);
+  return item;
+}
+
+function setAgentStepState(item, state) {
+  item.dataset.state = state;
+  const status = item.querySelector(".agent-step__copy span");
+  if (!status) return;
+  status.textContent = state === "active" ? "In progress" : state === "complete" ? "Complete" : "Waiting";
+}
+
+function runAgentSteps(container, labels, onComplete) {
+  if (!container) return;
+  clearLensTimers();
+  clearChildren(container);
+  const items = labels.map((label) => {
+    const item = createAgentStep(label);
+    container.appendChild(item);
+    return item;
+  });
+  lensRunActive = true;
+  let index = 0;
+
+  const advance = () => {
+    if (!lensRunActive) return;
+    if (index >= items.length) {
+      lensRunActive = false;
+      onComplete?.();
+      return;
+    }
+    const item = items[index];
+    setAgentStepState(item, "active");
+    setLensLiveStatus(`${labels[index]}.`);
+    scheduleLensTask(() => {
+      if (!lensRunActive) return;
+      setAgentStepState(item, "complete");
+      index += 1;
+      advance();
+    }, getLensDelay());
+  };
+
+  advance();
+}
+
+function renderAnalysisOutcome() {
+  if (!analysisOutcome || !selectedLensScenario) return;
+  clearChildren(analysisOutcome);
+  const outcome = selectedLensScenario.lens;
+  analysisOutcome.append(
+    createElement("p", "eyebrow", "Current read"),
+    createElement("h4", "", outcome.sceneType),
+    createElement("p", "", outcome.currentRead)
+  );
+  analysisOutcome.removeAttribute("hidden");
+}
+
+function renderGrounding() {
+  if (!selectedLensScenario || !groundingBrief || !referenceNetwork) return;
+  const scenario = selectedLensScenario;
+  const future = scenario.futures[0];
+  clearChildren(groundingBrief);
+  clearChildren(referenceNetwork);
+
+  const now = createElement("article", "scenario-brief__state scenario-brief__state--now");
+  now.append(
+    createElement("p", "eyebrow", "Now"),
+    createElement("h4", "", scenario.lens.sceneType),
+    createElement("p", "", scenario.lens.currentRead)
   );
 
-  return lines.join("\n\n");
-}
+  const futureState = createElement(
+    "article",
+    "scenario-brief__state scenario-brief__state--future"
+  );
+  futureState.append(
+    createElement("p", "eyebrow", future.horizon || "Possible future"),
+    createElement("h4", "", future.label),
+    createElement("p", "", scenario.lens.direction)
+  );
+  groundingBrief.append(now, futureState);
 
-function buildPresentDescription() {
-  const city = getValue(cityNameInput);
-  const district = getValue(cityDistrictInput);
-  const inventory = getValue(sceneInventoryInput);
-  const frictions = getValue(sceneFrictionsInput);
-  const equity = getValue(sceneEquityInput);
-  const assets = getValue(sceneAssetsInput);
-  const parts = [];
+  const networkHeading = createElement("div", "reference-network__heading");
+  networkHeading.append(
+    createElement("p", "eyebrow", "What informs this?"),
+    createElement(
+      "p",
+      "",
+      "The system transfers relevant moves, not the appearance of another city."
+    )
+  );
+  referenceNetwork.appendChild(networkHeading);
 
-  if (city || district) {
-    parts.push(
-      `${district ? district + ", " : ""}${city || "This area"} shows the current mobility conditions.`
+  const grid = createElement("div", "reference-network__grid");
+  scenario.lens.references.forEach((reference) => {
+    const card = createElement("article", "reference-card");
+    card.append(
+      createElement("p", "reference-card__location", reference.location),
+      createElement("h4", "", reference.label),
+      createElement("p", "", reference.detail)
     );
-  }
-  if (inventory) {
-    parts.push(inventory);
-  }
-  if (frictions) {
-    parts.push(frictions);
-  }
-  if (equity) {
-    parts.push(equity);
-  }
-  if (assets) {
-    parts.push(assets);
-  }
-
-  return parts.filter(Boolean).join("\n\n");
+    grid.appendChild(card);
+  });
+  referenceNetwork.appendChild(grid);
 }
 
-function buildFutureDescription() {
-  const priorities = getValue(futurePrioritiesInput);
-  const mobilityMix = getValue(futureMobilityMixInput);
-  const publicRealm = getValue(futurePublicRealmInput);
-  const climate = getValue(futureClimateInput);
-  const interventions = [
-    ...getCheckedValues("intervention"),
-    getValue(interventionOtherInput)
-  ].filter(Boolean);
-  const references = [
-    ...getCheckedValues("reference"),
-    getValue(refOtherInput)
-  ].filter(Boolean);
-  const parts = [];
-
-  if (interventions.length) {
-    parts.push(`Future interventions: ${interventions.join(", ")}.`);
-  }
-  if (priorities) {
-    parts.push(priorities);
-  }
-  if (mobilityMix) {
-    parts.push(mobilityMix);
-  }
-  if (publicRealm) {
-    parts.push(publicRealm);
-  }
-  if (climate) {
-    parts.push(climate);
-  }
-  if (references.length) {
-    parts.push(`Inspired by: ${references.join(", ")}.`);
-  }
-
-  return parts.filter(Boolean).join("\n\n");
+function renderGenerationOutcome() {
+  if (!generationOutcome || !selectedLensScenario) return;
+  clearChildren(generationOutcome);
+  const heading = createElement("div", "generation-outcome__heading");
+  heading.append(
+    createElement("p", "eyebrow", "Quality gate passed"),
+    createElement("h4", "", "The verified comparison is ready.")
+  );
+  generationOutcome.appendChild(heading);
+  generationOutcome.appendChild(
+    createElement(
+      "p",
+      "",
+      "This prototype opens the verified 360° future already paired with this supported place. A live renderer will replace this handoff for new locations."
+    )
+  );
+  const checks = createElement("ul", "quality-checks");
+  selectedLensScenario.lens.qualityChecks.forEach((check) => {
+    checks.appendChild(createElement("li", "", check));
+  });
+  generationOutcome.appendChild(checks);
+  generationOutcome.removeAttribute("hidden");
 }
 
-function updateAddScenarioButton() {
-  if (!addScenarioButton) return;
-  const ready =
-    getValue(cityLabelInput) &&
-    adminState.presentAssetId &&
-    adminState.futureAssetId;
-  addScenarioButton.disabled = !ready;
+function startLensAnalysis() {
+  if (!selectedLensScenario) return;
+  setLensStage("analysis");
+  analysisOutcome?.setAttribute("hidden", "");
+  continueToGroundingButton?.setAttribute("disabled", "");
+  runAgentSteps(
+    analysisAgentSteps,
+    selectedLensScenario.lens.analysisSteps,
+    () => {
+      renderAnalysisOutcome();
+      continueToGroundingButton?.removeAttribute("disabled");
+      setLensLiveStatus("Place read complete. See the evidence-led direction.");
+    }
+  );
 }
 
-function showLanding() {
-  adminOverlay?.classList.remove("is-visible");
-  adminOverlay?.setAttribute("aria-hidden", "true");
+function startLensGeneration() {
+  if (!selectedLensScenario) return;
+  setLensStage("generation");
+  generationOutcome?.setAttribute("hidden", "");
+  viewGeneratedScenarioButton?.setAttribute("disabled", "");
+  runAgentSteps(
+    generationAgentSteps,
+    selectedLensScenario.lens.generationSteps,
+    () => {
+      renderGenerationOutcome();
+      viewGeneratedScenarioButton?.removeAttribute("disabled");
+      setLensLiveStatus("Visual quality check complete. The comparison is ready.");
+    }
+  );
+}
+
+function cancelLensGeneration() {
+  clearLensTimers();
+  setLensStage("grounding");
+  setLensLiveStatus("Generation cancelled. The evidence-led direction is saved.");
+}
+
+function hidePlaceLens() {
+  clearLensTimers();
+  placeLensOverlay?.classList.remove("is-visible");
+  placeLensOverlay?.setAttribute("aria-hidden", "true");
+  placeLensOverlay?.setAttribute("hidden", "");
+  document.body.classList.remove("place-lens-open");
+}
+
+function showLanding({ focusTarget = showExplorerButton } = {}) {
+  hidePlaceLens();
   landingWorkspace?.removeAttribute("hidden");
   landingWorkspace?.setAttribute("aria-hidden", "false");
   explorerWorkspace?.setAttribute("hidden", "");
   explorerWorkspace?.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("admin-open");
   document.body.dataset.workspace = "landing";
-  showExplorerButton?.focus();
+  if (focusTarget) {
+    requestAnimationFrame(() => focusTarget.focus());
+  }
 }
 
-function showExplorer() {
-  adminOverlay?.classList.remove("is-visible");
-  adminOverlay?.setAttribute("aria-hidden", "true");
+function showExplorer({ focusTarget = backToLandingButton } = {}) {
+  hidePlaceLens();
   landingWorkspace?.setAttribute("hidden", "");
   landingWorkspace?.setAttribute("aria-hidden", "true");
   explorerWorkspace?.removeAttribute("hidden");
   explorerWorkspace?.setAttribute("aria-hidden", "false");
-  document.body.classList.remove("admin-open");
   document.body.dataset.workspace = "explorer";
   exitToHome();
   requestAnimationFrame(() => {
     const scene = explorerWorkspace?.querySelector("a-scene");
     scene?.resize?.();
     window.dispatchEvent(new Event("resize"));
-    backToLandingButton?.focus();
+    if (focusTarget) focusTarget.focus();
   });
 }
 
-function openAdmin() {
-  if (!adminOverlay) return;
+function openPlaceLens() {
+  if (!placeLensOverlay) return;
+  lensLastFocusedElement = document.activeElement instanceof HTMLElement
+    ? document.activeElement
+    : null;
   landingWorkspace?.setAttribute("hidden", "");
   landingWorkspace?.setAttribute("aria-hidden", "true");
   explorerWorkspace?.setAttribute("hidden", "");
   explorerWorkspace?.setAttribute("aria-hidden", "true");
-  adminOverlay.classList.add("is-visible");
-  adminOverlay.setAttribute("aria-hidden", "false");
-  document.body.classList.add("admin-open");
-  document.body.dataset.workspace = "builder";
-  closeAdminButton?.focus();
+  placeLensOverlay.removeAttribute("hidden");
+  placeLensOverlay.classList.add("is-visible");
+  placeLensOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("place-lens-open");
+  document.body.dataset.workspace = "lens";
+  setLensStage("place");
+  startPlaceAnalysisButton?.toggleAttribute("disabled", !selectedLensScenario);
+  renderPlaceSearchResults();
+  renderPlaceSelection();
+  requestAnimationFrame(() => placeSearchInput?.focus());
 }
 
-function closeAdmin() {
-  showLanding();
+function closePlaceLens() {
+  showLanding({ focusTarget: lensLastFocusedElement || openPlaceLensButton });
 }
 
-async function copyToClipboard(text) {
-  if (!text) return false;
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    await navigator.clipboard.writeText(text);
-    return true;
-  }
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "true");
-  textarea.style.position = "absolute";
-  textarea.style.left = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  const success = document.execCommand("copy");
-  document.body.removeChild(textarea);
-  return success;
+function getFocusableElements(container) {
+  return Array.from(
+    container.querySelectorAll(
+      'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )
+  );
 }
 
-function addScenarioFromAdmin() {
-  const label = getValue(cityLabelInput);
-  if (!label) {
-    setStatus(adminStatus, "Add a menu label before saving.", "warn");
+function trapPlaceLensFocus(event) {
+  if (!placeLensOverlay || placeLensOverlay.hasAttribute("hidden")) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closePlaceLens();
     return;
   }
-  if (!adminState.presentAssetId || !adminState.futureAssetId) {
-    setStatus(
-      adminStatus,
-      "Upload both the past and future images before saving.",
-      "warn"
-    );
-    return;
+  if (event.key !== "Tab") return;
+  const focusable = getFocusableElements(placeLensPanel);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus();
   }
+}
 
-  const scenarioId = createScenarioId(label);
-  const presentDescription =
-    getValue(presentDescriptionInput) || buildPresentDescription();
-  const futureDescription =
-    getValue(futureDescriptionInput) || buildFutureDescription();
-
-  scenarios.push({
-    id: scenarioId,
-    label,
-    location: [getValue(cityDistrictInput), getValue(cityNameInput)]
-      .filter(Boolean)
-      .join(" · "),
-    summary:
-      presentDescription.split("\n")[0] ||
-      "A newly created present-to-future mobility scenario.",
-    themes: getCheckedValues("intervention").slice(0, 3),
-    thumbnail: adminState.presentDataUrl,
-    present: {
-      asset: `#${adminState.presentAssetId}`,
-      description: presentDescription
-    },
-    futures: [
-      {
-        id: `${scenarioId}-future-1`,
-        label: "Future direction",
-        asset: `#${adminState.futureAssetId}`,
-        description: futureDescription
-      }
-    ]
+function initPlaceLens() {
+  openPlaceLensButton?.addEventListener("click", openPlaceLens);
+  showExplorerButton?.addEventListener("click", () => showExplorer());
+  backToLandingButton?.addEventListener("click", () => showLanding());
+  closePlaceLensButton?.addEventListener("click", closePlaceLens);
+  placeSearchInput?.addEventListener("input", renderPlaceSearchResults);
+  clearPlaceSearchButton?.addEventListener("click", () => {
+    if (!placeSearchInput) return;
+    placeSearchInput.value = "";
+    renderPlaceSearchResults();
+    placeSearchInput.focus();
   });
-
-  buildScenarioCatalog();
-  exitToHome();
-  setStatus(adminStatus, "City added to the experience.", "ok");
-  showExplorer();
-}
-
-function initAdminStudio() {
-  if (openAdminButton) {
-    openAdminButton.addEventListener("click", openAdmin);
-  }
-  if (showExplorerButton) {
-    showExplorerButton.addEventListener("click", showExplorer);
-  }
-  if (backToLandingButton) {
-    backToLandingButton.addEventListener("click", showLanding);
-  }
-  if (closeAdminButton) {
-    closeAdminButton.addEventListener("click", closeAdmin);
-  }
-  if (adminOverlay) {
-    adminOverlay.addEventListener("click", (event) => {
-      if (event.target === adminOverlay) {
-        closeAdmin();
-      }
-    });
-  }
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && adminOverlay?.classList.contains("is-visible")) {
-      closeAdmin();
+  placeSearchForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (selectedLensScenario) {
+      startLensAnalysis();
+      return;
     }
+    const firstScenario = scenarios.find((scenario) => {
+      const query = placeSearchInput?.value.trim().toLowerCase() || "";
+      return [scenario.label, scenario.location, scenario.lens.sceneType]
+        .join(" ")
+        .toLowerCase()
+        .includes(query);
+    });
+    if (firstScenario) selectLensScenario(firstScenario);
   });
-
-  if (cityNameInput && cityLabelInput) {
-    cityNameInput.addEventListener("input", () => {
-      if (cityLabelTouched) return;
-      cityLabelInput.value = getValue(cityNameInput);
-    });
-    cityLabelInput.addEventListener("input", () => {
-      cityLabelTouched = true;
-    });
-  }
-
-  if (pastImageInput) {
-    pastImageInput.addEventListener("change", (event) => {
-      const file = event.target.files?.[0];
-      loadImageFile({
-        file,
-        previewEl: pastPreview,
-        metaEl: pastMeta,
-        stateKey: "presentDataUrl",
-        assetPrefix: "asset-custom-present"
-      });
-    });
-  }
-
-  if (futureImageInput) {
-    futureImageInput.addEventListener("change", (event) => {
-      const file = event.target.files?.[0];
-      loadImageFile({
-        file,
-        previewEl: futurePreview,
-        metaEl: futureMeta,
-        stateKey: "futureDataUrl",
-        assetPrefix: "asset-custom-future"
-      });
-    });
-  }
-
-  if (generatePromptButton) {
-    generatePromptButton.addEventListener("click", () => {
-      const prompt = buildPrompt();
-      if (promptOutput) {
-        promptOutput.value = prompt;
-      }
-      setStatus(promptStatus, "Prompt generated.", "ok");
-    });
-  }
-
-  if (copyPromptButton) {
-    copyPromptButton.addEventListener("click", async () => {
-      const prompt = promptOutput ? promptOutput.value.trim() : "";
-      if (!prompt) {
-        setStatus(promptStatus, "Generate a prompt first.", "warn");
-        return;
-      }
-      try {
-        const success = await copyToClipboard(prompt);
-        setStatus(
-          promptStatus,
-          success ? "Prompt copied to clipboard." : "Copy failed.",
-          success ? "ok" : "warn"
-        );
-      } catch (error) {
-        setStatus(promptStatus, "Copy failed.", "warn");
-      }
-    });
-  }
-
-  if (addScenarioButton) {
-    addScenarioButton.addEventListener("click", addScenarioFromAdmin);
-  }
-
-  updateAddScenarioButton();
+  startPlaceAnalysisButton?.addEventListener("click", startLensAnalysis);
+  backToPlaceButton?.addEventListener("click", () => {
+    clearLensTimers();
+    setLensStage("place");
+    placeSearchInput?.focus();
+  });
+  continueToGroundingButton?.addEventListener("click", () => {
+    renderGrounding();
+    setLensStage("grounding");
+    generateScenarioButton?.focus();
+  });
+  backToAnalysisButton?.addEventListener("click", () => setLensStage("analysis"));
+  generateScenarioButton?.addEventListener("click", startLensGeneration);
+  cancelGenerationButton?.addEventListener("click", cancelLensGeneration);
+  viewGeneratedScenarioButton?.addEventListener("click", () => {
+    if (!selectedLensScenario) return;
+    hidePlaceLens();
+    showExplorer({ focusTarget: null });
+    enterScenario(selectedLensScenario);
+  });
+  document.addEventListener("keydown", trapPlaceLensFocus);
+  renderPlaceSearchResults();
+  renderPlaceSelection();
 }
 
 buildScenarioCatalog();
 buildTimeframeControls();
 styleHomeButton("default");
 exitToHome();
-initAdminStudio();
+initPlaceLens();

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InflectionPoints: Mobility — Place Lens MVP Flow</title>
+  <style>
+    :root{--ink:#edf3f7;--muted:#a5b3bf;--line:#2a3540;--accent:#23d59a;--ok:#7ee787;--warn:#f7c75e;--bg:#091017;--card:#121b24;--soft:#18232d}*{box-sizing:border-box;margin:0}body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);padding:48px 24px;max-width:900px;margin:0 auto}h1{font-size:30px;letter-spacing:-.03em}h2{font-size:21px;margin:48px 0 8px;padding-top:24px;border-top:1px solid var(--line)}h3{font-size:13px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);margin:28px 0 12px}.meta,.step-d{color:var(--muted);font-size:14px;margin-top:6px}.skills{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0 0}.chip{font-size:13px;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card)}.flow{list-style:none;padding:0;margin:16px 0}.flow>li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;position:relative}.flow>li+li{margin-top:34px}.flow>li+li::before{content:"";position:absolute;top:-27px;left:34px;width:2px;height:20px;background:var(--accent)}.flow>li+li::after{content:"";position:absolute;top:-12px;left:30px;border:5px solid transparent;border-top-color:var(--accent)}.step-n{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);border:1.5px solid var(--accent);border-radius:999px;padding:1px 9px;margin-right:8px;vertical-align:1px}.step-t{font-weight:700}.cta{font-size:13px;margin-top:10px}.cta b{color:var(--ok)}.branch{font-size:13px;margin-top:10px;padding:8px 12px;background:var(--soft);border-left:3px solid var(--accent);border-radius:0 6px 6px 0}table{border-collapse:collapse;width:100%;font-size:14px;background:var(--card)}th,td{text-align:left;padding:9px 12px;border:1px solid var(--line);vertical-align:top}th{background:var(--soft);font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}.pass{color:var(--ok);font-weight:700}.warn{color:var(--warn);font-weight:700}.overflow{overflow-x:auto}ul{padding-left:20px}li+li{margin-top:7px}footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+  </style>
+</head>
+<body>
+  <h1>InflectionPoints: Mobility — Place Lens MVP Flow</h1>
+  <p class="meta">Implemented 9 August 2026 · A place-first route from a verified 360° scene to one evidence-led possible future.</p>
+  <div class="skills">
+    <span class="chip">flow-search</span><span class="chip">flow-ai-chat</span><span class="chip">flow-empty-states</span><span class="chip">flow-errors</span><span class="chip">dec-ai-native-patterns</span><span class="chip">dec-accessibility</span>
+  </div>
+
+  <h2>Summary</h2>
+  <p>The previous manual scenario form is replaced with the InflectionPoints lens. A person selects a supported 360° place; the system exposes its current reading, shows the reference cases that inform a single possible direction, and leads into the paired immersive comparison. The person does not choose interventions, write prompts, or configure visual settings.</p>
+  <p class="meta">MVP boundary: this static version uses three verified places and their existing paired panoramas. It deliberately does not imply that a live locator, image generator, or evaluator is running. Those services have a clear insertion point in the flow.</p>
+
+  <h2>Flow: Place lens</h2>
+  <p class="meta">Entry point: “Analyze a place” from the landing page.</p>
+
+  <h3>Steps</h3>
+  <ol class="flow">
+    <li>
+      <span class="step-n">1</span><span class="step-t">Choose a supported place</span>
+      <p class="step-d">A fast search and visual result list make the three verified 360° places easy to browse. Each result is a button with an image, location, and scene type; selecting it reveals a confirmation card.</p>
+      <p class="cta">Primary action: <b>Understand this place</b> → Read the scene</p>
+      <div class="branch">No-match state: the experience explains that coverage is limited, keeps the search term visible, and offers “Browse places” rather than a dead end.</div>
+    </li>
+    <li>
+      <span class="step-n">2</span><span class="step-t">Read the current scene</span>
+      <p class="step-d">Named progress steps show the intended agent work: checking the source, reading movement and public-realm conditions, matching comparable situations, and preparing a place-specific direction. The completed read is concise and inspectable.</p>
+      <p class="cta">Primary action: <b>See the direction</b> → Ground the possible future</p>
+      <div class="branch">Recovery: “Choose another place” returns to the search with the selection still available; no work is lost.</div>
+    </li>
+    <li>
+      <span class="step-n">3</span><span class="step-t">Ground one direction</span>
+      <p class="step-d">A parallel Now / Possible 2040 brief makes the change legible. Reference cards explain transferable mobility moves from the other InflectionPoints places, rather than copying another city’s look.</p>
+      <p class="cta">Primary action: <b>Create the possible future</b> → Prepare the comparison</p>
+      <div class="branch">The system offers one evidence-led direction. It does not expose a menu of urban-design preferences.</div>
+    </li>
+    <li>
+      <span class="step-n">4</span><span class="step-t">Prepare and check the visual</span>
+      <p class="step-d">A second visible run represents the future rendering pipeline: visual brief, candidate changes, place continuity, and mobility legibility. The finished card lists the visual checks that matter for the selected scene.</p>
+      <p class="cta">Primary action: <b>View the comparison</b> → Enter the immersive scene</p>
+      <div class="branch">MVP behaviour: the run hands off to the verified paired panorama already in the library. “Cancel run” preserves the grounded direction and returns to it.</div>
+    </li>
+    <li>
+      <span class="step-n">5</span><span class="step-t">Compare Now and Possible future</span>
+      <p class="step-d">The immersive viewer opens in Now. Dedicated states, hold-to-compare, keyboard support, and the “What changes?” sheet help people perceive the spatial difference without overlaying the scene with dense controls.</p>
+      <p class="cta">Primary action: <b>Hold to compare</b> → Reveal the opposite state</p>
+      <div class="branch">The future is labelled as a possible, evidence-led direction—not a forecast or a certainty.</div>
+    </li>
+  </ol>
+
+  <h3>Screen inventory</h3>
+  <div class="overflow"><table>
+    <tr><th>Screen</th><th>Purpose</th><th>Primary action</th><th>States</th></tr>
+    <tr><td>Landing</td><td>Separate scenario exploration from place analysis.</td><td>Analyze a place</td><td>Two clear routes, no accidental access to a long builder.</td></tr>
+    <tr><td>Choose a supported place</td><td>Find and confirm a verified starting scene.</td><td>Understand this place</td><td>Default list, selected state, search filtering, no-match recovery.</td></tr>
+    <tr><td>Current read</td><td>Make the system’s analysis visible.</td><td>See the direction</td><td>Named progress, completed scene summary, return to search.</td></tr>
+    <tr><td>Evidence-led direction</td><td>Explain why the direction fits the scene.</td><td>Create the possible future</td><td>Parallel Now / Possible 2040 brief and reference cards.</td></tr>
+    <tr><td>Visual quality gate</td><td>Show meaningful, cancellable preparation work.</td><td>View the comparison</td><td>Named progress, cancel, preserved grounding, quality checklist.</td></tr>
+    <tr><td>Immersive comparison</td><td>Let people inspect the current place against its possible future.</td><td>Hold to compare</td><td>Now, Possible future, keyboard and VR-compatible controls.</td></tr>
+  </table></div>
+
+  <h3>Anti-pattern audit</h3>
+  <div class="overflow"><table>
+    <tr><th>Check</th><th>Verdict</th><th>Note</th></tr>
+    <tr><td>Users have to complete an expert planning form</td><td class="pass">PASS</td><td>The manual builder is removed from the user route.</td></tr>
+    <tr><td>Agent work is invisible or looks like a frozen spinner</td><td class="pass">PASS</td><td>Every run has compact, named progress steps and an outcome.</td></tr>
+    <tr><td>A user is asked to pick a preferred future</td><td class="pass">PASS</td><td>One direction is grounded by the reference network instead.</td></tr>
+    <tr><td>A reference city is copied visually without explanation</td><td class="pass">PASS</td><td>Reference cards name transferable mobility moves, not visual templates.</td></tr>
+    <tr><td>The prototype pretends to run a live image agent</td><td class="pass">PASS</td><td>Scope copy explicitly identifies the verified-scene handoff.</td></tr>
+    <tr><td>Any global location can be analysed today</td><td class="warn">PARKED</td><td>Requires a licensed location/360° source, repository retrieval, and a secure rendering service.</td></tr>
+    <tr><td>Visual plausibility is left unchecked</td><td class="pass">PASS</td><td>The quality gate names camera, built context, people, greenery, infrastructure, and mobility legibility checks.</td></tr>
+  </table></div>
+
+  <h2>Next integration points</h2>
+  <ul>
+    <li>Replace supported-place search with a licensed location and 360° viewpoint service, including clear coverage and consent boundaries.</li>
+    <li>Connect the reference cards to a versioned mobility-evidence repository with source confidence and review ownership.</li>
+    <li>Add a server-side orchestration layer for scene analysis, rendering, and an independent visual evaluator; do not expose model keys in the static site.</li>
+    <li>Persist place, source view, evidence, run status, and evaluation results so a failed visual can be retried without losing the work.</li>
+    <li>Define release thresholds for camera continuity, local context, people, greenery, infrastructure ageing, and visible mobility change.</li>
+  </ul>
+
+  <footer>Skills applied: flow-search, flow-ai-chat, flow-empty-states, flow-errors, dec-ai-native-patterns, and dec-accessibility.</footer>
+</body>
+</html>
